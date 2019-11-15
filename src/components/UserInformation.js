@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import connect from "react-redux/es/connect/connect";
+import {connect} from 'react-redux';
 import {getAccountInformation} from "../action-creators/userActionCreator";
 
 class UserInformation extends Component{

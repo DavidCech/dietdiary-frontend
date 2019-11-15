@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import connect from "react-redux/es/connect/connect";
+import {connect} from 'react-redux';
 import {createFood} from "../action-creators/foodActionCreator";
 
 class CreateFood extends Component {
