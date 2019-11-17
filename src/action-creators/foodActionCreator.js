@@ -24,3 +24,11 @@ export const createFood = (food) => dispatch => {
         console.log(e)
     )
 };
+
+export const searchedFoodToState = (food) => dispatch => {
+    console.log("Jsem tu");
+        dispatch({
+            type:'SEARCHED_FOOD_TO_STATE',
+            payload: food,
+        })
+};

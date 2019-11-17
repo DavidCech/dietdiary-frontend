@@ -5,6 +5,8 @@ const initialState = {
     empty: false,
     userName: "",
     email: "",
+    createDEResponse: "",
+    searchedFood: null,
 };
 
 export default function (state = initialState, action) {
@@ -26,6 +28,11 @@ export default function (state = initialState, action) {
                 ...state,
                 userName: action.payload.username,
                 email: action.payload.email
+            };
+        case 'SEARCHED_FOOD_TO_STATE':
+            return{
+                ...state,
+                searchedFood: action.payload,
             };
         default:
             return state

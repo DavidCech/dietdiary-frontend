@@ -5,7 +5,7 @@
   "dependencies": {
     "eslint": "^6.2.1",
     "lodash": "^4.17.15",
-    "npm": "^6.13.0",
+    "npm": "^6.9.0",
     "react": "^16.9.0",
     "react-calendar": "^2.19.2",
     "react-dom": "^16.9.0",
@@ -14,7 +14,8 @@
     "react-scripts": "^3.2.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serve": "^11.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
