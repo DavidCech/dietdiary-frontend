@@ -12,6 +12,7 @@ class Navigation extends Component {
                 <NavLink to="/user" style={{display: secret}}> User Information </NavLink>
                 <NavLink to="/createFood" style={{display: secret}}> Create food </NavLink>
                 <NavLink to="/createDiaryEntry" style={{display: secret}}> Create DiaryEntry </NavLink>
+                <NavLink to="/viewDiaryEntries" style={{display: secret}}> View DiaryEntries </NavLink>
                 <NavLink to="/"> Search </NavLink>
             </div>
         )

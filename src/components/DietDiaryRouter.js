@@ -7,6 +7,7 @@ import Navigation from "./Navigation";
 import UserInformation from "./UserInformation";
 import CreateFood from "./CreateFood";
 import CreateDiaryEntry from "./CreateDiaryEntry";
+import ViewDiaryEntries from "./ViewDiaryEntries";
 
 
 class ForumRouter extends Component {
@@ -21,6 +22,7 @@ class ForumRouter extends Component {
                 <Route path="/login" exact component={Login}/>
                 <Route path="/user" exact component={UserInformation}/>
                 <Route path="/createFood" exact component={CreateFood}/>
+                <Route path="/viewDiaryEntries" exact component={ViewDiaryEntries}/>
             </div>
         );
     }
