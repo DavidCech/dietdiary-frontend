@@ -19,6 +19,7 @@ class CreateDiaryEntry extends Component {
                 kcal: 15,
                 description: "Jogging"
             },
+            //meals: will have just idies of foods
             meals: [{
                 kcal: 1,
                 protein: 2,
@@ -102,6 +103,27 @@ class CreateDiaryEntry extends Component {
             <div>
                 <Calendar onChange={this.handleChange}/>
                 <button onClick={this.handleSubmit}>Submit</button>
+                Dropdown/Popup, Searchbar, Grams
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Breakfast</th>
+                            <th>Morning Snack</th>
+                            <th>Lunch</th>
+                            <th>Afternoon Snack</th>
+                            <th>Dinner</th>
+                            <th>Others</th>
+                        </tr>
+                        <tr>
+                            <td>Pridejte potravinu</td>
+                            <td>Pridejte potravinu</td>
+                            <td>Pridejte potravinu</td>
+                            <td>Pridejte potravinu</td>
+                            <td>Pridejte potravinu</td>
+                            <td>Pridejte potravinu</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         )
     }
@@ -113,6 +135,7 @@ const mapDispatchToProps = dispatch =>({
     },
 });
 
+//potentionally null
 const mapStateToProps = state =>{
 
 };

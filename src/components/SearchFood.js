@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {getFoods, searchedFoodToState} from "../action-creators/foodActionCreator";
 import {debounce} from 'lodash';
 import {connect} from 'react-redux';
+import FoodDetails from "./FoodDetails";
 
 class SearchFood extends Component {
 
@@ -79,6 +80,13 @@ class SearchFood extends Component {
             previousPageDisplay = "block"
         }
 
+        let searchedFoodHtml = <div></div>;
+        let showSearchedFood ="none";
+        if(this.props.searchedFood){
+            showSearchedFood = "block";
+            searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
+        }
+
         return (
             /*Show searched food dependant on props CreateDE will pass false*/
             <div>
@@ -87,6 +95,8 @@ class SearchFood extends Component {
                 <input onChange={this.handleChange}/>
                 <button onClick={() => console.log(this.props.searchedFood)}> Ahoj</button>
                 {names}
+                <p/>
+                {searchedFoodHtml}
             </div>
         )
     }
