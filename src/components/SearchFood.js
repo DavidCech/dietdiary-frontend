@@ -23,10 +23,12 @@ class SearchFood extends Component {
     };
 
     handleChange = (event) => {
-        let foodInput = event.target.value;
-        this.setState({ foodInput });
+        if(!this.props.disabled) {
+            let foodInput = event.target.value;
+            this.setState({foodInput});
 
-        this.debouncedDispatch(foodInput, 0)
+            this.debouncedDispatch(foodInput, 0)
+        }
     };
 
     debouncedDispatch = (input, page) => {
@@ -68,7 +70,7 @@ class SearchFood extends Component {
             names = <div>Jidlo s takovym nazvem se v databazi nenachazi</div>;
         } else if(this.props.foods.length !== 0){
             names = this.props.foods.map(food => (
-                <FoodClickable key={food._id} food={food} searchedFoodToState={this.props.searchedFoodToState}/>
+                <FoodClickable key={food._id} food={food} searchedFoodToState={this.props.searchedFoodToState} addMode={this.props.addMode}/>
             ));
         }
 
@@ -82,18 +84,20 @@ class SearchFood extends Component {
 
         let searchedFoodHtml = <div></div>;
         let showSearchedFood ="none";
-        if(this.props.searchedFood){
+        if(this.props.searchedFood && !this.props.addMode){
             showSearchedFood = "block";
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
         }
+
+        let selectCheck = this.props.disabled ? true : false;
 
         return (
             /*Show searched food dependant on props CreateDE will pass false*/
             <div>
                 <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Next </button>
                 <button style={{display: previousPageDisplay}} className="previous-page-button" onClick={this.previousPage}> Previous </button>
-                <input onChange={this.handleChange}/>
-                <button onClick={() => console.log(this.props.searchedFood)}> Ahoj</button>
+                <input onChange={this.handleChange} disabled={selectCheck}/>
+                <button onClick={() => console.log(this.state.foodInput)}> Ahoj</button>
                 {names}
                 <p/>
                 {searchedFoodHtml}

@@ -5,8 +5,10 @@ const initialState = {
     empty: false,
     userName: "",
     email: "",
+    //Not sure about this one
     createDEResponse: "",
     searchedFood: null,
+    createEntryFoods: [],
 };
 
 export default function (state = initialState, action) {

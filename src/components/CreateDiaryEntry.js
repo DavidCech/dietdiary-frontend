@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Calendar from 'react-calendar';
 import {connect} from 'react-redux';
 import {createDiaryEntry} from "../action-creators/diaryEntryActionCreator";
+import SearchFood from "./SearchFood";
 
 class CreateDiaryEntry extends Component {
 
@@ -9,6 +10,7 @@ class CreateDiaryEntry extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     state = {
@@ -79,7 +81,15 @@ class CreateDiaryEntry extends Component {
                     contents: ""
                 }
             ],
-        }
+        },
+        mealName: "no_select",
+        grams: 100,
+
+    };
+
+    handleSelect = (event) => {
+        console.log(event.target.value);
+        this.setState({mealName: event.target.value})
     };
 
     handleChange = (date) => {
@@ -97,13 +107,31 @@ class CreateDiaryEntry extends Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState){
+        console.log(this.state.mealName!=="no_select");
+        console.log(this.props.searchedFood !== prevProps.searchedFood);
+        if(this.props.searchedFood !== prevProps.searchedFood && this.state.mealName!=="no_select"){
+            console.log(this.props.searchedFood, this.state.mealName)
+        }
+    }
+
     render() {
-        //Implement some kind of assignment of searched foods to meals
+        //Implement some kind of assignment of searched foods to meals Dropdown/Popup, Searchbar, Grams
         return (
             <div>
                 <Calendar onChange={this.handleChange}/>
                 <button onClick={this.handleSubmit}>Submit</button>
-                Dropdown/Popup, Searchbar, Grams
+                <select onChange={this.handleSelect}>
+                    <option value="no_select" selected disabled hidden>Vyberte chod</option>
+                    <option value="breakfast">Snidane</option>
+                    <option value="morning_snack">Dopoledni svacina</option>
+                    <option value="lunch">Obed</option>
+                    <option value="afternoon_snack">Odpoledni svacina</option>
+                    <option value="dinner">Vecere</option>
+                    <option value="others">Ostatni</option>
+                </select>
+                <SearchFood addMode={true} disabled={this.state.mealName==="no_select"}/>
+                <button onClick={() => console.log(this.state.mealName==="no_select")}>Debug</button>
                 <table>
                     <tbody>
                         <tr>
@@ -136,8 +164,8 @@ const mapDispatchToProps = dispatch =>({
 });
 
 //potentionally null
-const mapStateToProps = state =>{
-
-};
+const mapStateToProps = state => ({
+    searchedFood: state.searchedFood,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateDiaryEntry);
