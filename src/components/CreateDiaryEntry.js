@@ -6,11 +6,13 @@ import SearchFood from "./SearchFood";
 
 class CreateDiaryEntry extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.changeDate = this.changeDate.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.changeGrams = this.changeGrams.bind(this);
+        this.addFood = this.addFood.bind(this);
     }
 
     state = {
@@ -82,47 +84,85 @@ class CreateDiaryEntry extends Component {
                 }
             ],
         },
+        addedFoods: {
+            "breakfast": [],
+            "morning_snack": [],
+            "lunch": [],
+            "afternoon_snack": [],
+            "dinner": [],
+            "others": [],
+        },
         mealName: "no_select",
-        grams: 100,
-
+        grams: "",
+        tableHtml: <div />,
     };
 
+
+    addFood = (event) => {
+        event.preventDefault();
+        if (this.props.searchedFood !== null && this.state.grams !== "" && this.state.mealName !== "no_select") {
+            console.log(this.state.grams, this.props.searchedFood.name, this.state.mealName);
+            let keys = Object.keys(this.state.addedFoods);
+            let entries = Object.entries(this.state.addedFoods);
+            console.log(keys);
+            keys.map(key => {
+                if (key.toString() === this.state.mealName) {
+                    console.log(keys.indexOf(key));
+                    console.log(entries[keys.indexOf(key)][2]);
+                    entries[keys.indexOf(key)][1].push({food: this.props.searchedFood, grams: this.state.grams});
+                }
+            });
+            this.generateTable(entries);
+            this.setState({addedFoods: Object.fromEntries(entries)})
+        } else {
+            console.log("Tady nemam bejt");
+        }
+    };
+
+    changeGrams = (event) => {
+        console.log(event.target.value);
+        this.setState({grams: event.target.value});
+    };
+
+    //Meni atribut mealName ve state podle vyberu uzivatele
     handleSelect = (event) => {
         console.log(event.target.value);
         this.setState({mealName: event.target.value})
     };
 
-    handleChange = (date) => {
-        this.setState({diaryEntry: {...this.state.diaryEntry , date: date}});
+    changeDate = (date) => {
+        this.setState({date: date, diaryEntry: {...this.state.diaryEntry, date: date}});
         console.log(this.state.diaryEntry);
     };
 
     handleSubmit = () => {
-        if (this.state.date instanceof Date) {
-            let singleDay = this.state.date;
-            console.log(singleDay);
+        let diaryEntry = this.state.diaryEntry;
+        if (diaryEntry.date instanceof Date) {
+            let singleDay = diaryEntry.date;
+            console.log(diaryEntry);
             createDiaryEntry(this.state.diaryEntry);
         } else {
             console.log("Musite zvolit datum nebo data v kalendari")
         }
     };
 
-    componentDidUpdate(prevProps, prevState){
-        console.log(this.state.mealName!=="no_select");
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.state.mealName !== "no_select");
         console.log(this.props.searchedFood !== prevProps.searchedFood);
-        if(this.props.searchedFood !== prevProps.searchedFood && this.state.mealName!=="no_select"){
+        if (this.props.searchedFood !== prevProps.searchedFood && this.state.mealName !== "no_select") {
             console.log(this.props.searchedFood, this.state.mealName)
         }
     }
 
     render() {
-        //Implement some kind of assignment of searched foods to meals Dropdown/Popup, Searchbar, Grams
+        //Disabled will be probably changed to hidden
+
         return (
             <div>
-                <Calendar onChange={this.handleChange}/>
+                <Calendar onChange={this.changeDate}/>
                 <button onClick={this.handleSubmit}>Submit</button>
-                <select onChange={this.handleSelect}>
-                    <option value="no_select" selected disabled hidden>Vyberte chod</option>
+                <select value={this.state.mealName} onChange={this.handleSelect}>
+                    <option value="no_select" disabled hidden>Vyberte chod</option>
                     <option value="breakfast">Snidane</option>
                     <option value="morning_snack">Dopoledni svacina</option>
                     <option value="lunch">Obed</option>
@@ -130,34 +170,64 @@ class CreateDiaryEntry extends Component {
                     <option value="dinner">Vecere</option>
                     <option value="others">Ostatni</option>
                 </select>
-                <SearchFood addMode={true} disabled={this.state.mealName==="no_select"}/>
-                <button onClick={() => console.log(this.state.mealName==="no_select")}>Debug</button>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Breakfast</th>
-                            <th>Morning Snack</th>
-                            <th>Lunch</th>
-                            <th>Afternoon Snack</th>
-                            <th>Dinner</th>
-                            <th>Others</th>
-                        </tr>
-                        <tr>
-                            <td>Pridejte potravinu</td>
-                            <td>Pridejte potravinu</td>
-                            <td>Pridejte potravinu</td>
-                            <td>Pridejte potravinu</td>
-                            <td>Pridejte potravinu</td>
-                            <td>Pridejte potravinu</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <SearchFood addMode={true} disabled={this.state.mealName === "no_select"}/>
+                {/*Currently being added*/}
+                <div>
+                    {this.props.searchedFood ? this.props.searchedFood.name : "Ahoj"}
+                    <form>
+                        <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
+                               placeholder="Zadejte gramy" value={this.state.grams}/>
+                        <button onClick={this.addFood}>Add</button>
+                    </form>
+                </div>
+                <button onClick={() => console.log(this.state.addedFoods)}>Debug</button>
+
+                {this.state.tableHtml}
+
             </div>
         )
     }
+
+    generateTable = (entries) => {
+        console.log(entries, "Generuji");
+        let longest = -1;
+        for(let i = 0; i < entries.length; i++){
+            console.log(entries[i][1].length);
+            if(entries[i][1].length > longest){
+                longest = entries[i][1].length
+            }
+        }
+        console.log(longest);
+
+        let cells;
+        let rows = [];
+        //tr tag needed
+        let mealNames = ["Breakfast", "Morning snack", "Lunch", "Afternoon snack", "Dinner", "Other"];
+
+        for(let i = 0; i <= longest; i++){
+            cells = [];
+            for (let j = 0; j<entries.length; j++){
+                if(i===0){
+                    cells.push(<th>{mealNames[j]}</th>);
+                } else {
+                    if(entries[j][1].length > i-1) {
+                        console.log(entries[j][1]);
+                        cells.push(<td>{entries[j][1][i-1].grams}</td>)
+                    } else{
+                        cells.push(<td />)
+                    }
+                }
+            }
+            rows.push(<tr>{cells}</tr>)
+        }
+        let table = <table><tbody>{rows}</tbody></table>;
+
+        console.log(cells);
+        this.setState({tableHtml: table})
+    }
 }
 
-const mapDispatchToProps = dispatch =>({
+const mapDispatchToProps = dispatch => ({
     createDiaryEntry: (diaryEntry) => {
         dispatch(createDiaryEntry(diaryEntry));
     },
