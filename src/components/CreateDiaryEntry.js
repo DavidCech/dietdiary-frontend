@@ -14,76 +14,14 @@ class CreateDiaryEntry extends Component {
         this.changeGrams = this.changeGrams.bind(this);
         this.addFood = this.addFood.bind(this);
         this.removeFood = this.removeFood.bind(this);
+        this.changeActivity = this.changeActivity.bind(this);
     }
 
     state = {
         date: null,
-        diaryEntry: {
-            date: "1995-12-21T03:24:00",
-            activities: {
-                kcal: 15,
-                description: "Jogging"
-            },
-            //meals: will have just idies of foods
-            meals: [{
-                kcal: 1,
-                protein: 2,
-                carbs: 3,
-                fat: 4,
-                fibre: 5,
-                _id: "5dcd8e26c36dd53338b62f9a",
-                name: "breakfast",
-                contents: ""
-            },
-                {
-                    kcal: 5,
-                    protein: 4,
-                    carbs: 3,
-                    fat: 2,
-                    fibre: 1,
-                    _id: "5dcd8e26c36dd53338b62f9b",
-                    name: "morning_snack",
-                    contents: ""
-                }, {
-                    kcal: 2,
-                    protein: 3,
-                    carbs: 2,
-                    fat: 3,
-                    fibre: 2,
-                    _id: "5dcd8e26c36dd53338b62f9c",
-                    name: "lunch",
-                    contents: ""
-                },
-                {
-                    kcal: 9,
-                    protein: 6,
-                    carbs: 5,
-                    fat: 4,
-                    fibre: 3,
-                    _id: "5dcd8e26c36dd53338b62f9d",
-                    name: "afternoon_snack",
-                    contents: ""
-                }, {
-                    kcal: 8,
-                    protein: 4,
-                    carbs: 1,
-                    fat: 4,
-                    fibre: 9,
-                    _id: "5dcd8e26c36dd53338b62f9e",
-                    name: "dinner",
-                    contents: ""
-                },
-                {
-                    kcal: 6,
-                    protein: 6,
-                    carbs: 6,
-                    fat: 6,
-                    fibre: 6,
-                    _id: "5dcd8e26c36dd53338b62f9f",
-                    name: "others",
-                    contents: ""
-                }
-            ],
+        activities: {
+            kcal: "",
+            description: ""
         },
         addedFoods: {
             "breakfast": [],
@@ -91,11 +29,11 @@ class CreateDiaryEntry extends Component {
             "lunch": [],
             "afternoon_snack": [],
             "dinner": [],
-            "others": [],
+            "other": []
         },
         mealName: "no_select",
         grams: "",
-        tableHtml: <div/>,
+        tableHtml: <div/>
     };
 
     //Generates empty table of meals upon mounting
@@ -134,25 +72,34 @@ class CreateDiaryEntry extends Component {
 
     //Changes attribute date in state when user selects one of the dates in the html form
     changeDate = (date) => {
-        this.setState({date: date, diaryEntry: {...this.state.diaryEntry, date: date}});
+        this.setState({date: date});
     };
 
     //NEEEEEEEEEEEEEDSSSSS UPDAAAAAAATE
-    //Checks whether user input all necessary data, calls function xxx from diaryEntryActionCreator
+    //Checks whether user put in all necessary data, calls function xxx from diaryEntryActionCreator
     handleSubmit = () => {
-        let diaryEntry = this.state.diaryEntry;
-        if (diaryEntry.date instanceof Date) {
-            let singleDay = diaryEntry.date;
-            createDiaryEntry(this.state.diaryEntry);
+        //Checks whether user put in some courses into the entry, if not isEmpty is true and vice versa
+        let entries = Object.entries(this.state.addedFoods);
+        let isEmpty = true;
+        entries.forEach(entry => {
+            if (entry[1].length > 0) {
+                isEmpty = false;
+            }
+        });
+
+        //Checks whether user selected a date
+        if (this.state.date instanceof Date && !isEmpty) {
+            let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
+            createDiaryEntry(diaryEntry);
         } else {
-            console.log("Musite zvolit datum nebo data v kalendari")
+            console.log("Musite zadat datum a alespon jedno jidlo")
         }
     };
 
     //Removes food from attribute addedFoods in state at an index given by the foodIndex argument
-    removeFood = (foodIndex) =>{
+    removeFood = (foodIndex) => {
         let entries = Object.entries(this.state.addedFoods);
-        entries[foodIndex[0]][1].splice(foodIndex[1],1);
+        entries[foodIndex[0]][1].splice(foodIndex[1], 1);
         this.generateTable(entries);
         this.setState({addedFoods: Object.fromEntries(entries)})
     };
@@ -165,6 +112,21 @@ class CreateDiaryEntry extends Component {
             console.log(this.props.searchedFood, this.state.mealName);
         }
     }
+
+    //Changes attributes kcal and description of state attribute activities to values inside the html form
+    // input field named kcal and text area named description respectively
+    changeActivity = (event) => {
+        if(Number(event.target.value) || event.target.className !== "kcal"){
+            this.setState({
+                activities: {
+                    ...this.state.activities,
+                    [event.target.className]: event.target.value
+                }
+            })
+        } else {
+            console.log("Chyba v zadani aktivit")
+        }
+    };
 
     render() {
         //Disabled will be probably changed to hidden
@@ -180,7 +142,7 @@ class CreateDiaryEntry extends Component {
                     <option value="lunch">Obed</option>
                     <option value="afternoon_snack">Odpoledni svacina</option>
                     <option value="dinner">Vecere</option>
-                    <option value="others">Ostatni</option>
+                    <option value="other">Ostatni</option>
                 </select>
                 <SearchFood addMode={true} disabled={this.state.mealName === "no_select"}/>
                 {/*Currently being added*/}
@@ -190,11 +152,16 @@ class CreateDiaryEntry extends Component {
                         <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
                                placeholder="Zadejte gramy" value={this.state.grams}/>
                         <button onClick={this.addFood}>Add</button>
+                        {this.state.tableHtml}
+                        <h3>Denni aktivita</h3>
+                        <input placeholder="Zadejte spalene kalorie" value={this.state.activities.kcal}
+                               onChange={this.changeActivity} className="kcal"/>
+                        <textarea placeholder="Popis aktivity... napr: jmeno, dodatecne informace pro vas"
+                                  value={this.state.activities.description} onChange={this.changeActivity} className="description"/>
                     </form>
                 </div>
-                <button onClick={() => console.log(this.state.addedFoods)}>Debug</button>
+                <button onClick={() => console.log(this.state.activities)}>Debug</button>
 
-                {this.state.tableHtml}
 
             </div>
         )
@@ -222,32 +189,32 @@ class CreateDiaryEntry extends Component {
             cells = [];
             for (let j = 0; j < entries.length; j++) {
                 if (i === 0) {
-                    cells.push(<th key={(i+1)*(j+1)}>{mealNames[j]}</th>);
+                    cells.push(<th key={(i + 1) * (j + 1)}>{mealNames[j]}</th>);
                 } else {
                     if (entries[j][1].length > i - 1) {
                         console.log(entries[j][1]);
                         cells.push(
-                            <td key={(i+1)*(j+1)}>
+                            <td key={(i + 1) * (j + 1)}>
                                 {entries[j][1][i - 1].grams}
-                                <RemoveFoodButton foodIndex={[j,i-1]} onClick={this.removeFood}/>
+                                <RemoveFoodButton foodIndex={[j, i - 1]} onClick={this.removeFood}/>
                             </td>
                         )
-                    } else if(i===1){
-                        cells.push(<td key={(i+1)*(j+1)}>{"Pridejte chod"}</td>)
+                    } else if (i === 1) {
+                        cells.push(<td key={(i + 1) * (j + 1)}>{"Pridejte chod"}</td>)
                     } else {
-                        cells.push(<td key={(i+1)*(j+1)}/>)
+                        cells.push(<td key={(i + 1) * (j + 1)}/>)
                     }
                 }
             }
-            rows.push(<tr key={i+longest*2}>{cells}</tr>);
+            rows.push(<tr key={i + longest * 2}>{cells}</tr>);
 
             //if the arrays are empty inserts a placeholder
             if (longest === 0) {
                 cells = [];
                 for (let j = 0; j < 6; j++) {
-                    cells.push(<td key={(i+1)*(j+1)}>{"Pridejte chod"}</td>)
+                    cells.push(<td key={(i + 1) * (j + 1)}>{"Pridejte chod"}</td>)
                 }
-                rows.push(<tr key={i+longest*2+1}>{cells}</tr>);
+                rows.push(<tr key={i + longest * 2 + 1}>{cells}</tr>);
             }
         }
 
@@ -262,13 +229,13 @@ class CreateDiaryEntry extends Component {
 //Button for removing foods from table, receives arguments foodIndex and onClick, foodIndex is the entry index of the
 //food which is to be removed from addedFoods, onClick is the function that is to be called onClick
 class RemoveFoodButton extends Component {
-    handleClick = () =>{
+    handleClick = () => {
         this.props.onClick(this.props.foodIndex);
     };
 
-    render(){
-        return(
-            <button  onClick={this.handleClick}>X</button>
+    render() {
+        return (
+            <button onClick={this.handleClick}>X</button>
         )
     }
 }

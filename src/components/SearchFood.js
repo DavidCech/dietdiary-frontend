@@ -82,7 +82,7 @@ class SearchFood extends Component {
             previousPageDisplay = "block"
         }
 
-        let searchedFoodHtml = <div></div>;
+        let searchedFoodHtml = <div />;
         let showSearchedFood ="none";
         if(this.props.searchedFood && !this.props.addMode){
             showSearchedFood = "block";
