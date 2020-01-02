@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Calendar from "react-calendar";
+import {connect} from 'react-redux';
+import {getDiaryEntries} from "../action-creators/diaryEntryActionCreator";
 
 class ViewDiaryEntries extends Component{
     constructor(props){
@@ -20,17 +22,15 @@ class ViewDiaryEntries extends Component{
     };
 
     handleCheckbox = () => {
-        this.setState({multipleSelection: !this.state.multipleSelection})
+        this.setState({
+            multipleSelection: !this.state.multipleSelection,
+            date: null
+        })
     };
 
     handleSubmit = () => {
-        if (Array.isArray(this.state.date)) {
-            let begining = this.state.date[0];
-            let end = this.state.date[1];
-            console.log(begining + "\n" + end);
-        } else if (this.state.date instanceof Date) {
-            let singleDay = this.state.date;
-            console.log(singleDay);
+        if (this.state.date!==null) {
+            this.props.getDiaryEntries(JSON.stringify(this.state.date));
         } else {
             console.log("Musite zvolit datum nebo data v kalendari")
         }
@@ -40,11 +40,22 @@ class ViewDiaryEntries extends Component{
         return (
             <div>
                 Select more than one day <input type="checkbox" onClick={this.handleCheckbox}/>
-                <Calendar onChange={this.handleChange} selectRange={this.state.multipleSelection}/>
+                <Calendar onChange={this.handleChange} selectRange={this.state.multipleSelection} value={this.state.date}/>
                 <button onClick={this.handleSubmit}>Submit</button>
+                <button onClick={()=>console.log(this.props.searchedDiaryEntries)}>Debug</button>
             </div>
         )
     }
 }
 
-export default ViewDiaryEntries;
+const mapDispatchToProps = dispatch => ({
+    getDiaryEntries: (date) => {
+        dispatch(getDiaryEntries(date));
+    },
+});
+
+const mapStateToProps = state => ({
+    searchedDiaryEntries: state.searchedDiaryEntries,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewDiaryEntries);

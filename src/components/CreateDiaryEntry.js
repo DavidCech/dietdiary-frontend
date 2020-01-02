@@ -62,7 +62,9 @@ class CreateDiaryEntry extends Component {
 
     //Changes the number of grams of a food in state when user inputs grams in the html form
     changeGrams = (event) => {
-        this.setState({grams: event.target.value});
+        if(Number(event.target.value) || event.target.value === ""){
+            this.setState({grams: event.target.value});
+        }
     };
 
     //Changes attribute mealName in state when user selects one of the options in the html form
@@ -90,7 +92,7 @@ class CreateDiaryEntry extends Component {
         //Checks whether user selected a date
         if (this.state.date instanceof Date && !isEmpty) {
             let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
-            createDiaryEntry(diaryEntry);
+            this.props.createDiaryEntry(diaryEntry);
         } else {
             console.log("Musite zadat datum a alespon jedno jidlo")
         }
@@ -160,7 +162,7 @@ class CreateDiaryEntry extends Component {
                                   value={this.state.activities.description} onChange={this.changeActivity} className="description"/>
                     </form>
                 </div>
-                <button onClick={() => console.log(this.state.activities)}>Debug</button>
+                <button onClick={() => console.log(this.state.date)}>Debug</button>
 
 
             </div>
@@ -192,10 +194,18 @@ class CreateDiaryEntry extends Component {
                     cells.push(<th key={(i + 1) * (j + 1)}>{mealNames[j]}</th>);
                 } else {
                     if (entries[j][1].length > i - 1) {
-                        console.log(entries[j][1]);
+                        let inflection;
+                        if(parseInt(entries[j][1][i - 1].grams) === 1){
+                            inflection = "gram";
+                        } else if(parseInt(entries[j][1][i - 1].grams) > 1 && parseInt(entries[j][1][i - 1].grams) < 5){
+                            inflection = "gramy"
+                        } else {
+                            inflection = "gramu"
+                        }
+
                         cells.push(
                             <td key={(i + 1) * (j + 1)}>
-                                {entries[j][1][i - 1].grams}
+                                {entries[j][1][i - 1].food.name + " " + entries[j][1][i - 1].grams + " " + inflection}
                                 <RemoveFoodButton foodIndex={[j, i - 1]} onClick={this.removeFood}/>
                             </td>
                         )
@@ -246,7 +256,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-//potentionally null
 const mapStateToProps = state => ({
     searchedFood: state.searchedFood,
 });

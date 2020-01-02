@@ -5,10 +5,9 @@ const initialState = {
     empty: false,
     userName: "",
     email: "",
-    //Not sure about this one
-    createDEResponse: "",
     searchedFood: null,
     createEntryFoods: [],
+    searchedDiaryEntries: null,
 };
 
 export default function (state = initialState, action) {
@@ -35,6 +34,11 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 searchedFood: action.payload,
+            };
+        case 'SEARCHED_DIARYENTRY_TO_STATE':
+            return{
+                ...state,
+                searchedDiaryEntries: action.payload,
             };
         default:
             return state
