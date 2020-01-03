@@ -12,7 +12,6 @@ class SearchFood extends Component {
         this.debouncedDispatch = this.debouncedDispatch.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
-        this.showFoodDetails = this.showFoodDetails.bind(this);
 
         this.debouncedDispatch = debounce(this.debouncedDispatch, 500);
     }
@@ -23,7 +22,7 @@ class SearchFood extends Component {
     };
 
     handleChange = (event) => {
-        if(!this.props.disabled) {
+        if (!this.props.disabled) {
             let foodInput = event.target.value;
             this.setState({foodInput});
 
@@ -36,55 +35,48 @@ class SearchFood extends Component {
     };
 
     //Prevents calling the action when user leaves the url after typing into the search bar
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.debouncedDispatch.cancel();
     }
 
-    nextPage = () => {
-        if(!this.props.last){
-            this.props.getFood(this.state.foodInput, this.state.currentPage+1);
-            this.setState({currentPage: this.state.currentPage+1});
+    nextPage = (event) => {
+        event.preventDefault();
+        if (!this.props.last) {
+            this.props.getFood(this.state.foodInput, this.state.currentPage + 1);
+            this.setState({currentPage: this.state.currentPage + 1});
         }
     };
 
-    previousPage = () => {
-        if(this.state.currentPage > 0){
-            this.props.getFood(this.state.foodInput, this.state.currentPage-1);
-            this.setState({currentPage: this.state.currentPage-1});
+    previousPage = (event) => {
+        event.preventDefault();
+        if (this.state.currentPage > 0) {
+            this.props.getFood(this.state.foodInput, this.state.currentPage - 1);
+            this.setState({currentPage: this.state.currentPage - 1});
         }
-    };
-
-    showFoodDetails = (event) =>{
-      console.log(event.target.getAttribute('food-id'));
-      this.props.foods.forEach(food => {
-          if(food._id === event.target.getAttribute('food-id')){
-              this.props.searchedFoodToState(food);
-              console.log(food.name)
-          }
-      })
     };
 
     render() {
         let names = <div>Vyhledejte jidlo</div>;
-        if(this.props.empty){
+        if (this.props.empty) {
             names = <div>Jidlo s takovym nazvem se v databazi nenachazi</div>;
-        } else if(this.props.foods.length !== 0){
+        } else if (this.props.foods.length !== 0) {
             names = this.props.foods.map(food => (
-                <FoodClickable key={food._id} food={food} searchedFoodToState={this.props.searchedFoodToState} addMode={this.props.addMode}/>
+                <FoodClickable key={food._id} food={food} searchedFoodToState={this.props.searchedFoodToState}
+                               addMode={this.props.addMode}/>
             ));
         }
 
         let nextPageDisplay = "none";
         let previousPageDisplay = "none";
-        if(!this.props.last && this.props.foods.length !== 0){
+        if (!this.props.last && this.props.foods.length !== 0) {
             nextPageDisplay = "block"
-        } else if (this.state.currentPage > 0 && this.props.foods.length !== 0){
+        } else if (this.state.currentPage > 0 && this.props.foods.length !== 0) {
             previousPageDisplay = "block"
         }
 
-        let searchedFoodHtml = <div />;
-        let showSearchedFood ="none";
-        if(this.props.searchedFood && !this.props.addMode){
+        let searchedFoodHtml = <div/>;
+        let showSearchedFood = "none";
+        if (this.props.searchedFood && !this.props.addMode) {
             showSearchedFood = "block";
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
         }
@@ -94,9 +86,12 @@ class SearchFood extends Component {
         return (
             /*Show searched food dependant on props CreateDE will pass false*/
             <div>
-                <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Next </button>
-                <button style={{display: previousPageDisplay}} className="previous-page-button" onClick={this.previousPage}> Previous </button>
-                <input onChange={this.handleChange} disabled={selectCheck}/>
+                <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Next
+                </button>
+                <button style={{display: previousPageDisplay}} className="previous-page-button"
+                        onClick={this.previousPage}> Previous
+                </button>
+                <input onChange={this.handleChange} disabled={selectCheck} placeholder={"Search for food"}/>
                 <button onClick={() => console.log(this.state.foodInput)}> Ahoj</button>
                 {names}
                 <p/>
@@ -107,12 +102,12 @@ class SearchFood extends Component {
 }
 
 class FoodClickable extends Component {
-    handleClick = () =>{
+    handleClick = () => {
         this.props.searchedFoodToState(this.props.food)
     };
 
-    render(){
-        return(
+    render() {
+        return (
             <div onClick={this.handleClick}>
                 {this.props.food.name}
             </div>
@@ -131,7 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
     getFood: (name, page) => {
         dispatch(getFoods(name, page));
     },
-    searchedFoodToState: (food) =>{
+    searchedFoodToState: (food) => {
         dispatch(searchedFoodToState(food));
     }
 });

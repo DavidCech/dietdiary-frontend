@@ -8,6 +8,9 @@ class CreateDiaryEntry extends Component {
 
     constructor(props) {
         super(props);
+
+        this.keyCount = 0;
+        this.getKey = this.getKey.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
@@ -34,6 +37,11 @@ class CreateDiaryEntry extends Component {
         mealName: "no_select",
         grams: "",
         tableHtml: <div/>
+    };
+
+    //Generates unique keys for html elements
+    getKey = () => {
+        return this.keyCount++;
     };
 
     //Generates empty table of meals upon mounting
@@ -191,7 +199,7 @@ class CreateDiaryEntry extends Component {
             cells = [];
             for (let j = 0; j < entries.length; j++) {
                 if (i === 0) {
-                    cells.push(<th key={(i + 1) * (j + 1)}>{mealNames[j]}</th>);
+                    cells.push(<th key={this.getKey()}>{mealNames[j]}</th>);
                 } else {
                     if (entries[j][1].length > i - 1) {
                         let inflection;
@@ -204,27 +212,27 @@ class CreateDiaryEntry extends Component {
                         }
 
                         cells.push(
-                            <td key={(i + 1) * (j + 1)}>
+                            <td key={this.getKey()}>
                                 {entries[j][1][i - 1].food.name + " " + entries[j][1][i - 1].grams + " " + inflection}
                                 <RemoveFoodButton foodIndex={[j, i - 1]} onClick={this.removeFood}/>
                             </td>
                         )
                     } else if (i === 1) {
-                        cells.push(<td key={(i + 1) * (j + 1)}>{"Pridejte chod"}</td>)
+                        cells.push(<td key={this.getKey()}>{"Pridejte chod"}</td>)
                     } else {
-                        cells.push(<td key={(i + 1) * (j + 1)}/>)
+                        cells.push(<td key={this.getKey()}/>)
                     }
                 }
             }
-            rows.push(<tr key={i + longest * 2}>{cells}</tr>);
+            rows.push(<tr key={this.getKey()}>{cells}</tr>);
 
             //if the arrays are empty inserts a placeholder
             if (longest === 0) {
                 cells = [];
                 for (let j = 0; j < 6; j++) {
-                    cells.push(<td key={(i + 1) * (j + 1)}>{"Pridejte chod"}</td>)
+                    cells.push(<td key={this.getKey()}>{"Pridejte chod"}</td>)
                 }
-                rows.push(<tr key={i + longest * 2 + 1}>{cells}</tr>);
+                rows.push(<tr key={this.getKey()}>{cells}</tr>);
             }
         }
 
@@ -250,7 +258,7 @@ class RemoveFoodButton extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     createDiaryEntry: (diaryEntry) => {
         dispatch(createDiaryEntry(diaryEntry));
     },

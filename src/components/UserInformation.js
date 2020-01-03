@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getAccountInformation} from "../action-creators/userActionCreator";
 
-class UserInformation extends Component{
+class UserInformation extends Component {
 
-    componentDidUpdate(){
+    componentDidUpdate() {
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 {this.props.userName + " " + this.props.userEmail}
                 <button onClick={this.props.getUserInformation}>Click me</button>

@@ -1,4 +1,4 @@
-export const createDiaryEntry = (diaryEntry) => {
+export const createDiaryEntry = (diaryEntry) => dispatch => {
     fetch("http://localhost:6767/diaryEntries/create", {
         method: "post",
         headers: {
@@ -26,10 +26,8 @@ export const getDiaryEntries = date => dispatch => {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('authHeader')
         },
-    }).then(response => {
-        return response.json();
-    }).then(cargo => {
-        console.log(cargo);
+    }).then(response => response.json())
+        .then(cargo => {
         dispatch({
             type: 'SEARCHED_DIARYENTRY_TO_STATE',
             payload: cargo,

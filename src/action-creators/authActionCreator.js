@@ -18,7 +18,7 @@ export const logIn = (credentials) => dispatch => {
             type: 'LOG_IN',
             payload: true
         })
-        }).catch(e =>
+    }).catch(e =>
         console.log(e)
     )
 };

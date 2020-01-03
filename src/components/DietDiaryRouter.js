@@ -5,7 +5,8 @@ import Register from "./Register";
 import Login from "./Login";
 import Navigation from "./Navigation";
 import UserInformation from "./UserInformation";
-import CreateFood from "./CreateFood";
+import CreateIngredient from "./CreateIngredient";
+import CreateMeal from "./CreateMeal";
 import CreateDiaryEntry from "./CreateDiaryEntry";
 import ViewDiaryEntries from "./ViewDiaryEntries";
 
@@ -21,7 +22,8 @@ class ForumRouter extends Component {
                 <Route path="/register" exact component={Register}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/user" exact component={UserInformation}/>
-                <Route path="/createFood" exact component={CreateFood}/>
+                <Route path="/createIngredient" exact component={CreateIngredient}/>
+                <Route path="/createMeal" exact component={CreateMeal}/>
                 <Route path="/viewDiaryEntries" exact component={ViewDiaryEntries}/>
             </div>
         );
