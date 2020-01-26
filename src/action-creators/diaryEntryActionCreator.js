@@ -26,11 +26,20 @@ export const getDiaryEntries = date => dispatch => {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('authHeader')
         },
-    }).then(response => response.json())
-        .then(cargo => {
+    }).then(response => {
+            if (response.status === 200) {
+                return response.json()
+            } else {
+                dispatch({
+                    type: 'SEARCHED_DIARYENTRY_TO_STATE',
+                    payload: null,
+                });
+                throw new Error("Chyba " + response.status);
+            }
+    }).then(response => {
         dispatch({
             type: 'SEARCHED_DIARYENTRY_TO_STATE',
-            payload: cargo,
+            payload: response,
         })
     }).catch(e =>
         console.log(e)
