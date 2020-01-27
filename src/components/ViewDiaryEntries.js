@@ -104,6 +104,17 @@ class ViewDiaryEntries extends Component {
         this.setState({show: event.target.value})
     };
 
+    renderLegendText(value, entry, index){
+        let noRender = ["goalKcal","goalProtein","goalCarbs","goalFibre","goalFats"];
+        const { color } = entry;
+
+        if(value && !noRender.includes(value)){
+            return <span style={{ color }}>{value}</span>;
+        }
+
+        return null;
+    }
+
     render() {
         //Doesn't show chart before user submits date(s) of the diaryEntry(/ies) or if there are no diaryEntries for the
         //submitted dates
@@ -147,8 +158,8 @@ class ViewDiaryEntries extends Component {
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date"/>
                         <YAxis/>
-                        <Tooltip/>
-                        <Legend/>
+                        <Tooltip content={<CustomTooltip />}/>
+                        <Legend formatter={this.renderLegendText}/>
                         {barsHtml}
                     </BarChart>;
                 </div>
@@ -157,6 +168,46 @@ class ViewDiaryEntries extends Component {
         )
     }
 }
+
+const handleInflection = (number) => {
+    let inflection;
+    if(parseInt(number) === 1){
+        inflection = "gram";
+    } else if(parseInt(number) > 1 && parseInt(number) < 5){
+        inflection = "gramy"
+    } else {
+        inflection = "gramů"
+    }
+
+    return inflection;
+};
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload.length===2) {
+        return (
+            <div className="custom-tooltip" style={{"background-color":"white"}}>
+                <p className="label">{`${label}:`}</p>
+                <p>{`Energie: Zkonzumováno ${payload[0].value} kcal, do cíle zbývá ${payload[1].value} kcal`}</p>
+            </div>
+        );
+    } else if(active && payload.length===8){
+        let names = ["Sacharidy", "Bílkoviny", "Vláknina", "Tuky"];
+        let html = [];
+        for(let i = 0; i<8; i+=2){
+            html.push(<p key={i}>{`${names[i/2]}: Zkonzumováno ${payload[i].value} ${handleInflection(payload[i].value)},
+              do cíle zbývá ${payload[i+1].value} ${handleInflection(payload[i+1].value)}`}</p>);
+        }
+
+        return (
+            <div className="custom-tooltip" style={{"background-color":"white"}}>
+                <p className="label">{`${label}:`}</p>
+                {html}
+            </div>
+        );
+    }
+
+    return null;
+};
 
 const mapDispatchToProps = dispatch => ({
     getDiaryEntries: (date) => {
