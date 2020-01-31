@@ -23,54 +23,59 @@ class ViewDiaryEntries extends Component {
         show: "kcal",
         data: [
             {
-                date: "2020 1 1",
-                kcal: 2000,
-                "goalKcal": 2550-2000,
-                "goalCarbs": 300-260,
-                carbs: 260,
-                "protein": 50,
-                "goalProtein": 300-50,
-                "fibre": 12,
-                "goalFibre": 300-12,
-                "fats": 36,
-                "goalFats": 300-36,
+                kcal: 88,
+                protein: 11,
+                carbs: 8,
+                fat: 4,
+                fibre: 34,
+                goalKcal: 2462,
+                goalProtein: 289,
+                goalCarbs: 292,
+                goalFat: 296,
+                goalFibre: 266,
+                date: '14. 1. 2020'
             },
             {
-                "date": "2020 1 6",
-                "kcal": 2000,
-                "carbs": 281,
-                "protein": 89,
-                "fibre": 16,
-                "fats": 24,
-            }, {
-                "date": "2020 1 6",
-                "kcal": 2000,
-                "carbs": 280,
-                "protein": 89,
-                "fibre": 16,
-                "fats": 24,
-            }, {
-                "date": "2020 1 6",
-                "kcal": 1856,
-                "carbs": 280,
-                "protein": 89,
-                "fibre": 16,
-                "fats": 24,
-            }, {
-                "date": "2020 1 6",
-                "kcal": 2069,
-                "carbs": 286,
-                "protein": 89,
-                "fibre": 16,
-                "fats": 24,
-            }, {
-                "date": "2020 1 6",
-                "kcal": 1500,
-                "carbs": 280,
-                "protein": 89,
-                "fibre": 16,
-                "fats": 24,
+                kcal: 184,
+                protein: 4,
+                carbs: 10,
+                fat: 3,
+                fibre: 11,
+                goalKcal: 2366,
+                goalProtein: 296,
+                goalCarbs: 290,
+                goalFat: 297,
+                goalFibre: 289,
+                date: '15. 1. 2020'
+            },
+            {
+                kcal: 0,
+                protein: 0,
+                carbs: 0,
+                fat: 0,
+                fibre: 0,
+                goalKcal: 2550,
+                goalProtein: 300,
+                goalCarbs: 300,
+                goalFat: 300,
+                goalFibre: 300,
+                date: '16. 1. 2020'
+            },
+            {
+                kcal: 0,
+                protein: 0,
+                carbs: 0,
+                fat: 0,
+                fibre: 0,
+                goalKcal: 2550,
+                goalProtein: 300,
+                goalCarbs: 300,
+                goalFat: 300,
+                goalFibre: 300,
+                date: '17. 1. 2020'
             }
+
+
         ]
 
     };
@@ -104,8 +109,8 @@ class ViewDiaryEntries extends Component {
         this.setState({show: event.target.value})
     };
 
-    renderLegendText(value, entry, index){
-        let noRender = ["goalKcal","goalProtein","goalCarbs","goalFibre","goalFats"];
+    renderLegendText(value, entry){
+        let noRender = ["goalKcal","goalProtein","goalCarbs","goalFibre","goalFat"];
         const { color } = entry;
 
         if(value && !noRender.includes(value)){
@@ -136,8 +141,8 @@ class ViewDiaryEntries extends Component {
             barsHtml.push(<Bar dataKey="goalProtein" stackId="b" fill="none" stroke="#ab1d1d" key={this.getKey()} isAnimationActive={false}/>);
             barsHtml.push(<Bar dataKey="fibre" stackId="c" fill="#1c7800" stroke="#1c7800" key={this.getKey()} isAnimationActive={false}/>);
             barsHtml.push(<Bar dataKey="goalFibre" stackId="c" fill="none" stroke="#1c7800" key={this.getKey()} isAnimationActive={false}/>);
-            barsHtml.push(<Bar dataKey="fats" stackId="d" fill="saddlebrown" stroke="saddlebrown" key={this.getKey()} isAnimationActive={false}/>);
-            barsHtml.push(<Bar dataKey="goalFats" stackId="d" fill="none" stroke="saddlebrown" key={this.getKey()} isAnimationActive={false}/>);
+            barsHtml.push(<Bar dataKey="fat" stackId="d" fill="saddlebrown" stroke="saddlebrown" key={this.getKey()} isAnimationActive={false}/>);
+            barsHtml.push(<Bar dataKey="goalFat" stackId="d" fill="none" stroke="saddlebrown" key={this.getKey()} isAnimationActive={false}/>);
         }
 
         return (
