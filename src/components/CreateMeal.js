@@ -91,14 +91,17 @@ class CreateMeal extends Component {
     }
 }
 
+//Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     searchedFood: state.searchedFood,
 });
 
+//Ensures reception of the functions from actionCreators in props
 const mapDispatchToProps = (dispatch) => ({
     createFood: (food) => {
         dispatch(createFood(food))
     },
 });
 
+//Connects the component to React-Redux Store
 export default connect(mapStateToProps, mapDispatchToProps)(CreateMeal);

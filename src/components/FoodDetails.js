@@ -68,8 +68,10 @@ class FoodDetails extends Component {
 
 }
 
+//Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     searchedFood: state.searchedFood,
 });
 
+//Connects the component to React-Redux Store
 export default connect(mapStateToProps, null)(FoodDetails);

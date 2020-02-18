@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 
+//Creates links to the urls at which all the components are located
 class Navigation extends Component {
 
     render() {

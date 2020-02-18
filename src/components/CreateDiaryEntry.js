@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {createDiaryEntry} from "../action-creators/diaryEntryActionCreator";
 import SearchFood from "./SearchFood";
 
+//This component serves as GUI for viewing dietDiaryEntries
 class CreateDiaryEntry extends Component {
 
     constructor(props) {
@@ -258,14 +259,17 @@ class RemoveFoodButton extends Component {
     }
 }
 
+//Ensures reception of the functions from actionCreators in props
 const mapDispatchToProps = (dispatch) => ({
     createDiaryEntry: (diaryEntry) => {
         dispatch(createDiaryEntry(diaryEntry));
     },
 });
 
+//Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     searchedFood: state.searchedFood,
 });
 
+//Connects the component to React-Redux Store
 export default connect(mapStateToProps, mapDispatchToProps)(CreateDiaryEntry);

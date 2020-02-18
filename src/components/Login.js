@@ -40,14 +40,17 @@ class Login extends Component {
     }
 }
 
+//Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     loggedIn: state.loggedIn
 });
 
+//Ensures reception of the functions from actionCreators in props
 const mapDispatchToProps = (dispatch) => ({
     logIn : (credentials) => {
         dispatch(logIn(credentials))
     }
 });
 
+//Connects the component to React-Redux Store
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

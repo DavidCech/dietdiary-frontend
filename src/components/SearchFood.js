@@ -4,8 +4,10 @@ import {debounce} from 'lodash';
 import {connect} from 'react-redux';
 import FoodDetails from "./FoodDetails";
 
+//This component serves as GUI for searching for foods
 class SearchFood extends Component {
 
+    //Initializes functions and debounce which ensures that there are not too many requests sent to backend
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -16,11 +18,14 @@ class SearchFood extends Component {
         this.debouncedDispatch = debounce(this.debouncedDispatch, 500);
     }
 
+    //Initializes state property of the component
     state = {
         foodInput: "",
         currentPage: 0
     };
 
+    //Whenever user types into the input used for searching foods this function changes foodInput property of state and
+    //calls debouncedDispatch
     handleChange = (event) => {
         if (!this.props.disabled) {
             let foodInput = event.target.value;
@@ -30,6 +35,7 @@ class SearchFood extends Component {
         }
     };
 
+    //Calls function getFood from foodActionCreator with parameters input and page
     debouncedDispatch = (input, page) => {
         this.props.getFood(input, page);
     };
@@ -39,6 +45,8 @@ class SearchFood extends Component {
         this.debouncedDispatch.cancel();
     }
 
+    //Increases the currentPage attribute of state by one when user clicks on the given button and calls getFood
+    //function from foodActionCreator with the appropriate page number
     nextPage = (event) => {
         event.preventDefault();
         if (!this.props.last) {
@@ -47,6 +55,8 @@ class SearchFood extends Component {
         }
     };
 
+    //Decreases the currentPage attribute of state by one when user clicks on the given button and calls getFood
+    //function from foodActionCreator with the appropriate page number
     previousPage = (event) => {
         event.preventDefault();
         if (this.state.currentPage > 0) {
@@ -56,6 +66,7 @@ class SearchFood extends Component {
     };
 
     render() {
+        //Shows div with searched data after searching or a placeholder text
         let names = <div>Vyhledejte jidlo</div>;
         if (this.props.empty) {
             names = <div>Jidlo s takovym nazvem se v databazi nenachazi</div>;
@@ -66,6 +77,7 @@ class SearchFood extends Component {
             ));
         }
 
+        //Takes care of displaying next and previous page buttons only when there are such pages
         let nextPageDisplay = "none";
         let previousPageDisplay = "none";
         if (!this.props.last && this.props.foods.length !== 0) {
@@ -74,6 +86,7 @@ class SearchFood extends Component {
             previousPageDisplay = "block"
         }
 
+        //Shows the FoodDetails component for the particular food after user clicks on the name of the food
         let searchedFoodHtml = <div/>;
         let showSearchedFood = "none";
         if (this.props.searchedFood && !this.props.addMode) {
@@ -81,6 +94,7 @@ class SearchFood extends Component {
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
         }
 
+        //Disables the input when the user is not logged in
         let selectCheck = this.props.disabled ? true : false;
 
         return (
@@ -101,6 +115,7 @@ class SearchFood extends Component {
     }
 }
 
+//Creates a component which on click fetches given food from backend
 class FoodClickable extends Component {
     handleClick = () => {
         this.props.searchedFoodToState(this.props.food)
@@ -115,6 +130,7 @@ class FoodClickable extends Component {
     }
 }
 
+//Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     foods: state.foods,
     last: state.last,
@@ -122,6 +138,7 @@ const mapStateToProps = state => ({
     searchedFood: state.searchedFood,
 });
 
+//Ensures reception of the functions from actionCreators in props
 const mapDispatchToProps = (dispatch) => ({
     getFood: (name, page) => {
         dispatch(getFoods(name, page));
@@ -131,4 +148,5 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
+//Connects the component to React-Redux Store
 export default connect(mapStateToProps, mapDispatchToProps)(SearchFood);

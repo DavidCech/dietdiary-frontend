@@ -10,7 +10,7 @@ import CreateMeal from "./CreateMeal";
 import CreateDiaryEntry from "./CreateDiaryEntry";
 import ViewDiaryEntries from "./ViewDiaryEntries";
 
-
+//Assigns which components should be displayed at various urls
 class ForumRouter extends Component {
 
     render() {
