@@ -1,3 +1,4 @@
+//
 export const createDiaryEntry = (diaryEntry) => dispatch => {
     fetch("http://localhost:6767/diaryEntries/create", {
         method: "post",
@@ -19,6 +20,7 @@ export const createDiaryEntry = (diaryEntry) => dispatch => {
     )
 };
 
+//
 export const getDiaryEntries = date => dispatch => {
     fetch("http://localhost:6767/diaryEntries/get/?date=" + date + "", {
         method: "get",
@@ -44,4 +46,12 @@ export const getDiaryEntries = date => dispatch => {
     }).catch(e =>
         console.log(e)
     )
+};
+
+//Sets all properties of diaryEntryReducer in Store to their initial values
+export const diaryEntryCleanUp = () => dispatch => {
+    dispatch({
+        type: 'SEACHED_DIARYENTRY_CLEANUP',
+    })
+
 };

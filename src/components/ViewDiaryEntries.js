@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Calendar from "react-calendar";
 import {connect} from 'react-redux';
-import {getDiaryEntries} from "../action-creators/diaryEntryActionCreator";
+import {getDiaryEntries, diaryEntryCleanUp} from "../action-creators/diaryEntryActionCreator";
 import {BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar} from 'recharts';
 
 //This component serves as GUI for viewing diaryEntries
@@ -100,6 +100,13 @@ class ViewDiaryEntries extends Component {
         }
 
         return null;
+    }
+
+    //Cleans up searched diaryEntries from the Redux Store
+    componentWillUnmount(){
+        if(this.props.diaryEntryCleanUp){
+            this.props.diaryEntryCleanUp();
+        }
     }
 
     render() {
@@ -296,11 +303,14 @@ const mapDispatchToProps = dispatch => ({
     getDiaryEntries: (date) => {
         dispatch(getDiaryEntries(date));
     },
+    diaryEntryCleanUp: () => {
+        dispatch(diaryEntryCleanUp());
+    }
 });
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    searchedDiaryEntries: state.searchedDiaryEntries,
+    searchedDiaryEntries: state.diaryEntryReducer.searchedDiaryEntries,
 });
 
 //Connects the component to React-Redux Store

@@ -17,8 +17,8 @@ class UserInformation extends Component {
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    userName: state.userName,
-    userEmail: state.email,
+    userName: state.userReducer.userName,
+    userEmail: state.userReducer.email,
 });
 
 //Ensures reception of the functions from actionCreators in props

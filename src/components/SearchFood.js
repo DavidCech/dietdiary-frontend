@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getFoods, searchedFoodToState} from "../action-creators/foodActionCreator";
+import {getFoods, searchedFoodToState, foodCleanUp} from "../action-creators/foodActionCreator";
 import {debounce} from 'lodash';
 import {connect} from 'react-redux';
 import FoodDetails from "./FoodDetails";
@@ -40,8 +40,12 @@ class SearchFood extends Component {
         this.props.getFood(input, page);
     };
 
-    //Prevents calling the action when user leaves the url after typing into the search bar
+    //Prevents calling the action when user leaves the url after typing into the search bar and calls the cleanUp function
+    //from foodActionCreator
     componentWillUnmount() {
+        if(this.props.cleanUp){
+            this.props.cleanUp();
+        }
         this.debouncedDispatch.cancel();
     }
 
@@ -132,10 +136,10 @@ class FoodClickable extends Component {
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    foods: state.foods,
-    last: state.last,
-    empty: state.empty,
-    searchedFood: state.searchedFood,
+    foods: state.foodReducer.foods,
+    last: state.foodReducer.last,
+    empty: state.foodReducer.isEmpty,
+    searchedFood: state.foodReducer.searchedFood,
 });
 
 //Ensures reception of the functions from actionCreators in props
@@ -145,7 +149,10 @@ const mapDispatchToProps = (dispatch) => ({
     },
     searchedFoodToState: (food) => {
         dispatch(searchedFoodToState(food));
-    }
+    },
+    cleanUp: () => {
+        dispatch(foodCleanUp());
+    },
 });
 
 //Connects the component to React-Redux Store

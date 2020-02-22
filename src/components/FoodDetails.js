@@ -36,6 +36,7 @@ class FoodDetails extends Component {
     };
 
     render() {
+        console.log(this.props.searchedFood.nutritionVal);
         return (
             <div style={{display: this.props.showSearchedFood}}>
                 <div key={this.getKey()}><h3>{this.props.searchedFood.name}</h3></div>
@@ -70,7 +71,7 @@ class FoodDetails extends Component {
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    searchedFood: state.searchedFood,
+    searchedFood: state.foodReducer.searchedFood,
 });
 
 //Connects the component to React-Redux Store

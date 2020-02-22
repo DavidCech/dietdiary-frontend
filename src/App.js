@@ -4,6 +4,7 @@ import {store} from "./store";
 import {BrowserRouter} from 'react-router-dom';
 import DietDiaryRouter from "./components/DietDiaryRouter";
 
+//Puts together all the components and classes
 class App extends Component {
     render() {
         return (

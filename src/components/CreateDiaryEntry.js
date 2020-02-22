@@ -268,7 +268,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    searchedFood: state.searchedFood,
+    searchedFood: state.foodReducer.searchedFood,
 });
 
 //Connects the component to React-Redux Store

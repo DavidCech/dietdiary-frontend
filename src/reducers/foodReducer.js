@@ -1,13 +1,9 @@
+//Stores information regarding Food items received from the database
 const initialState = {
     foods: [],
     last: false,
-    loggedIn: false,
-    empty: false,
-    userName: "",
-    email: "",
+    isEmpty: false,
     searchedFood: null,
-    createEntryFoods: [],
-    searchedDiaryEntries: null,
 };
 
 export default function (state = initialState, action) {
@@ -19,26 +15,17 @@ export default function (state = initialState, action) {
                 last: action.payload.last,
                 empty: action.payload.foodArray.length===0,
             };
-        case 'LOG_IN':
-            return{
-                ...state,
-                loggedIn: action.payload
-            };
-        case 'USER_INFORMATION':
-            return{
-                ...state,
-                userName: action.payload.username,
-                email: action.payload.email
+        case 'SEARCHED_FOOD_CLEANUP':
+            return {
+                foods: [],
+                last: false,
+                isEmpty: false,
+                searchedFood: null,
             };
         case 'SEARCHED_FOOD_TO_STATE':
             return{
                 ...state,
                 searchedFood: action.payload,
-            };
-        case 'SEARCHED_DIARYENTRY_TO_STATE':
-            return{
-                ...state,
-                searchedDiaryEntries: action.payload,
             };
         default:
             return state

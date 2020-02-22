@@ -42,7 +42,7 @@ class Login extends Component {
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    loggedIn: state.loggedIn
+    loggedIn: state.authReducer.loggedIn
 });
 
 //Ensures reception of the functions from actionCreators in props

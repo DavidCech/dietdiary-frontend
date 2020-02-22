@@ -1,3 +1,4 @@
+//Fetches username and email of the user who is logged in from the database
 export const getAccountInformation = () => dispatch => {
     fetch("http://localhost:6767/users/test", {
         method: "get",
