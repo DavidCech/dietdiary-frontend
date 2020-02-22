@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import {createDiaryEntry} from "../action-creators/diaryEntryActionCreator";
 import SearchFood from "./SearchFood";
 
-//This component serves as GUI for viewing dietDiaryEntries
+//This component serves as GUI for creating dietDiaryEntries
 class CreateDiaryEntry extends Component {
 
+    //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
 
@@ -21,6 +22,7 @@ class CreateDiaryEntry extends Component {
         this.changeActivity = this.changeActivity.bind(this);
     }
 
+    //Initializes state property of the component
     state = {
         date: null,
         activities: {
@@ -51,7 +53,7 @@ class CreateDiaryEntry extends Component {
     }
 
     //Adds food to a given meal array in addedFoods attribute of state, requires mealName and grams to be assigned
-    //values by the user through and html form
+    //values by the user through and html form and then generates an html table with these foods
     addFood = (event) => {
         event.preventDefault();
         if (this.props.searchedFood !== null && this.state.grams !== "" && this.state.mealName !== "no_select") {
@@ -86,8 +88,7 @@ class CreateDiaryEntry extends Component {
         this.setState({date: date});
     };
 
-    //NEEEEEEEEEEEEEDSSSSS UPDAAAAAAATE
-    //Checks whether user put in all necessary data, calls function xxx from diaryEntryActionCreator
+    //Checks whether user put in all necessary data, calls function createDiaryEntry from diaryEntryActionCreator
     handleSubmit = () => {
         //Checks whether user put in some courses into the entry, if not isEmpty is true and vice versa
         let entries = Object.entries(this.state.addedFoods);
@@ -98,7 +99,7 @@ class CreateDiaryEntry extends Component {
             }
         });
 
-        //Checks whether user selected a date
+        //Checks whether user selected a date and calls the function createDiaryEntry
         if (this.state.date instanceof Date && !isEmpty) {
             let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
             this.props.createDiaryEntry(diaryEntry);
@@ -117,10 +118,7 @@ class CreateDiaryEntry extends Component {
 
     //Probably does nothing serves debugging purposes
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.state.mealName !== "no_select");
-        console.log(this.props.searchedFood !== prevProps.searchedFood);
         if (this.props.searchedFood !== prevProps.searchedFood && this.state.mealName !== "no_select") {
-            console.log(this.props.searchedFood, this.state.mealName);
         }
     }
 
@@ -181,7 +179,6 @@ class CreateDiaryEntry extends Component {
     // Generates an html table the columns and rows of which are set by the number of meals and number of elements inside
     // the arrays of those meals respectively, meals and their arrays are stored in addedFood attribute of state
     generateTable = (entries) => {
-        console.log(entries, "Generuji");
         //Determines number of rows table will have
         let longest = -1;
         for (let i = 0; i < entries.length; i++) {

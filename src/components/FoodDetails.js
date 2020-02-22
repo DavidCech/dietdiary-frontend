@@ -1,21 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {deleteFood} from "../action-creators/foodActionCreator";
 
+//This component displays given food in detail and allows the author of the food to delete it
 class FoodDetails extends Component {
 
-    //receive props with a food object from STORE, show all of its details
+    //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
 
         this.keyCount = 0;
         this.getKey = this.getKey.bind(this);
         this.generateIngredientTable.bind(this);
+        this.deleteFood = this.deleteFood.bind(this);
     }
 
+    //Initializes state property of the component
     state = {
         html: <div/>
     };
 
+    //Upon mount of the component calls generateIngredientTable function
     componentDidMount() {
         this.generateIngredientTable(this.props.searchedFood.ingredients);
     }
@@ -25,6 +30,7 @@ class FoodDetails extends Component {
         return this.keyCount++;
     };
 
+    //This function generates a div with the name of the ingredient for every ingredient the given food has
     generateIngredientTable = (ingredients) => {
         let previewHtml = [];
         let text;
@@ -35,15 +41,31 @@ class FoodDetails extends Component {
         this.setState({html: previewHtml});
     };
 
+    //If its the user who calls this function, it calls the deleteFood function from foodActionCreator with the given food
+    deleteFood = () => {
+        if(this.props.deleteFood && this.props.searchedFood){
+            this.props.deleteFood(this.props.searchedFood);
+        }
+    };
+
     render() {
-        console.log(this.props.searchedFood.nutritionVal);
+        //If it is the author of the food who views it, this code generates a button which allows the user to delete the
+        //food
+        let conditionalDelete = <div />;
+        if(this.props.searchedFood){
+            if(this.props.searchedFood.authorUsername){
+                let deleteButton = <button className="delete-button" onClick={this.deleteFood}>X</button>;
+                conditionalDelete = localStorage.getItem('username')===this.props.searchedFood.authorUsername ? deleteButton : <div />;
+            }
+        }
+
         return (
             <div style={{display: this.props.showSearchedFood}}>
                 <div key={this.getKey()}><h3>{this.props.searchedFood.name}</h3></div>
                 <div style={{display: this.props.searchedFood.ingredients.length > 0}}>
                     {this.state.html}
                 </div>
-                Kaloricke udaje na 100g
+                <span>Kalorické údaje na 100g</span>
                 <table>
                     <tbody>
                     <tr>
@@ -63,11 +85,19 @@ class FoodDetails extends Component {
                     </tbody>
                 </table>
                 <div key={this.getKey()}>{this.props.searchedFood.desc}</div>
+                {conditionalDelete}
             </div>
         )
     }
 
 }
+
+//Ensures reception of the functions from actionCreators in props
+const mapDispatchToProps = (dispatch) => ({
+    deleteFood: (food) => {
+        dispatch(deleteFood(food));
+    }
+});
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
@@ -75,4 +105,4 @@ const mapStateToProps = state => ({
 });
 
 //Connects the component to React-Redux Store
-export default connect(mapStateToProps, null)(FoodDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodDetails);

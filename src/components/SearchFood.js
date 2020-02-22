@@ -90,12 +90,15 @@ class SearchFood extends Component {
             previousPageDisplay = "block"
         }
 
-        //Shows the FoodDetails component for the particular food after user clicks on the name of the food
+        //Shows the FoodDetails component for the particular food after user clicks on the name of the food, whenever
+        //user deletes food through FoodDetails it also shows the message
         let searchedFoodHtml = <div/>;
         let showSearchedFood = "none";
         if (this.props.searchedFood && !this.props.addMode) {
             showSearchedFood = "block";
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
+        } else if (this.props.deleteMessage && !this.props.searchedFood){
+            searchedFoodHtml = <div>{this.props.deleteMessage}</div>;
         }
 
         //Disables the input when the user is not logged in
@@ -140,6 +143,7 @@ const mapStateToProps = state => ({
     last: state.foodReducer.last,
     empty: state.foodReducer.isEmpty,
     searchedFood: state.foodReducer.searchedFood,
+    deleteMessage: state.foodReducer.deleteMessage,
 });
 
 //Ensures reception of the functions from actionCreators in props

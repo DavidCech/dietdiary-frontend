@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import authReducer from './reducers/authReducer';
 import diaryEntryReducer from './reducers/diaryEntryReducer';
 import foodReducer from './reducers/foodReducer';
-import userReducer from './reducers/userReducer';
 
 import {composeWithDevTools} from "redux-devtools-extension";
 
@@ -12,7 +11,6 @@ let rootReducer = combineReducers({
         authReducer,
         diaryEntryReducer,
         foodReducer,
-        userReducer,
 });
 
 //Composes Enhancers with given arguments

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Calendar from "react-calendar";
 import {connect} from 'react-redux';
-import {getDiaryEntries, diaryEntryCleanUp} from "../action-creators/diaryEntryActionCreator";
+import {getDiaryEntries, diaryEntryCleanUp, deleteDiaryEntry} from "../action-creators/diaryEntryActionCreator";
 import {BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar} from 'recharts';
 
 //This component serves as GUI for viewing diaryEntries
@@ -17,6 +17,7 @@ class ViewDiaryEntries extends Component {
         this.changeDate = this.changeDate.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.generateTable = this.generateTable.bind(this);
+        this.deleteDiaryEntry = this.deleteDiaryEntry.bind(this);
     }
 
     //Initializes state property of the component
@@ -109,12 +110,31 @@ class ViewDiaryEntries extends Component {
         }
     }
 
+    //Deletes the given diaryEntry if it is the author of the diaryEntry who calls this function
+    deleteDiaryEntry = () => {
+        if(this.props.deleteDiaryEntry){
+            this.props.deleteDiaryEntry(this.props.searchedDiaryEntries);
+        }
+    };
+
     render() {
         //Doesn't show chart before user submits date(s) of the diaryEntry(/ies) or if there are no diaryEntries for the
         //submitted dates
         let displayChart = 'none';
-        if (this.state.data.length !== 0) {
+        if (this.state.data.length !== 0 && this.props.searchedDiaryEntries) {
             displayChart = 'block';
+        }
+
+        //If it is the author of the diaryEntry who views it, this code renders a delete button, else if the user chooses
+        //to delete the diaryEntry via the aforementioned delete button it shows a message with the outcome of the delete
+        let conditionalDelete;
+        let deleteMessage;
+        if(!Array.isArray(this.props.searchedDiaryEntries) && this.props.searchedDiaryEntries){
+            console.log(this.props.searchedDiaryEntries);
+            let deleteButton = <button className="delete-button" onClick={this.deleteDiaryEntry}>X</button>;
+            conditionalDelete = localStorage.getItem('username')===this.props.searchedDiaryEntries.authorUsername ? deleteButton : <div />;
+        } else if (this.props.deleteMessage && !this.props.searchedDiaryEntries){
+            deleteMessage = <div>{this.props.deleteMessage}</div>;
         }
 
         //Shows either chart for calories or nutritional values which depends on show attribute of state which user changes
@@ -161,6 +181,7 @@ class ViewDiaryEntries extends Component {
                 </select>
 
                 <div style={{display: displayChart}}>
+                    {conditionalDelete}
                     <BarChart width={730} height={250} data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>
@@ -172,10 +193,9 @@ class ViewDiaryEntries extends Component {
                         <Legend formatter={this.renderLegendText}/>
                         {barsHtml}
                     </BarChart>
+                    {this.state.tableHtml}
                 </div>
-
-                {this.state.tableHtml}
-
+                {deleteMessage}
             </div>
         );
     }
@@ -305,12 +325,16 @@ const mapDispatchToProps = dispatch => ({
     },
     diaryEntryCleanUp: () => {
         dispatch(diaryEntryCleanUp());
+    },
+    deleteDiaryEntry: (diaryEntry) => {
+        dispatch(deleteDiaryEntry(diaryEntry))
     }
 });
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     searchedDiaryEntries: state.diaryEntryReducer.searchedDiaryEntries,
+    deleteMessage: state.diaryEntryReducer.deleteMessage,
 });
 
 //Connects the component to React-Redux Store

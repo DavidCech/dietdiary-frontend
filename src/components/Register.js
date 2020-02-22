@@ -15,10 +15,10 @@ class Register extends Component {
 
     //Initializes state property of the component
     state = {
-        email: null,
-        username: null,
-        password: null,
-        repassword: null,
+        email: "",
+        username: "",
+        password: "",
+        repassword: "",
     };
 
     //Updates properties of state with the data from the input
@@ -32,7 +32,7 @@ class Register extends Component {
     //authActionCreator with the submitted account details
     handleSubmit = (event) => {
         event.preventDefault();
-        if(this.state.password && this.state.repassword && this.state.password===this.state.repassword && this.state.username && this.state.email){
+        if(this.state.password!=="" && this.state.repassword!=="" && this.state.password===this.state.repassword && this.state.username!=="" && this.state.email!==""){
             let credentials = {
                 email: this.state.email,
                 password: this.state.password,

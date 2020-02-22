@@ -48,6 +48,31 @@ export const getDiaryEntries = date => dispatch => {
     )
 };
 
+export const deleteDiaryEntry = (diaryEntry) => dispatch => {
+    fetch("http://localhost:6767/diaryEntries/delete", {
+        method: "delete",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('authHeader')
+        },
+        body: JSON.stringify(diaryEntry)
+    }).then(response => {
+        if(response.status === 200) {
+            dispatch({
+                type: 'DELETE',
+                payload: "Úspěšně smazáno",
+            })
+        } else {
+            dispatch({
+                type: 'DELETE',
+                payload: "Bohužel došlo k chybě",
+            })
+        }
+    }).catch(e =>
+        console.log(e)
+    )
+};
+
 //Sets all properties of diaryEntryReducer in Store to their initial values
 export const diaryEntryCleanUp = () => dispatch => {
     dispatch({

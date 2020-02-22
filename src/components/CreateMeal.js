@@ -3,16 +3,23 @@ import {connect} from 'react-redux';
 import {createFood} from "../action-creators/foodActionCreator";
 import SearchFood from "./SearchFood";
 
+//This component serves as GUI for creating meals
 class CreateMeal extends Component {
 
+    //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
+
+        this.keyCount = 0;
+        this.getKey = this.getKey.bind(this);
         this.changeInputText = this.changeInputText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addIngredient = this.addIngredient.bind(this);
         this.generatePreview = this.generatePreview.bind(this);
+        this.removeIngredient = this.removeIngredient.bind(this);
     }
 
+    //Initializes state property of the component
     state = {
         name: "",
         desc: "",
@@ -21,6 +28,16 @@ class CreateMeal extends Component {
         previewHtml: <div/>,
     };
 
+    //Removes ingredient from the ingredients array in state at an index given by the ingredientIndex argument
+    removeIngredient = (ingredientIndex) => {
+        let reducedIngredients = this.state.ingredients;
+        reducedIngredients.splice(ingredientIndex,1);
+        this.generatePreview(reducedIngredients);
+        this.setState({ingredients: reducedIngredients})
+    };
+
+
+    //Changes properties of state to data from their respective input fields
     changeInputText = (event) => {
         if (event.target.className === "name" || event.target.className === "desc") {
             this.setState({
@@ -33,6 +50,13 @@ class CreateMeal extends Component {
         }
     };
 
+    //Generates unique keys for html elements
+    getKey = () => {
+        return this.keyCount++;
+    };
+
+    //Adds ingredient the the array of ingredients in state, it requires the user to search for the ingredient and submit
+    //how many grams of the given ingredient the meal contains
     addIngredient = (event) => {
         event.preventDefault();
         if (this.props.searchedFood !== null && this.state.grams !== "") {
@@ -43,6 +67,8 @@ class CreateMeal extends Component {
 
     };
 
+    //Checks whether the user submitted all the necessary data and if that is the case then this function creates
+    //an object from these data and calls function createFood from foodActionCreator with this object as a parameter
     handleSubmit = (event) => {
         event.preventDefault();
         if (this.state.ingredients.length !== 0 && this.state.name !== "") {
@@ -53,20 +79,23 @@ class CreateMeal extends Component {
             };
             this.props.createFood(food);
         }
-        //console.log(food)
     };
 
+    //This function generates a preview of the ingredients user has added to their meal
     generatePreview = (ingredients) => {
         let previewHtml = [];
         let text;
+        let i = 0;
         ingredients.forEach(ingredient => {
             text = ingredient.food.name + " " + ingredient.grams;
-            previewHtml.push(<div>{text}</div>);
+            previewHtml.push(<div key={this.getKey()}>{text}<RemoveIngredientButton ingredientIndex={i} onClick={this.removeIngredient}/></div>);
+            i++;
         });
         this.setState({previewHtml: previewHtml});
     };
 
     render() {
+        console.log(this.state.ingredients);
         return (
             <div>
                 <form>
@@ -79,7 +108,7 @@ class CreateMeal extends Component {
                                value={this.state.grams} disabled={this.props.searchedFood === null}/>
                         <button onClick={this.addIngredient}>Add to ingredients</button>
                     </div>
-                    <button onClick={() => console.log(this.props.searchedFood)}>Debug</button>
+                    <button onClick={() =>{console.log(this.state.ingredients)}}>Debug</button>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </form>
 
@@ -87,6 +116,21 @@ class CreateMeal extends Component {
                     {this.state.previewHtml}
                 </div>
             </div>
+        )
+    }
+}
+
+//Button for removing ingredients from the preview, receives arguments ingredientIndex and onClick, ingredientIndex is
+//the index of the ingredient which is to be removed from the preview, onClick is the function that is to be called on
+//click
+class RemoveIngredientButton extends Component {
+    handleClick = () => {
+        this.props.onClick(this.props.ingredientIndex);
+    };
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>X</button>
         )
     }
 }

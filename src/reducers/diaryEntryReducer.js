@@ -2,6 +2,7 @@
 const initialState = {
     createEntryFoods: [],
     searchedDiaryEntries: null,
+    deleteMessage: "",
 };
 
 export default function (state = initialState, action) {
@@ -15,6 +16,12 @@ export default function (state = initialState, action) {
             return{
                 createEntryFoods: [],
                 searchedDiaryEntries: null,
+            };
+        case 'DELETE':
+            return{
+                ...state,
+                searchedDiaryEntries: null,
+                deleteMessage: action.payload,
             };
         default:
             return state

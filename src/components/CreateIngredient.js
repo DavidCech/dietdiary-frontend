@@ -2,14 +2,17 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createFood} from "../action-creators/foodActionCreator";
 
+//This component serves as GUI for creating ingredients
 class CreateIngredient extends Component {
 
+    //Initializes functions and in this class
     constructor(props) {
         super(props);
         this.changeInputText = this.changeInputText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    //Initializes state property of the component
     state = {
         name: "",
         nutritionVal: {
@@ -22,6 +25,7 @@ class CreateIngredient extends Component {
         desc: "",
     };
 
+    //Changes properties of state to data from their respective input fields
     changeInputText = (event) => {
         if (event.target.className === "name" || event.target.className === "desc") {
             this.setState({
@@ -39,9 +43,12 @@ class CreateIngredient extends Component {
         }
     };
 
+    //Checks whether the user submitted all the necessary data and if that is the case then this function creates
+    //an object from these data and calls function createFood from foodActionCreator with this object as a parameter
     handleSubmit = (event) => {
         event.preventDefault();
         let emptyCheck = this.state.name === "";
+        //Checks whether the nutritional values are empty
         Object.entries(this.state.nutritionVal).forEach(nutritionVal => {
             if (nutritionVal[1] === "") {
                 emptyCheck = true
@@ -49,6 +56,7 @@ class CreateIngredient extends Component {
         });
 
         if (!emptyCheck) {
+            //creates the object and calls the function
             const food = {
                 name: this.state.name,
                 nutritionVal: {
@@ -62,7 +70,6 @@ class CreateIngredient extends Component {
                 ingredients: [],
             };
             this.props.createFood(food);
-            //console.log("Funguje", food);
         }
     };
 

@@ -4,6 +4,7 @@ const initialState = {
     last: false,
     isEmpty: false,
     searchedFood: null,
+    deleteMessage: "",
 };
 
 export default function (state = initialState, action) {
@@ -26,6 +27,12 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 searchedFood: action.payload,
+            };
+        case 'DELETE':
+            return{
+                ...state,
+                searchedFood: null,
+                deleteMessage: action.payload,
             };
         default:
             return state
