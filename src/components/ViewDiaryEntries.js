@@ -28,6 +28,7 @@ class ViewDiaryEntries extends Component {
         data: [],
         additionalData: null,
         tableHtml: <div/>,
+        inputError: ""
     };
 
     //Deals with the reception of props from backend
@@ -78,9 +79,9 @@ class ViewDiaryEntries extends Component {
     handleSubmit = () => {
         if (this.state.date !== null) {
             this.props.getDiaryEntries(JSON.stringify(this.state.date));
+            this.setState({inputError: ""})
         } else {
-            let NEEDSUPDATE;
-            console.log("Musite zvolit datum nebo data v kalendari")
+            this.setState({inputError: "Musíte zvolit datum nebo data v kalendáři"})
         }
     };
 
@@ -134,7 +135,9 @@ class ViewDiaryEntries extends Component {
             let deleteButton = <button className="delete-button" onClick={this.deleteDiaryEntry}>X</button>;
             conditionalDelete = localStorage.getItem('username')===this.props.searchedDiaryEntries.authorUsername ? deleteButton : <div />;
         } else if (this.props.deleteMessage && !this.props.searchedDiaryEntries){
-            deleteMessage = <div>{this.props.deleteMessage}</div>;
+            deleteMessage = <span>{this.props.deleteMessage}</span>;
+        } else if (this.state.inputError!==""){
+            deleteMessage = <span>{this.state.inputError}</span>;
         }
 
         //Shows either chart for calories or nutritional values which depends on show attribute of state which user changes

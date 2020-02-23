@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {logIn, logOut} from '../action-creators/authActionCreator';
+import {logIn, logOut, loginCleanUp} from '../action-creators/authActionCreator';
 import {connect} from 'react-redux';
 
 //This component takes care of logging in and out of the users
@@ -32,6 +32,7 @@ class Login extends Component {
     submit = (event) =>{
         event.preventDefault();
         let credentials = {email: this.state.email, password: this.state.password};
+        this.props.history.push("/");
         this.props.logIn(credentials);
     };
 
@@ -39,9 +40,17 @@ class Login extends Component {
     logOut = (event) => {
         event.preventDefault();
         if(this.props.logOut){
+            this.props.history.push("/");
             this.props.logOut();
         }
     };
+
+    //Clears the login message in Store should the component unmount
+    componentWillUnmount(){
+        if(this.props.loginCleanUp){
+            this.props.loginCleanUp();
+        }
+    }
 
     render() {
         //If the user is logged in already this code renders a log out button
@@ -55,6 +64,7 @@ class Login extends Component {
                     <button onClick={this.submit}>Confirm</button>
                     {logOut}
                 </form>
+                <span>{this.props.loginMessage}</span>
             </div>
         )
     }
@@ -62,7 +72,8 @@ class Login extends Component {
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
-    loggedIn: state.authReducer.loggedIn
+    loggedIn: state.authReducer.loggedIn,
+    loginMessage: state.authReducer.loginMessage,
 });
 
 //Ensures reception of the functions from actionCreators in props
@@ -72,6 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     logOut: () => {
         dispatch(logOut())
+    },
+    loginCleanUp: () => {
+        dispatch(loginCleanUp())
     }
 });
 

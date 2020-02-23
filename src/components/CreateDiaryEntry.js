@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Calendar from 'react-calendar';
 import {connect} from 'react-redux';
-import {createDiaryEntry} from "../action-creators/diaryEntryActionCreator";
+import {createDiaryEntry, messageCleanUp} from "../action-creators/diaryEntryActionCreator";
 import SearchFood from "./SearchFood";
 
 //This component serves as GUI for creating dietDiaryEntries
@@ -73,7 +73,7 @@ class CreateDiaryEntry extends Component {
 
     //Changes the number of grams of a food in state when user inputs grams in the html form
     changeGrams = (event) => {
-        if(Number(event.target.value) || event.target.value === ""){
+        if (Number(event.target.value) || event.target.value === "") {
             this.setState({grams: event.target.value});
         }
     };
@@ -122,10 +122,16 @@ class CreateDiaryEntry extends Component {
         }
     }
 
+    componentWillUnmount() {
+        if (this.props.messageCleanUp) {
+            this.props.messageCleanUp();
+        }
+    }
+
     //Changes attributes kcal and description of state attribute activities to values inside the html form
     // input field named kcal and text area named description respectively
     changeActivity = (event) => {
-        if(Number(event.target.value) || event.target.className !== "kcal"){
+        if (Number(event.target.value) || event.target.className !== "kcal") {
             this.setState({
                 activities: {
                     ...this.state.activities,
@@ -138,40 +144,52 @@ class CreateDiaryEntry extends Component {
     };
 
     render() {
-        //Disabled will be probably changed to hidden
+        //Changes the render from form to message about the outcome after the user submits data
+        let displayDE = "block";
+        let displayMess = "none";
+        let messageText;
+        if (this.props.message) {
+            if (this.props.message !== "") {
+                messageText = this.props.message;
+                displayDE = "none";
+                displayMess = "block";
+            }
+        }
 
         return (
             <div>
-                <Calendar onChange={this.changeDate}/>
-                <button onClick={this.handleSubmit}>Submit</button>
-                <select value={this.state.mealName} onChange={this.handleSelect}>
-                    <option value="no_select" disabled hidden>Vyberte chod</option>
-                    <option value="breakfast">Snidane</option>
-                    <option value="morning_snack">Dopoledni svacina</option>
-                    <option value="lunch">Obed</option>
-                    <option value="afternoon_snack">Odpoledni svacina</option>
-                    <option value="dinner">Vecere</option>
-                    <option value="other">Ostatni</option>
-                </select>
-                <SearchFood addMode={true} disabled={this.state.mealName === "no_select"}/>
-                {/*Currently being added*/}
-                <div>
-                    {this.props.searchedFood ? this.props.searchedFood.name : "Ahoj"}
-                    <form>
-                        <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
-                               placeholder="Zadejte gramy" value={this.state.grams}/>
-                        <button onClick={this.addFood}>Add</button>
-                        {this.state.tableHtml}
-                        <h3>Denni aktivita</h3>
-                        <input placeholder="Zadejte spalene kalorie" value={this.state.activities.kcal}
-                               onChange={this.changeActivity} className="kcal"/>
-                        <textarea placeholder="Popis aktivity... napr: jmeno, dodatecne informace pro vas"
-                                  value={this.state.activities.description} onChange={this.changeActivity} className="description"/>
-                    </form>
+                <div className="create-diaryentry-wrapper" style={{display: displayDE}}>
+                    <Calendar onChange={this.changeDate}/>
+                    <button onClick={this.handleSubmit}>Submit</button>
+                    <select value={this.state.mealName} onChange={this.handleSelect}>
+                        <option value="no_select" disabled hidden>Vyberte chod</option>
+                        <option value="breakfast">Snidane</option>
+                        <option value="morning_snack">Dopoledni svacina</option>
+                        <option value="lunch">Obed</option>
+                        <option value="afternoon_snack">Odpoledni svacina</option>
+                        <option value="dinner">Vecere</option>
+                        <option value="other">Ostatni</option>
+                    </select>
+                    <SearchFood addMode={true} disabled={this.state.mealName === "no_select"}/>
+                    {/*Currently being added*/}
+                    <div>
+                        {this.props.searchedFood ? this.props.searchedFood.name : "Ahoj"}
+                        <form>
+                            <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
+                                   placeholder="Zadejte gramy" value={this.state.grams}/>
+                            <button onClick={this.addFood}>Add</button>
+                            {this.state.tableHtml}
+                            <h3>Denni aktivita</h3>
+                            <input placeholder="Zadejte spalene kalorie" value={this.state.activities.kcal}
+                                   onChange={this.changeActivity} className="kcal"/>
+                            <textarea placeholder="Popis aktivity... napr: jmeno, dodatecne informace pro vas"
+                                      value={this.state.activities.description} onChange={this.changeActivity}
+                                      className="description"/>
+                        </form>
+                    </div>
+                    <button onClick={() => console.log(this.state.date)}>Debug</button>
                 </div>
-                <button onClick={() => console.log(this.state.date)}>Debug</button>
-
-
+                <span style={{display: displayMess}}>{messageText}</span>
             </div>
         )
     }
@@ -201,9 +219,9 @@ class CreateDiaryEntry extends Component {
                 } else {
                     if (entries[j][1].length > i - 1) {
                         let inflection;
-                        if(parseInt(entries[j][1][i - 1].grams) === 1){
+                        if (parseInt(entries[j][1][i - 1].grams) === 1) {
                             inflection = "gram";
-                        } else if(parseInt(entries[j][1][i - 1].grams) > 1 && parseInt(entries[j][1][i - 1].grams) < 5){
+                        } else if (parseInt(entries[j][1][i - 1].grams) > 1 && parseInt(entries[j][1][i - 1].grams) < 5) {
                             inflection = "gramy"
                         } else {
                             inflection = "gramu"
@@ -261,11 +279,15 @@ const mapDispatchToProps = (dispatch) => ({
     createDiaryEntry: (diaryEntry) => {
         dispatch(createDiaryEntry(diaryEntry));
     },
+    messageCleanUp: () => {
+        dispatch(messageCleanUp());
+    }
 });
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     searchedFood: state.foodReducer.searchedFood,
+    message: state.diaryEntryReducer.createMessage,
 });
 
 //Connects the component to React-Redux Store

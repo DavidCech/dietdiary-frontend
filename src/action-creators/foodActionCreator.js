@@ -1,5 +1,5 @@
-//Fetches up to 10 Food items from the database with given name, page argument determines whether it is the first 10,
-//second 10, third 10 etc
+//Fetches up to 10 Food items from the database with given name; page argument determines whether it is the first 10,
+//second 10, third 10 and so on
 export const getFoods = (name, page) => dispatch => {
     fetch("http://localhost:6767/foods/?name=" + name + "&skipNumber=" + page * 10)
         .then(res => res.json())
@@ -20,7 +20,8 @@ export const foodCleanUp = () => dispatch => {
     })
 };
 
-//Receives Food object and creates according item in the database
+//Receives Food object and submits it with authentication header to create function in backend which in turn creates
+//according item in the database
 export const createFood = (food) => dispatch => {
     fetch("http://localhost:6767/foods/create", {
         method: "post",
@@ -37,6 +38,8 @@ export const createFood = (food) => dispatch => {
     )
 };
 
+//Receives food which is to be removed from component and submits it to the delete food function in backend from which
+//it in turn receives a status code which determines what message the user will receive
 export const deleteFood = (food) => dispatch => {
     fetch("http://localhost:6767/foods/delete", {
         method: "delete",

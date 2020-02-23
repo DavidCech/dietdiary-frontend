@@ -23,6 +23,7 @@ class CreateIngredient extends Component {
             fibre: "",
         },
         desc: "",
+        errorMessage: "",
     };
 
     //Changes properties of state to data from their respective input fields
@@ -43,20 +44,28 @@ class CreateIngredient extends Component {
         }
     };
 
-    //Checks whether the user submitted all the necessary data and if that is the case then this function creates
-    //an object from these data and calls function createFood from foodActionCreator with this object as a parameter
+    //Checks whether the user submitted all the necessary data and if the data are correct if that is the case then
+    //this function creates an object from these data and calls function createFood from foodActionCreator with
+    //this object as a parameter
     handleSubmit = (event) => {
         event.preventDefault();
-        let emptyCheck = this.state.name === "";
-        //Checks whether the nutritional values are empty
+        let incorrectInput = this.state.name === "";
+        //Checks whether the nutritional values are empty and adds up all the nutritional values to check if their sum
+        //isn't bigger than 100 (since they are per 100g they can't have bigger values)
+        let nutriSum = (-this.state.nutritionVal.kcal);
         Object.entries(this.state.nutritionVal).forEach(nutritionVal => {
             if (nutritionVal[1] === "") {
-                emptyCheck = true
+                incorrectInput = true
+            } else {
+                nutriSum += parseInt(nutritionVal[1]);
             }
         });
+        if (nutriSum > 100) {
+            incorrectInput = true;
+        }
 
-        if (!emptyCheck) {
-            //creates the object and calls the function
+        if (!incorrectInput) {
+            //Creates the object and calls the function
             const food = {
                 name: this.state.name,
                 nutritionVal: {
@@ -70,31 +79,49 @@ class CreateIngredient extends Component {
                 ingredients: [],
             };
             this.props.createFood(food);
+            this.setState({errorMessage: "Úspěšně vytvořeno"})
+        } else {
+            this.setState({
+                errorMessage: "Nesprávné údaje: musíte vyplnit všechna " +
+                    "pole kromě popisu a součet gramů sacharidů, bílkovin, tuků a vlákniny nesmí přesahovat 100"
+            })
         }
     };
 
     render() {
+        //Renders message only when there is one and hides the form if the submit was successful
+        let displayForm = "block";
+        let displayMessage = "none";
+        if (this.state.errorMessage !== "") {
+            displayMessage = "block";
+            if (this.state.errorMessage === "Úspěšně vytvořeno") {
+                displayForm = "none";
+            }
+        }
+
+
         return (
             <div>
-                <form>
+                <form style={{display: displayForm}}>
                     <input placeholder="Name" className="name" onChange={this.changeInputText} value={this.state.name}/>
                     <div>
-                        {"Nutritional values"}
-                        <input placeholder="kcal" className="kcal" onChange={this.changeInputText}
+                        <span>{"Nutriční hodnoty na 100 gramů: "}</span>
+                        <input placeholder="Kilokalorie" className="kcal" onChange={this.changeInputText}
                                value={this.state.nutritionVal.kcal}/>
-                        <input placeholder="Protein" className="protein" onChange={this.changeInputText}
+                        <input placeholder="Bílkoviny" className="protein" onChange={this.changeInputText}
                                value={this.state.nutritionVal.protein}/>
-                        <input placeholder="Carbohydrates" className="carbs" onChange={this.changeInputText}
+                        <input placeholder="Sacharidy" className="carbs" onChange={this.changeInputText}
                                value={this.state.nutritionVal.carbs}/>
-                        <input placeholder="Fat" className="fat" onChange={this.changeInputText}
+                        <input placeholder="Tuky" className="fat" onChange={this.changeInputText}
                                value={this.state.nutritionVal.fat}/>
-                        <input placeholder="Fibre" className="fibre" onChange={this.changeInputText}
+                        <input placeholder="Vláknina" className="fibre" onChange={this.changeInputText}
                                value={this.state.nutritionVal.fibre}/>
                     </div>
-                    <input placeholder="Description" className="desc" onChange={this.changeInputText}
+                    <input placeholder="Popis" className="desc" onChange={this.changeInputText}
                            value={this.state.desc}/>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </form>
+                <span style={{display: displayMessage}}>{this.state.errorMessage}</span>
             </div>
         )
     }

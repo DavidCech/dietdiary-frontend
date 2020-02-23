@@ -6,7 +6,7 @@ import SearchFood from "./SearchFood";
 //This component serves as GUI for creating meals
 class CreateMeal extends Component {
 
-    //Initializes functions and variable keyCount in this class
+    //Initializes functions, variable keyCount in this class and initial state
     constructor(props) {
         super(props);
 
@@ -26,12 +26,13 @@ class CreateMeal extends Component {
         grams: "",
         ingredients: [],
         previewHtml: <div/>,
+        createdMessage: "",
     };
 
     //Removes ingredient from the ingredients array in state at an index given by the ingredientIndex argument
     removeIngredient = (ingredientIndex) => {
         let reducedIngredients = this.state.ingredients;
-        reducedIngredients.splice(ingredientIndex,1);
+        reducedIngredients.splice(ingredientIndex, 1);
         this.generatePreview(reducedIngredients);
         this.setState({ingredients: reducedIngredients})
     };
@@ -78,6 +79,11 @@ class CreateMeal extends Component {
                 ingredients: this.state.ingredients,
             };
             this.props.createFood(food);
+            this.setState({createdMessage: "Úspěšně vytvořeno"})
+        } else {
+            this.setState({
+                createdMessage: "Nesprávné údaje: Musíte zadat jméno a alespoň jednu ingredienci s gramy"
+            })
         }
     };
 
@@ -88,33 +94,52 @@ class CreateMeal extends Component {
         let i = 0;
         ingredients.forEach(ingredient => {
             text = ingredient.food.name + " " + ingredient.grams;
-            previewHtml.push(<div key={this.getKey()}>{text}<RemoveIngredientButton ingredientIndex={i} onClick={this.removeIngredient}/></div>);
+            previewHtml.push(<div key={this.getKey()}>{text}<RemoveIngredientButton ingredientIndex={i}
+                                                                                    onClick={this.removeIngredient}/>
+            </div>);
             i++;
         });
         this.setState({previewHtml: previewHtml});
     };
 
     render() {
-        console.log(this.state.ingredients);
+        //Renders message only when there is one and hides the form if the submit was successful
+        let displayForm = "block";
+        let displayMessage = "none";
+        if (this.state.createdMessage !== "") {
+            displayMessage = "block";
+            if (this.state.createdMessage === "Úspěšně vytvořeno") {
+                displayForm = "none";
+            }
+        }
+
         return (
             <div>
-                <form>
-                    <input placeholder="Name" className="name" onChange={this.changeInputText} value={this.state.name}/>
-                    <input placeholder="Description" className="desc" onChange={this.changeInputText}
-                           value={this.state.desc}/>
-                    <div>
-                        <SearchFood addMode={true}/>
-                        <input placeholder={"Grams"} className="grams" onChange={this.changeInputText}
-                               value={this.state.grams} disabled={this.props.searchedFood === null}/>
-                        <button onClick={this.addIngredient}>Add to ingredients</button>
-                    </div>
-                    <button onClick={() =>{console.log(this.state.ingredients)}}>Debug</button>
-                    <button onClick={this.handleSubmit}>Submit</button>
-                </form>
+                <div className="create-meal-form-wrapper" style={{display: displayForm}}>
+                    <form>
+                        <input placeholder="Jméno" className="name" onChange={this.changeInputText}
+                               value={this.state.name}/>
+                        <input placeholder="Popis" className="desc" onChange={this.changeInputText}
+                               value={this.state.desc}/>
+                        <div>
+                            <SearchFood addMode={true}/>
+                            <input placeholder={"Gramy"} className="grams" onChange={this.changeInputText}
+                                   value={this.state.grams} disabled={this.props.searchedFood === null}/>
+                            <button onClick={this.addIngredient}>Add to ingredients</button>
+                        </div>
+                        <button onClick={() => {
+                            console.log(this.state.ingredients)
+                        }}>Debug
+                        </button>
+                        <button onClick={this.handleSubmit}>Submit</button>
+                    </form>
 
-                <div className="preview">
-                    {this.state.previewHtml}
+                    <div className="preview">
+                        {this.state.previewHtml}
+                    </div>
                 </div>
+                <span className="create-meal-message"
+                      style={{display: displayMessage}}>{this.state.createdMessage}</span>
             </div>
         )
     }

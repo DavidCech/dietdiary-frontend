@@ -43,7 +43,7 @@ class SearchFood extends Component {
     //Prevents calling the action when user leaves the url after typing into the search bar and calls the cleanUp function
     //from foodActionCreator
     componentWillUnmount() {
-        if(this.props.cleanUp){
+        if (this.props.cleanUp) {
             this.props.cleanUp();
         }
         this.debouncedDispatch.cancel();
@@ -97,7 +97,7 @@ class SearchFood extends Component {
         if (this.props.searchedFood && !this.props.addMode) {
             showSearchedFood = "block";
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
-        } else if (this.props.deleteMessage && !this.props.searchedFood){
+        } else if (this.props.deleteMessage && !this.props.searchedFood) {
             searchedFoodHtml = <div>{this.props.deleteMessage}</div>;
         }
 
@@ -112,7 +112,7 @@ class SearchFood extends Component {
                 <button style={{display: previousPageDisplay}} className="previous-page-button"
                         onClick={this.previousPage}> Previous
                 </button>
-                <input onChange={this.handleChange} disabled={selectCheck} placeholder={"Search for food"}/>
+                <input onChange={this.handleChange} disabled={selectCheck} placeholder={"Hledejte jídlo"}/>
                 <button onClick={() => console.log(this.state.foodInput)}> Ahoj</button>
                 {names}
                 <p/>
