@@ -1,0 +1,43 @@
+.navigation-wrapper {
+    width: 100%;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.navigation-item {
+    text-decoration: none;
+    color: slategray;
+    background-color: gold;
+    float: left;
+    width: 14.2857%;
+    height: 40px;
+    line-height: 36px;
+    font-size: 22px;
+    text-align: center;
+    display:block;
+    vertical-align: middle;
+}
+
+.navigation-item:hover{
+    background-color: goldenrod;
+}
+
+.user-information-p {
+    color: slategray;
+    background-color: gold;
+    float: left;
+    width: 14.2857%;
+    height: 40px;
+    line-height: 36px;
+    font-size: 22px;
+    text-align: center;
+    display:inline-block;
+    vertical-align: middle;
+    margin: 0 auto;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
