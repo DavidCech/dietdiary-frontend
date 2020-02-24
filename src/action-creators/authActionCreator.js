@@ -41,7 +41,6 @@ export const logIn = (credentials) => dispatch => {
                 email: json.email,
             }
         });
-        window.location.reload();
     }).catch(e =>
         console.log(e)
     )
@@ -72,12 +71,14 @@ export const register = (credentials) => dispatch => {
         if (response.status === 200) {
             dispatch({
                 type: "REGISTER",
-                message: "Úspěšně zaregistrován"
+                message: "Úspěšně zaregistrován",
+                registered: true,
             });
         } else {
             dispatch({
                 type: "REGISTER",
-                message: "Bohužel došlo k chybě při registraci"
+                message: "Bohužel došlo k chybě při registraci",
+                registered: false,
             });
         }
     }).catch(e =>

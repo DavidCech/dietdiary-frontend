@@ -1,0 +1,40 @@
+.register-form > .email{
+    top: 38%;
+}
+
+.register-form > .password {
+    top: 46%;
+}
+
+.register-form > .repassword{
+    top: 54%;
+}
+
+.register-form > .username {
+    top: 30%;
+
+}
+
+.register-button{
+    top: 62%;
+}
+
+.repassword:focus, .username:focus, .register-button:focus{
+    outline: none;
+}
+
+.register-message{
+    display: block;
+    margin: auto;
+    width: 30%;
+    overflow-wrap: normal;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 23%;
+    left: 50%;
+    color: red;
+    opacity: 0.75;
+}

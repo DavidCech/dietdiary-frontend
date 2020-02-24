@@ -4,7 +4,8 @@ const initialState = {
     username: "",
     email: "",
     registerMessage: "",
-    loginMessage: ""
+    loginMessage: "",
+    registered: false
 };
 
 export default function (state = initialState, action) {
@@ -27,11 +28,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 registerMessage: action.message,
+                registered: action.registered,
             };
         case 'REGISTER_CLEANUP':
             return {
                 ...state,
                 registerMessage: "",
+                registered: false
             };
         case 'LOGIN_CLEANUP':
             return {

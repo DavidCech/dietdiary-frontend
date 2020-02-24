@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {logIn, logOut, loginCleanUp} from '../action-creators/authActionCreator';
 import {connect} from 'react-redux';
+import '../styles/login.css';
 
 //This component takes care of logging in and out of the users
 class Login extends Component {
@@ -32,18 +33,31 @@ class Login extends Component {
     submit = (event) =>{
         event.preventDefault();
         let credentials = {email: this.state.email, password: this.state.password};
-        this.props.history.push("/");
         this.props.logIn(credentials);
     };
 
     //This function calls the logOut function from authActionCreator
-    logOut = (event) => {
-        event.preventDefault();
+    logOut = () => {
         if(this.props.logOut){
             this.props.history.push("/");
             this.props.logOut();
         }
     };
+
+    //If the user is logged in this function logs him out which makes the link effectively a button one the user logs in
+    componentDidMount(){
+        if(this.props.logOut && localStorage.getItem('logged')){
+            this.logOut()
+        }
+    }
+
+    componentDidUpdate(prevProps){
+        if(this.props.loggedIn && !prevProps.loggedIn){
+            this.props.history.push("/");
+            window.location.reload();
+        }
+    }
+
 
     //Clears the login message in Store should the component unmount
     componentWillUnmount(){
@@ -53,18 +67,14 @@ class Login extends Component {
     }
 
     render() {
-        //If the user is logged in already this code renders a log out button
-        let logOutButton = <button className="log-out" onClick={this.logOut}>Log Out</button>;
-        let logOut = localStorage.getItem('logged') ? logOutButton : <div/>;
         return (
-            <div>
-                <form>
-                    <input placeholder="E-mail" value={this.state.email} onChange={this.updateInputValue} className="email"/>
-                    <input placeholder="Password" value={this.state.password} onChange={this.updateInputValue} className="password"/>
-                    <button onClick={this.submit}>Confirm</button>
-                    {logOut}
+            <div className="login-wrapper">
+                <form className="login-form">
+                    <input autoComplete="new-email" placeholder="E-mail" value={this.state.email} onChange={this.updateInputValue} className="email"/>
+                    <input autoComplete="new-password" placeholder="Heslo" type="password" value={this.state.password} onChange={this.updateInputValue} className="password"/>
+                    <button className="login-button" onClick={this.submit}>Potvrdit</button>
                 </form>
-                <span>{this.props.loginMessage}</span>
+                <span className="login-error">{this.props.loginMessage}</span>
             </div>
         )
     }

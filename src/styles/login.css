@@ -1,0 +1,78 @@
+.password, .email, .username, .repassword {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    height: 50px;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+}
+
+.login-form > .email{
+    top: 42%;
+}
+
+.login-form > .password {
+    top: 50%;
+}
+
+.password:focus, .email:focus, .login-button:focus{
+    outline: none;
+}
+
+.login-button, .register-button {
+    color: var(--secondary-color);
+    width: 10%;
+    height: 50px;
+    background-color: var(--primary-color);
+    display: block;
+    margin: auto;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    left: 50%;
+}
+
+.login-button {
+    top: 58%;
+}
+
+.login-button:hover, .register-button:hover{
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border: 2px solid var(--primary-color-hover);
+}
+
+::-webkit-input-placeholder,  ::placeholder {
+    color: var(--placeholder);
+}
+
+:-ms-input-placeholder {
+    color: var(--placeholder);
+}
+
+
+.login-error {
+    display: block;
+    margin: auto;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 36%;
+    left: 50%;
+    color: red;
+    opacity: 0.75;
+}

@@ -1,12 +1,33 @@
 .navigation-wrapper {
     width: 100%;
+    height: 40px;
+    background-color: var(--primary-color);
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 .navigation-item {
     text-decoration: none;
-    color: slategray;
-    background-color: gold;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    width: 14.2857%;
+    height: 40px;
+    line-height: 36px;
+    font-size: 22px;
+    text-align: center;
+    display:block;
+    float: left;
+    left: 28.57%;
+    position: relative;
+    vertical-align: middle;
+}
+
+.navigation-item:hover{
+    background-color: var(--primary-color-hover);
+}
+
+.user-information-p {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
     float: left;
     width: 14.2857%;
     height: 40px;
@@ -15,28 +36,10 @@
     text-align: center;
     display:block;
     vertical-align: middle;
-}
-
-.navigation-item:hover{
-    background-color: goldenrod;
-}
-
-.user-information-p {
-    color: slategray;
-    background-color: gold;
-    float: left;
-    width: 14.2857%;
-    height: 40px;
-    line-height: 36px;
-    font-size: 22px;
-    text-align: center;
-    display:inline-block;
-    vertical-align: middle;
-    margin: 0 auto;
+    margin: 0;
     cursor: default;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;

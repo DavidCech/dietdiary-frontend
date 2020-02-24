@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {register, registerCleanUp} from '../action-creators/authActionCreator';
 import {connect} from 'react-redux';
+import '../styles/register.css';
 
 //This component serves as a form for creating new accounts in the database
 class Register extends Component {
@@ -37,6 +38,7 @@ class Register extends Component {
         //eslint-disable-next-line
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+        console.log("tu");
         if (this.state.password !== "" && this.state.repassword !== "" && this.state.password === this.state.repassword
             && this.state.username !== "" && this.state.email !== "" && re.test(String(this.state.email))) {
             let credentials = {
@@ -49,7 +51,7 @@ class Register extends Component {
             this.setState({inputError: ""})
         } else {
             this.setState({inputError: "Špatné údaje: musíte vyplnit nezabrané uživatelské jméno, nezabranou validní" +
-                    " emialovou adresu a hesla se musí shodovat"})
+                    " emailovou adresu a hesla se musí shodovat"})
         }
     };
 
@@ -76,23 +78,31 @@ class Register extends Component {
             displayMess = "block";
         }
 
+        //Changes the color and position of the message depending on the outcome
+        let messColor = "red";
+        let position = "23%";
+        if(this.props.registered){
+            messColor = "green";
+            position = "50%"
+        }
+
         return (
             <div className="register-wrapper">
-                <div className="register-from-wrapper" style={{display: displayForm}}>
-                    <form>
+                <div className="register-form-wrapper" style={{display: displayForm}}>
+                    <form className="register-form">
                         <input placeholder="E-mail" value={this.state.email} onChange={this.updateInputValue}
-                               className="email"/>
+                               className="email" autoComplete="new-email"/>
                         <input placeholder="Uživatelské jméno" value={this.state.username} onChange={this.updateInputValue}
-                               className="username"/>
-                        <input placeholder="Heslo" value={this.state.password} onChange={this.updateInputValue}
-                               className="password"/>
-                        <input placeholder="Heslo znovu" value={this.state.repassword}
+                               className="username" autoComplete="new-username"/>
+                        <input placeholder="Heslo" value={this.state.password} onChange={this.updateInputValue} type="password"
+                               className="password" autoComplete="new-password"/>
+                        <input placeholder="Heslo znovu" value={this.state.repassword} type="password"
                                onChange={this.updateInputValue}
-                               className="repassword"/>
-                        <button onClick={this.handleSubmit}>Confirm</button>
+                               className="repassword" autoComplete="new-password"/>
+                        <button onClick={this.handleSubmit} className="register-button">Potvrdit</button>
                     </form>
                 </div>
-                <span className="register-message" style={{display: displayMess}}>{messageText}</span>
+                <span className="register-message" style={{display: displayMess, color: messColor, top: position}}>{messageText}</span>
             </div>
         )
     }
@@ -111,6 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
     registerMessage: state.authReducer.registerMessage,
+    registered: state.authReducer.registered,
 });
 
 //Connects the component to React-Redux Store

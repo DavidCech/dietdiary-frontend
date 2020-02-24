@@ -3,6 +3,7 @@ import {Provider} from "react-redux";
 import {store} from "./store";
 import {BrowserRouter} from 'react-router-dom';
 import DietDiaryRouter from "./components/DietDiaryRouter";
+import './styles/global.css'
 
 //Puts together all the components and classes
 class App extends Component {
