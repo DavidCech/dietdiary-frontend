@@ -1,0 +1,80 @@
+.search-wrapper > .search-input {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    height: 50px;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-sizing: border-box;
+    left: 50%;
+    top: 28%;
+    z-index: 1;
+}
+
+.search-wrapper > .searched-names-wrapper {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    height: 40%;
+    position: fixed;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    border: 2px solid var(--primary-color);
+    border-top: none;
+    box-sizing: border-box;
+    padding: 2px 0;
+}
+
+.search-input:focus, .next-page-button:focus, .previous-page-button:focus {
+    outline: none;
+}
+
+.search-wrapper > .next-page-button, .search-wrapper > .previous-page-button {
+    color: var(--secondary-color);
+    width: 15%;
+    height: 50px;
+    background-color: var(--primary-color);
+    display: block;
+    margin: 2px 0;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    box-sizing: padding-box;
+    font-size: 22px;
+    top: 71%;
+}
+
+.search-wrapper > .next-page-button {
+    left: 50%;
+}
+
+.search-wrapper > .previous-page-button {
+    left: 35%;
+}
+
+.previous-page-button:hover, .next-page-button:hover{
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border: 2px solid var(--primary-color-hover);
+}
+
+.searched-names-wrapper > .food-clickable{
+    display: block;
+    height: 10%;
+    vertical-align: middle;
+    font-size: 16px;
+    text-align: center;
+}
+
+

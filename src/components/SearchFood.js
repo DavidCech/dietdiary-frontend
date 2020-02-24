@@ -3,6 +3,7 @@ import {getFoods, searchedFoodToState, foodCleanUp} from "../action-creators/foo
 import {debounce} from 'lodash';
 import {connect} from 'react-redux';
 import FoodDetails from "./FoodDetails";
+import '../styles/searchfood.css';
 
 //This component serves as GUI for searching for foods
 class SearchFood extends Component {
@@ -71,10 +72,12 @@ class SearchFood extends Component {
 
     render() {
         //Shows div with searched data after searching or a placeholder text
-        let names = <div>Vyhledejte jidlo</div>;
+        let names = "";
+        let showNames = "none";
         if (this.props.empty) {
-            names = <div>Jidlo s takovym nazvem se v databazi nenachazi</div>;
+            names = "Jidlo s takovym nazvem se v databazi nenachazi";
         } else if (this.props.foods.length !== 0) {
+            showNames = "block";
             names = this.props.foods.map(food => (
                 <FoodClickable key={food._id} food={food} searchedFoodToState={this.props.searchedFoodToState}
                                addMode={this.props.addMode}/>
@@ -92,31 +95,28 @@ class SearchFood extends Component {
 
         //Shows the FoodDetails component for the particular food after user clicks on the name of the food, whenever
         //user deletes food through FoodDetails it also shows the message
-        let searchedFoodHtml = <div/>;
+        let searchedFoodHtml = "";
         let showSearchedFood = "none";
         if (this.props.searchedFood && !this.props.addMode) {
             showSearchedFood = "block";
             searchedFoodHtml = <FoodDetails showSearchedFood={showSearchedFood}/>;
         } else if (this.props.deleteMessage && !this.props.searchedFood) {
-            searchedFoodHtml = <div>{this.props.deleteMessage}</div>;
+            searchedFoodHtml = this.props.deleteMessage;
         }
 
         //Disables the input when the user is not logged in
         let selectCheck = this.props.disabled ? true : false;
 
         return (
-            /*Show searched food dependant on props CreateDE will pass false*/
-            <div>
-                <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Next
-                </button>
+            <div className="search-wrapper">
+                <input className="search-input" onChange={this.handleChange} disabled={selectCheck} placeholder={"Vyhledejte jídlo"}/>
+                <div className="searched-names-wrapper" style={{display: showNames}}>{names}</div>
+                <div className="searched-food-wrapper">{searchedFoodHtml}</div>
                 <button style={{display: previousPageDisplay}} className="previous-page-button"
-                        onClick={this.previousPage}> Previous
+                        onClick={this.previousPage}> Předchozí
                 </button>
-                <input onChange={this.handleChange} disabled={selectCheck} placeholder={"Hledejte jídlo"}/>
-                <button onClick={() => console.log(this.state.foodInput)}> Ahoj</button>
-                {names}
-                <p/>
-                {searchedFoodHtml}
+                <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Další
+                </button>
             </div>
         )
     }
@@ -130,7 +130,7 @@ class FoodClickable extends Component {
 
     render() {
         return (
-            <div onClick={this.handleClick}>
+            <div className="food-clickable" onClick={this.handleClick}>
                 {this.props.food.name}
             </div>
         )

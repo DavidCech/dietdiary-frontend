@@ -5,3 +5,7 @@
     --secondary-color: black;
     --placeholder: #C0C0C0;
 }
+
+*{
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
