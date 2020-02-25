@@ -14,7 +14,14 @@ export const getFoods = (name, page) => dispatch => {
 };
 
 //Sets all properties of foodReducer in Store to their initial values
-export const foodCleanUp = () => dispatch => {
+export const totalCleanUp = () => dispatch => {
+    dispatch({
+        type: 'SEARCH_CLEANUP'
+    })
+};
+
+//Sets all properties of foodReducer in Store to their initial values
+export const searchedFoodCleanUp = () => dispatch => {
     dispatch({
         type: 'SEARCHED_FOOD_CLEANUP'
     })

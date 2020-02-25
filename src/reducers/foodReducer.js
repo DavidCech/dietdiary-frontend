@@ -16,7 +16,7 @@ export default function (state = initialState, action) {
                 last: action.payload.last,
                 empty: action.payload.foodArray.length===0,
             };
-        case 'SEARCHED_FOOD_CLEANUP':
+        case 'SEARCH_CLEANUP':
             return {
                 foods: [],
                 last: false,
@@ -27,6 +27,11 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 searchedFood: action.payload,
+            };
+        case 'SEARCHED_FOOD_CLEANUP':
+            return{
+                ...state,
+                searchedFood: null
             };
         case 'DELETE':
             return{

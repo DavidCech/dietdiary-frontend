@@ -20,7 +20,7 @@ class Navigation extends Component {
         }
 
         //The link at whose url the user is currently changes color for better clarity of the application
-        let paths = ["/", "/login", "/register", "viewDiaryEntries", "createDiaryEntry", "createMeal", "createIngredient"];
+        let paths = ["/", "/login", "/register", "/viewDiaryEntries", "/createDiaryEntry", "/createMeal", "/createIngredient"];
         let currentUrlDisplay = ["gold", "gold", "gold", "gold", "gold", "gold", "gold", "gold"];
         if (this.props.history) {
             for (let i = 0; i < 7; i++) {

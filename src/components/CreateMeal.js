@@ -119,7 +119,7 @@ class CreateMeal extends Component {
                     <form>
                         <input placeholder="Jméno" className="name" onChange={this.changeInputText}
                                value={this.state.name}/>
-                        <input placeholder="Popis" className="desc" onChange={this.changeInputText}
+                        <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
                                value={this.state.desc}/>
                         <div>
                             <SearchFood addMode={true}/>

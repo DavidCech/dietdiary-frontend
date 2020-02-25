@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getFoods, searchedFoodToState, foodCleanUp} from "../action-creators/foodActionCreator";
+import {getFoods, searchedFoodToState, totalCleanUp, searchedFoodCleanUp} from "../action-creators/foodActionCreator";
 import {debounce} from 'lodash';
 import {connect} from 'react-redux';
 import FoodDetails from "./FoodDetails";
@@ -15,6 +15,7 @@ class SearchFood extends Component {
         this.debouncedDispatch = this.debouncedDispatch.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
+        this.cleanSearchedFood = this.cleanSearchedFood.bind(this);
 
         this.debouncedDispatch = debounce(this.debouncedDispatch, 500);
     }
@@ -22,7 +23,7 @@ class SearchFood extends Component {
     //Initializes state property of the component
     state = {
         foodInput: "",
-        currentPage: 0
+        currentPage: 0,
     };
 
     //Whenever user types into the input used for searching foods this function changes foodInput property of state and
@@ -30,7 +31,7 @@ class SearchFood extends Component {
     handleChange = (event) => {
         if (!this.props.disabled) {
             let foodInput = event.target.value;
-            this.setState({foodInput});
+            this.setState({foodInput: foodInput});
 
             this.debouncedDispatch(foodInput, 0)
         }
@@ -41,14 +42,22 @@ class SearchFood extends Component {
         this.props.getFood(input, page);
     };
 
-    //Prevents calling the action when user leaves the url after typing into the search bar and calls the cleanUp function
+    //Prevents calling the action when user leaves the url after typing into the search bar and calls the totalCleanUp function
     //from foodActionCreator
     componentWillUnmount() {
-        if (this.props.cleanUp) {
-            this.props.cleanUp();
+        if (this.props.totalCleanUp) {
+            this.props.totalCleanUp();
         }
         this.debouncedDispatch.cancel();
     }
+
+    //Clears the item searchedFood from Redux Store and therefore toggles the view from viewing the searched food back to
+    //the search bar
+    cleanSearchedFood = () => {
+        if(this.props.searchedFoodCleanUp){
+            this.props.searchedFoodCleanUp();
+        }
+    };
 
     //Increases the currentPage attribute of state by one when user clicks on the given button and calls getFood
     //function from foodActionCreator with the appropriate page number
@@ -103,20 +112,27 @@ class SearchFood extends Component {
         } else if (this.props.deleteMessage && !this.props.searchedFood) {
             searchedFoodHtml = this.props.deleteMessage;
         }
+        let showSearchBar = showSearchedFood==="none" ? "block" : "none";
 
         //Disables the input when the user is not logged in
         let selectCheck = this.props.disabled ? true : false;
 
         return (
             <div className="search-wrapper">
-                <input className="search-input" onChange={this.handleChange} disabled={selectCheck} placeholder={"Vyhledejte jídlo"}/>
-                <div className="searched-names-wrapper" style={{display: showNames}}>{names}</div>
-                <div className="searched-food-wrapper">{searchedFoodHtml}</div>
-                <button style={{display: previousPageDisplay}} className="previous-page-button"
-                        onClick={this.previousPage}> Předchozí
-                </button>
-                <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Další
-                </button>
+                <div className="search-bar-wrapper" style={{display: showSearchBar}}>
+                    <input className="search-input" onChange={this.handleChange} disabled={selectCheck} placeholder={"Vyhledejte jídlo"}/>
+                    <div className="searched-names-wrapper" style={{display: showNames}}>{names}</div>
+                    <button style={{display: previousPageDisplay}} className="previous-page-button"
+                            onClick={this.previousPage}> Předchozí
+                    </button>
+                    <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Další
+                    </button>
+                </div>
+
+                <div className="searched-food-wrapper" style={{display: showSearchedFood}}>
+                    {searchedFoodHtml}
+                    <button className="previous-page-button" onClick={this.cleanSearchedFood}>Zpět</button>
+                </div>
             </div>
         )
     }
@@ -130,9 +146,9 @@ class FoodClickable extends Component {
 
     render() {
         return (
-            <div className="food-clickable" onClick={this.handleClick}>
+            <span className="food-clickable" onClick={this.handleClick}>
                 {this.props.food.name}
-            </div>
+            </span>
         )
     }
 }
@@ -154,9 +170,12 @@ const mapDispatchToProps = (dispatch) => ({
     searchedFoodToState: (food) => {
         dispatch(searchedFoodToState(food));
     },
-    cleanUp: () => {
-        dispatch(foodCleanUp());
+    totalCleanUp: () => {
+        dispatch(totalCleanUp());
     },
+    searchedFoodCleanUp: () => {
+        dispatch(searchedFoodCleanUp());
+    }
 });
 
 //Connects the component to React-Redux Store

@@ -117,7 +117,7 @@ class CreateIngredient extends Component {
                         <input placeholder="Vláknina" className="fibre" onChange={this.changeInputText}
                                value={this.state.nutritionVal.fibre}/>
                     </div>
-                    <input placeholder="Popis" className="desc" onChange={this.changeInputText}
+                    <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
                            value={this.state.desc}/>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </form>

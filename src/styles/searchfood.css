@@ -1,4 +1,4 @@
-.search-wrapper > .search-input {
+.search-bar-wrapper > .search-input {
     color: var(--secondary-color);
     display: block;
     width: 30%;
@@ -18,7 +18,7 @@
     z-index: 1;
 }
 
-.search-wrapper > .searched-names-wrapper {
+.search-bar-wrapper > .searched-names-wrapper {
     color: var(--secondary-color);
     display: block;
     width: 30%;
@@ -29,17 +29,16 @@
     background-color: white;
     left: 50%;
     top: 50%;
-    border: 2px solid var(--primary-color);
     border-top: none;
     box-sizing: border-box;
-    padding: 2px 0;
+    padding: 2px 0 0 0;
 }
 
 .search-input:focus, .next-page-button:focus, .previous-page-button:focus {
     outline: none;
 }
 
-.search-wrapper > .next-page-button, .search-wrapper > .previous-page-button {
+.search-bar-wrapper > .next-page-button, .search-bar-wrapper > .previous-page-button, .searched-food-wrapper > .previous-page-button {
     color: var(--secondary-color);
     width: 15%;
     height: 50px;
@@ -55,26 +54,48 @@
     top: 71%;
 }
 
-.search-wrapper > .next-page-button {
+.search-bar-wrapper > .next-page-button {
     left: 50%;
 }
 
-.search-wrapper > .previous-page-button {
+.search-bar-wrapper > .previous-page-button {
     left: 35%;
 }
 
-.previous-page-button:hover, .next-page-button:hover{
+.searched-food-wrapper > .previous-page-button {
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.previous-page-button:hover, .next-page-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
-.searched-names-wrapper > .food-clickable{
+.searched-names-wrapper > .food-clickable {
     display: block;
     height: 10%;
+    line-height: 240%;
     vertical-align: middle;
     font-size: 16px;
     text-align: center;
+    box-sizing: border-box;
+    border-right: 1px solid var(--primary-color);
+    border-left: 1px solid var(--primary-color);
 }
 
+.food-clickable + .food-clickable {
+    border-bottom: 1px solid var(--primary-color);
+}
 
+.food-clickable:nth-child(1) {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.searched-names-wrapper > .food-clickable:hover {
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border-color: var(--primary-color-hover);
+}
