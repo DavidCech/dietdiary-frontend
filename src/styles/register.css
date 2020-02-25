@@ -1,4 +1,4 @@
-.register-form > .email{
+.register-form > .email {
     top: 38%;
 }
 
@@ -6,7 +6,7 @@
     top: 46%;
 }
 
-.register-form > .repassword{
+.register-form > .repassword {
     top: 54%;
 }
 
@@ -15,15 +15,11 @@
 
 }
 
-.register-button{
+.register-button {
     top: 62%;
 }
 
-.repassword:focus, .username:focus, .register-button:focus{
-    outline: none;
-}
-
-.register-message{
+.register-message {
     display: block;
     margin: auto;
     width: 30%;
@@ -56,13 +52,13 @@
     left: 50%;
 }
 
-.register-button:hover{
+.register-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
-.username, .repassword{
+.username, .repassword {
     color: var(--secondary-color);
     display: block;
     width: 30%;

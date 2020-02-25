@@ -34,10 +34,6 @@
     padding: 2px 0 0 0;
 }
 
-.search-input:focus, .next-page-button:focus, .previous-page-button:focus {
-    outline: none;
-}
-
 .search-bar-wrapper > .next-page-button, .search-bar-wrapper > .previous-page-button, .searched-food-wrapper > .previous-page-button {
     color: var(--secondary-color);
     width: 15%;

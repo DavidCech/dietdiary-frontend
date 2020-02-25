@@ -1,7 +1,7 @@
 .food-details-wrapper {
     display: block;
-    width: 40%;
-    height: 33%;
+    width: 800px;
+    height: 340px;
     line-height: 36px;
     font-size: 22px;
     position: fixed;
@@ -14,8 +14,49 @@
     top: 30%;
 }
 
+.food-details-header {
+    margin: 0;
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
+    padding: 5px 0;
+}
+
+.food-details-label {
+    display: block;
+    padding: 3px 0 3px 15px;
+    width: 100%;
+}
+
 .food-details-ingredient {
     display: block;
+    margin: 5px 0 0 15px;
+}
+
+.food-details-ingredients-wrapper {
+    max-height: 90px;
+    overflow-y: scroll;
+    border-bottom: 2px solid var(--primary-color);
+    border-top: 1px solid var(--primary-color);
+}
+
+.food-details-table {
+    border-top: 1px solid var(--primary-color);
+    width: 100%;
+    border-spacing: 0;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.food-details-table-header {
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.food-details-table-cell, .food-details-table-header {
+    text-align: center;
+    font-size: 19px;
+}
+
+.food-details-table-cell + .food-details-table-cell, .food-details-table-header + .food-details-table-header {
+    border-left: 1px solid var(--primary-color);
 }
 
 .food-details-description {
@@ -24,11 +65,52 @@
     text-align: justify;
     overflow-y: scroll;
     text-overflow: ellipsis;
-    max-height: 30%;
+    height: 95px;
 }
 
+.food-details-description{
+    padding: 5px 15px 0 15px;
+    margin: 5px 0 5px 0;
+}
 
-.food-details-no-description {
+.food-details-ingredient {
     font-size: 18px;
     line-height: 18px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color-hover);
+    cursor: pointer;
+}
+
+.food-details-wrapper > .delete-button {
+    display: block;
+    position: absolute;
+    padding: 5px 0;
+    width: 43px;
+    right: -2px;
+    top: -36px;
+    text-align: center;
+    border: 2px solid var(--primary-color);
+    box-sizing: content-box;
+    background-color: var(--primary-color);
+}
+
+.delete-button:hover {
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border: 2px solid var(--primary-color-hover);
 }

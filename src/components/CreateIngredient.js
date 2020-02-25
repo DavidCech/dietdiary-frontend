@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createFood} from "../action-creators/foodActionCreator";
+import '../styles/createingredient.css';
 
 //This component serves as GUI for creating ingredients
 class CreateIngredient extends Component {
@@ -101,11 +102,11 @@ class CreateIngredient extends Component {
 
 
         return (
-            <div>
-                <form style={{display: displayForm}}>
+            <div className="create-ingredient-wrapper">
+                <form className="create-ingredient-form" style={{display: displayForm}}>
                     <input placeholder="Name" className="name" onChange={this.changeInputText} value={this.state.name}/>
-                    <div>
-                        <span>{"Nutriční hodnoty na 100 gramů: "}</span>
+                    <div className="create-ingredient-nutri-wrapper">
+                        <span className="create-ingredient-label">{"Nutriční hodnoty na 100 gramů: "}</span>
                         <input placeholder="Kilokalorie" className="kcal" onChange={this.changeInputText}
                                value={this.state.nutritionVal.kcal}/>
                         <input placeholder="Bílkoviny" className="protein" onChange={this.changeInputText}
@@ -119,9 +120,9 @@ class CreateIngredient extends Component {
                     </div>
                     <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
                            value={this.state.desc}/>
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <button className="create-ingredient-submit-button" onClick={this.handleSubmit}>Submit</button>
                 </form>
-                <span style={{display: displayMessage}}>{this.state.errorMessage}</span>
+                <span style={{display: displayMessage}} className="create-ingredient-message">{this.state.errorMessage}</span>
             </div>
         )
     }

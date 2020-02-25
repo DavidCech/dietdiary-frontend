@@ -23,10 +23,6 @@
     top: 50%;
 }
 
-.password:focus, .email:focus, .login-button:focus{
-    outline: none;
-}
-
 .login-button {
     color: var(--secondary-color);
     width: 10%;

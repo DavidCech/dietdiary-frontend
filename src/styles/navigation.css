@@ -20,10 +20,6 @@
     vertical-align: middle;
 }
 
-.navigation-item:hover{
-    background-color: var(--primary-color-hover);
-}
-
 .user-information-p {
     color: var(--secondary-color);
     background-color: var(--primary-color);
@@ -43,3 +39,8 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.navigation-item:hover{
+    background-color: var(--primary-color-hover) !important;
+}
+

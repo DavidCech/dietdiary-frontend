@@ -9,3 +9,7 @@
 *{
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+
+*:focus {
+    outline: none;
+}
