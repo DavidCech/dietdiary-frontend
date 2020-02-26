@@ -1,6 +1,6 @@
 .create-ingredient-nutri-wrapper > .kcal, .create-ingredient-nutri-wrapper > .protein,
 .create-ingredient-nutri-wrapper > .carbs, .create-ingredient-nutri-wrapper > .fat,
-.create-ingredient-nutri-wrapper > .fibre, .create-ingredient-form > .name {
+.create-ingredient-nutri-wrapper > .fibre, .name {
     color: var(--secondary-color);
     display: block;
     width: 30%;
@@ -43,22 +43,25 @@
     top: 59%;
 }
 
-.create-ingredient-form > .desc {
+.desc {
     color: var(--secondary-color);
     display: block;
     width: 30%;
-    height: 140px;
     font-size: 16px;
     position: fixed;
     border: 2px solid var(--primary-color);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background-color: white;
-    top: 75%;
     left: 50%;
     padding: 5px 10px 5px 10px;
     resize: none;
     box-sizing: border-box;
+}
+
+.create-ingredient-form > .desc {
+    top: 75%;
+    height: 140px;
 }
 
 .create-ingredient-submit-button {
@@ -84,5 +87,44 @@
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
+}
+
+.create-ingredient-label {
+    color: var(--primary-color);
+    display: block;
+    width: 30%;
+    height: 40px;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    vertical-align: middle;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+    top: 31%;
+}
+
+.create-ingredient-message {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    height: 20px;
+    line-height: 16px;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+}
+
+.voluntary {
+    top: 67%;
+    text-align: left;
+    line-height: 13px;
+    font-size: 11px;
+    opacity: 0.7;
 }
 

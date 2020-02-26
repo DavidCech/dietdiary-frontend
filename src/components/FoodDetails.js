@@ -55,7 +55,6 @@ class FoodDetails extends Component {
         ingredients.forEach(ingredient => {
             text = ingredient.food.name + " " + ingredient.grams + " " + this.handleGramInflection(ingredient.grams);
             previewHtml.push(<span className="food-details-ingredient" key={this.getKey()}>{text}</span>);
-            previewHtml.push(<span className="food-details-ingredient" key={this.getKey()}>{text}</span>);
         });
 
         this.setState({html: previewHtml});
@@ -85,11 +84,24 @@ class FoodDetails extends Component {
                 styleWithIngredients = {height: "172px", top: "40%"};
                 descriptionDisplay = "none";
             } else if (this.props.searchedFood.ingredients.length > 0){
-                styleWithIngredients = {height: "425px", top: "23%"};
+                //each
+                //>0 && <=2 lines
+                //>2 && <=4 lines
+                //>4 && <=6 lines
+                if(this.props.searchedFood.ingredients.length===1){
+                    styleWithIngredients = {height: "375px", top: "23%"};
+                } else if (this.props.searchedFood.ingredients.length===2){
+                    styleWithIngredients = {height: "400px", top: "23%"};
+                } else {
+                    styleWithIngredients = {height: "425px", top: "23%"};
+                }
             }
             if (this.props.searchedFood.ingredients.length > 0 &&
                 (this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu")) {
-                styleWithIngredients = {height: "307px", top: "30%"};
+                //===1 {height: "240px", top: "30%"}
+                //===2 {height: "263px", top: "30%"}
+                //===3 {height: "263px", top: "30%"}
+                styleWithIngredients = {height: "286px", top: "30%"};
             } else if((this.props.searchedFood.ingredients.length === 0 &&
                 !(this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu"))){
                 styleWithIngredients = {height: "290px", top: "32%"};

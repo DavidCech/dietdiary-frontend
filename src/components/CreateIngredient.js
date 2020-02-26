@@ -92,10 +92,11 @@ class CreateIngredient extends Component {
     render() {
         //Renders message only when there is one and hides the form if the submit was successful
         let displayForm = "block";
-        let displayMessage = "none";
+        let messageStyle = {display: "none", color: "red", top: "15%"};
         if (this.state.errorMessage !== "") {
-            displayMessage = "block";
+            messageStyle = {...messageStyle, display: "block"};
             if (this.state.errorMessage === "Úspěšně vytvořeno") {
+                messageStyle = {...messageStyle, fontSize: "22px", color: "green", top: "50%"};
                 displayForm = "none";
             }
         }
@@ -104,7 +105,7 @@ class CreateIngredient extends Component {
         return (
             <div className="create-ingredient-wrapper">
                 <form className="create-ingredient-form" style={{display: displayForm}}>
-                    <input placeholder="Name" className="name" onChange={this.changeInputText} value={this.state.name}/>
+                    <input placeholder="Jméno ingredience" className="name" onChange={this.changeInputText} value={this.state.name}/>
                     <div className="create-ingredient-nutri-wrapper">
                         <span className="create-ingredient-label">{"Nutriční hodnoty na 100 gramů: "}</span>
                         <input placeholder="Kilokalorie" className="kcal" onChange={this.changeInputText}
@@ -118,11 +119,12 @@ class CreateIngredient extends Component {
                         <input placeholder="Vláknina" className="fibre" onChange={this.changeInputText}
                                value={this.state.nutritionVal.fibre}/>
                     </div>
+                    <span className="create-ingredient-message voluntary">{"Nepovinné pole"}</span>
                     <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
                            value={this.state.desc}/>
                     <button className="create-ingredient-submit-button" onClick={this.handleSubmit}>Submit</button>
                 </form>
-                <span style={{display: displayMessage}} className="create-ingredient-message">{this.state.errorMessage}</span>
+                <span style={messageStyle} className="create-ingredient-message error">{this.state.errorMessage}</span>
             </div>
         )
     }

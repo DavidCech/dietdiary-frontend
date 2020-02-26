@@ -37,7 +37,7 @@ class Navigation extends Component {
                 <NavLink className="navigation-item" to="/createIngredient"
                          style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[6]}}> Vytvořit ingredienci </NavLink>
                 <NavLink className="navigation-item" to="/createMeal"
-                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[5]}}> Vytvořit jídlo </NavLink>
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[5]}}> Vytvořit pokrm </NavLink>
                 <NavLink className="navigation-item" to="/createDiaryEntry"
                          style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[4]}}> Vytvořit zápis dne </NavLink>
                 <NavLink className="navigation-item" to="/viewDiaryEntries"

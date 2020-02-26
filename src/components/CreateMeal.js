@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createFood} from "../action-creators/foodActionCreator";
 import SearchFood from "./SearchFood";
+import '../styles/createmeal.css';
 
 //This component serves as GUI for creating meals
 class CreateMeal extends Component {
@@ -17,6 +18,8 @@ class CreateMeal extends Component {
         this.addIngredient = this.addIngredient.bind(this);
         this.generatePreview = this.generatePreview.bind(this);
         this.removeIngredient = this.removeIngredient.bind(this);
+        this.nextStep = this.nextStep.bind(this);
+        this.previousStep = this.previousStep.bind(this);
     }
 
     //Initializes state property of the component
@@ -27,6 +30,7 @@ class CreateMeal extends Component {
         ingredients: [],
         previewHtml: <div/>,
         createdMessage: "",
+        step: 1,
     };
 
     //Removes ingredient from the ingredients array in state at an index given by the ingredientIndex argument
@@ -68,6 +72,22 @@ class CreateMeal extends Component {
 
     };
 
+    //Adds 1 to the step property of state which determines rendering of the html elements
+    nextStep = (event) => {
+        event.preventDefault();
+        if (this.state.step < 3) {
+            this.setState({step: this.state.step + 1})
+        }
+    };
+
+    //Subtracts 1 from the step property of state which determines rendering of the html elements
+    previousStep = (event) => {
+        event.preventDefault();
+        if (this.state.step > 1) {
+            this.setState({step: this.state.step - 1})
+        }
+    };
+
     //Checks whether the user submitted all the necessary data and if that is the case then this function creates
     //an object from these data and calls function createFood from foodActionCreator with this object as a parameter
     handleSubmit = (event) => {
@@ -94,9 +114,11 @@ class CreateMeal extends Component {
         let i = 0;
         ingredients.forEach(ingredient => {
             text = ingredient.food.name + " " + ingredient.grams;
-            previewHtml.push(<div key={this.getKey()}>{text}<RemoveIngredientButton ingredientIndex={i}
-                                                                                    onClick={this.removeIngredient}/>
-            </div>);
+            previewHtml.push(
+                <div key={this.getKey()} className={"create-meal-ingredient"}>
+                    {text}<RemoveIngredientButton ingredientIndex={i} onClick={this.removeIngredient}/>
+                </div>
+            );
             i++;
         });
         this.setState({previewHtml: previewHtml});
@@ -113,28 +135,83 @@ class CreateMeal extends Component {
             }
         }
 
+        //Determines whether html elements for adding ingredient will be shown or not
+        let renderSearchedFood = "none";
+        let searchedFoodName="";
+        if(this.props.searchedFood && this.state.step===2){
+            renderSearchedFood = "block";
+            searchedFoodName = this.props.searchedFood.name;
+        }
+
+        //Defines the style of the html elements which assures rendering only some of them each step
+        let renderStepOne = "block";
+        let renderStepTwo = "none";
+        let renderStepThree = "none";
+        if (this.state.step === 2) {
+            renderStepOne = "none";
+            renderStepTwo = "block";
+            renderStepThree = "none";
+        } else if (this.state.step === 3) {
+            renderStepOne = "none";
+            renderStepTwo = "none";
+            renderStepThree = "block";
+        }
+
+        //Determines whether the buttons for switching steps will be rendered or not and how they will be rendered
+        //(centered or next to one another)
+        let singleButtonStyle = {
+            "display": "block",
+            "msTransform": "translate(-50%, -50%)",
+            "transform": "translate(-50%, -50%)",
+            "left": "50%",
+            "top": "20%"
+        };
+        let renderNext = {display: "block"};
+        let renderPrevious = {display: "none"};
+        if (this.state.step >= 3) {
+            if (this.state.step === 3) {
+                renderPrevious = singleButtonStyle;
+            }
+            renderNext = {display: "none"};
+        } else if (this.state.step >= 1) {
+            if (this.state.step === 1) {
+                renderNext = singleButtonStyle;
+            } else {
+                renderPrevious = {display: "block"};
+            }
+        }
+
         return (
             <div>
                 <div className="create-meal-form-wrapper" style={{display: displayForm}}>
-                    <form>
-                        <input placeholder="Jméno" className="name" onChange={this.changeInputText}
+                    <form className="create-meal-form">
+                        <span className="create-meal-step">{"Krok " + this.state.step + "/3"}</span>
+                        <span className="create-meal-searched-food" style={{display:renderSearchedFood}}>{searchedFoodName}</span>
+                        <input placeholder="Zadejte jméno pokrmu" style={{display: renderStepOne}} className="name"
+                               onChange={this.changeInputText}
                                value={this.state.name}/>
-                        <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
-                               value={this.state.desc}/>
-                        <div>
-                            <SearchFood addMode={true}/>
+                        <textarea placeholder="Popis" style={{display: renderStepOne}} className="desc"
+                                  onChange={this.changeInputText}
+                                  value={this.state.desc}/>
+                        <div className="create-meal-add-ingredient-wrapper">
+                            <SearchFood addMode={true} disabled={renderStepTwo === "none"}/>
                             <input placeholder={"Gramy"} className="grams" onChange={this.changeInputText}
-                                   value={this.state.grams} disabled={this.props.searchedFood === null}/>
-                            <button onClick={this.addIngredient}>Add to ingredients</button>
+                                   style={{display:renderSearchedFood}} value={this.state.grams}
+                                   disabled={this.props.searchedFood === null}/>
+                            <button className="create-meal-add-ingredient" style={{display:renderSearchedFood}}
+                                    onClick={this.addIngredient}>
+                                {"Přidat ingredienci"}
+                            </button>
                         </div>
-                        <button onClick={() => {
-                            console.log(this.state.ingredients)
-                        }}>Debug
+                        <button className="create-meal-button create-meal-next" style={renderNext}
+                                onClick={this.nextStep}>{"Další krok"}</button>
+                        <button className="create-meal-button create-meal-previous" style={renderPrevious}
+                                onClick={this.previousStep}>{"Předchozí krok"}</button>
+                        <button className="create-meal-submit" style={{display: renderStepThree}}
+                                onClick={this.handleSubmit}>Potvrdit
                         </button>
-                        <button onClick={this.handleSubmit}>Submit</button>
                     </form>
-
-                    <div className="preview">
+                    <div className="create-meal-preview" style={{display: renderStepThree}}>
                         {this.state.previewHtml}
                     </div>
                 </div>

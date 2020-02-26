@@ -31,7 +31,7 @@ class SearchFood extends Component {
     handleChange = (event) => {
         if (!this.props.disabled) {
             let foodInput = event.target.value;
-            this.setState({foodInput: foodInput});
+            this.setState({foodInput: foodInput, currentPage:0});
 
             this.debouncedDispatch(foodInput, 0)
         }
@@ -65,6 +65,7 @@ class SearchFood extends Component {
         event.preventDefault();
         if (!this.props.last) {
             this.props.getFood(this.state.foodInput, this.state.currentPage + 1);
+            console.log(this.state.currentPage);
             this.setState({currentPage: this.state.currentPage + 1});
         }
     };
@@ -98,7 +99,8 @@ class SearchFood extends Component {
         let previousPageDisplay = "none";
         if (!this.props.last && this.props.foods.length !== 0) {
             nextPageDisplay = "block"
-        } else if (this.state.currentPage > 0 && this.props.foods.length !== 0) {
+        }
+        if (this.state.currentPage > 0 && this.props.foods.length !== 0) {
             previousPageDisplay = "block"
         }
 
@@ -114,13 +116,13 @@ class SearchFood extends Component {
         }
         let showSearchBar = showSearchedFood==="none" ? "block" : "none";
 
-        //Disables the input when the user is not logged in
-        let selectCheck = this.props.disabled ? true : false;
+        //Hides the entire component if disabled is true
+        let selectCheck = this.props.disabled ? "none" : "block";
 
         return (
-            <div className="search-wrapper">
+            <div className="search-wrapper" style={{display: selectCheck}}>
                 <div className="search-bar-wrapper" style={{display: showSearchBar}}>
-                    <input className="search-input" onChange={this.handleChange} disabled={selectCheck} placeholder={"Vyhledejte jídlo"}/>
+                    <input className="search-input" onChange={this.handleChange} placeholder={"Vyhledejte jídlo"}/>
                     <div className="searched-names-wrapper" style={{display: showNames}}>{names}</div>
                     <button style={{display: previousPageDisplay}} className="previous-page-button"
                             onClick={this.previousPage}> Předchozí
