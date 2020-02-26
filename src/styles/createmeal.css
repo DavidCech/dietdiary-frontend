@@ -1,15 +1,10 @@
 .create-meal-form > .desc {
-    top: 75%;
-    height: 140px;
-}
-
-.create-meal-form > .desc {
     top: 57%;
     height: 240px;
 }
 
 .create-meal-form > .name {
-    top: 35%;
+    top: 38%;
     font-size: 24px;
     line-height: 28px;
 }
@@ -17,7 +12,6 @@
 .create-meal-step, .create-meal-searched-food {
     display: block;
     width: 30%;
-    height: 40px;
     line-height: 36px;
     font-size: 24px;
     position: fixed;
@@ -30,12 +24,13 @@
 }
 
 .create-meal-step {
+    height: 40px;
     top: 15%;
     color: var(--primary-color);
 }
 
 .create-meal-searched-food {
-    top: 80%;
+    top: 35%;
     color: var(--secondary-color);
 }
 
@@ -65,15 +60,17 @@
 }
 
 .create-meal-submit {
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    top: 80%
+    left:0;
+    position: static;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
 }
 
 .create-meal-add-ingredient {
+    position: static;
+    margin-top: 40px;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    top: 90%;
 }
 
 .create-meal-button:hover, .create-meal-submit:hover, .create-meal-add-ingredient:hover{
@@ -85,11 +82,9 @@
 .create-meal-add-ingredient-wrapper > .grams {
     color: var(--secondary-color);
     display: block;
-    width: 30%;
     height: 36px;
     line-height: 24px;
     font-size: 18px;
-    position: fixed;
     text-align: center;
     vertical-align: middle;
     border: 2px solid var(--primary-color);
@@ -98,27 +93,82 @@
     background-color: white;
     left: 50%;
     top: 84%;
+    width: 30%;
+    position: static;
 }
 
 .create-meal-preview {
+    display: block;
+    width: 100%;
+    background: none;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    vertical-align: middle;
+    left: 50%;
+    top: 35%;
+}
+
+.create-meal-preview-table {
     color: var(--secondary-color);
     display: block;
     width: 30%;
-    height: 240px;
+    max-height: 250px;
     line-height: 24px;
     font-size: 18px;
-    position: fixed;
     text-align: center;
     vertical-align: middle;
     border: 2px solid var(--primary-color);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
     background-color: white;
-    left: 50%;
-    top: 50%;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    margin-bottom: 20px;
+    overflow-y: scroll;
 }
 
 .create-meal-ingredient + .create-meal-ingredient{
     border-top: 1px solid var(--primary-color);
+}
+
+.create-meal-add-ingredient-wrapper > .create-meal-searched-food {
+    position: static;
+    display: block;
+}
+
+.create-meal-add-ingredient-wrapper {
+    display: block;
+    width: 100%;
+    background: none;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    vertical-align: middle;
+    left: 50%;
+    top: 30%;
+}
+
+.create-meal-add-ingredient-wrapper > .food-details-wrapper{
+    position: static;
+    margin-bottom: 40px;
+}
+
+.create-meal-add-ingredient-wrapper > .grams, .create-meal-add-ingredient-wrapper > .create-meal-add-ingredient{
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.create-meal-ingredient{
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+}
+
+.create-meal-ingredient > .delete-button {
+    position: relative;
+    float: left;
+}
+
+.create-meal-form > .voluntary {
+    top: 44%;
 }
 

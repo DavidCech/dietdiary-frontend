@@ -125,9 +125,9 @@ class SearchFood extends Component {
                     <input className="search-input" onChange={this.handleChange} placeholder={"Vyhledejte jídlo"}/>
                     <div className="searched-names-wrapper" style={{display: showNames}}>{names}</div>
                     <button style={{display: previousPageDisplay}} className="previous-page-button"
-                            onClick={this.previousPage}> Předchozí
+                            onClick={this.previousPage}> {"Předchozí výsledky"}
                     </button>
-                    <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> Další
+                    <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> {"Další výsledky"}
                     </button>
                 </div>
 

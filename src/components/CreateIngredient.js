@@ -96,7 +96,7 @@ class CreateIngredient extends Component {
         if (this.state.errorMessage !== "") {
             messageStyle = {...messageStyle, display: "block"};
             if (this.state.errorMessage === "Úspěšně vytvořeno") {
-                messageStyle = {...messageStyle, fontSize: "22px", color: "green", top: "50%"};
+                messageStyle = {...messageStyle, fontSize: "24px", color: "green", top: "50%"};
                 displayForm = "none";
             }
         }

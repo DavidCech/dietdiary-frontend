@@ -20,7 +20,7 @@ export const totalCleanUp = () => dispatch => {
     })
 };
 
-//Sets all properties of foodReducer in Store to their initial values
+//Sets searchedFood property of foodReducer in Store to null
 export const searchedFoodCleanUp = () => dispatch => {
     dispatch({
         type: 'SEARCHED_FOOD_CLEANUP'

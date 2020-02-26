@@ -1,7 +1,6 @@
 .food-details-wrapper {
     display: block;
     width: 800px;
-    height: 340px;
     line-height: 36px;
     font-size: 22px;
     position: fixed;
@@ -43,7 +42,6 @@
     border-top: 1px solid var(--primary-color);
     width: 100%;
     border-spacing: 0;
-    border-bottom: 2px solid var(--primary-color);
 }
 
 .food-details-table-header {
@@ -65,7 +63,8 @@
     text-align: justify;
     overflow-y: scroll;
     text-overflow: ellipsis;
-    height: 95px;
+    max-height: 95px;
+    border-top: 2px solid var(--primary-color);
 }
 
 .food-details-description{
@@ -96,17 +95,21 @@
     cursor: pointer;
 }
 
-.food-details-wrapper > .delete-button {
-    display: block;
-    position: absolute;
-    padding: 5px 0;
+.delete-button {
+    display: inline-block;
     width: 43px;
-    right: -2px;
-    top: -36px;
+    padding: 5px 0;
     text-align: center;
     border: 2px solid var(--primary-color);
     box-sizing: content-box;
     background-color: var(--primary-color);
+}
+
+.food-details-wrapper > .delete-button {
+    display: block;
+    position: absolute;
+    right: -2px;
+    top: -36px;
 }
 
 .delete-button:hover {
