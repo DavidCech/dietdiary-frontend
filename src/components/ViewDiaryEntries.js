@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 import {connect} from 'react-redux';
 import {getDiaryEntries, diaryEntryCleanUp, deleteDiaryEntry} from "../action-creators/diaryEntryActionCreator";
 import {BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar} from 'recharts';
+import '../styles/viewdiaryentries.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 //This component serves as GUI for viewing diaryEntries
 class ViewDiaryEntries extends Component {
@@ -18,6 +20,7 @@ class ViewDiaryEntries extends Component {
         this.handleSelect = this.handleSelect.bind(this);
         this.generateTable = this.generateTable.bind(this);
         this.deleteDiaryEntry = this.deleteDiaryEntry.bind(this);
+        this.diaryEntriesCleanUp = this.diaryEntriesCleanUp.bind(this);
     }
 
     //Initializes state property of the component
@@ -81,14 +84,19 @@ class ViewDiaryEntries extends Component {
             this.props.getDiaryEntries(JSON.stringify(this.state.date));
             this.setState({inputError: ""})
         } else {
-            this.setState({inputError: "Musíte zvolit datum nebo data v kalendáři"})
+            this.setState({inputError: "Nejdříve musíte zvolit datum nebo data v kalendáři"})
         }
     };
 
     //Changes the show property of state which determines whether the BarChart will show information about calories or
     //nutritional values
     handleSelect = (event) => {
-        this.setState({show: event.target.value})
+        if(this.state.show==="kcal"){
+            this.setState({show: "nutrition"})
+        }else {
+            this.setState({show: "kcal"})
+        }
+
     };
 
     //Alters the Legend text used by the BarChart, it prevents the Legend from rendering items used by the BarChart to
@@ -106,9 +114,7 @@ class ViewDiaryEntries extends Component {
 
     //Cleans up searched diaryEntries from the Redux Store
     componentWillUnmount(){
-        if(this.props.diaryEntryCleanUp){
-            this.props.diaryEntryCleanUp();
-        }
+        this.diaryEntriesCleanUp();
     }
 
     //Deletes the given diaryEntry if it is the author of the diaryEntry who calls this function
@@ -118,26 +124,63 @@ class ViewDiaryEntries extends Component {
         }
     };
 
+    //Cleans up searched diaryEntries from the Redux Store, and resets some properties of state to their initial values
+    diaryEntriesCleanUp = () => {
+        this.setState({
+            date: null,
+            multipleSelection: false,
+            show: "kcal",
+            inputError: ""
+        });
+        if(this.props.diaryEntryCleanUp){
+            this.props.diaryEntryCleanUp();
+        }
+    };
+
     render() {
-        //Doesn't show chart before user submits date(s) of the diaryEntry(/ies) or if there are no diaryEntries for the
-        //submitted dates
+        //Toggles between showing diaryEntry(/ies) for the selected days after the user submits them and showing the
+        //calendar
         let displayChart = 'none';
+        let displayCalendar = 'block';
         if (this.state.data.length !== 0 && this.props.searchedDiaryEntries) {
             displayChart = 'block';
+            displayCalendar = 'none';
         }
 
         //If it is the author of the diaryEntry who views it, this code renders a delete button, else if the user chooses
         //to delete the diaryEntry via the aforementioned delete button it shows a message with the outcome of the delete
         let conditionalDelete;
         let deleteMessage;
+        let messageStyle = {display: "none"};
         if(!Array.isArray(this.props.searchedDiaryEntries) && this.props.searchedDiaryEntries){
-            console.log(this.props.searchedDiaryEntries);
-            let deleteButton = <button className="delete-button" onClick={this.deleteDiaryEntry}>X</button>;
+            let deleteButton = <i onClick={this.deleteDiaryEntry} className="far fa-trash-alt delete-button" />;
             conditionalDelete = localStorage.getItem('username')===this.props.searchedDiaryEntries.authorUsername ? deleteButton : <div />;
         } else if (this.props.deleteMessage && !this.props.searchedDiaryEntries){
-            deleteMessage = <span>{this.props.deleteMessage}</span>;
+            messageStyle = {
+                display: "block",
+                color: "green",
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                msTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+                fontSize: "24px",
+            };
+            displayChart = 'none';
+            displayCalendar = 'none';
+            deleteMessage = <span style={messageStyle}>{this.props.deleteMessage}</span>;
         } else if (this.state.inputError!==""){
-            deleteMessage = <span>{this.state.inputError}</span>;
+            messageStyle = {
+                display: "block",
+                color: "red",
+                position: "fixed",
+                top: "86%",
+                left: "50%",
+                msTransform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -50%)",
+                fontSize: "16px",
+            };
+            deleteMessage = <span style={messageStyle}>{this.state.inputError}</span>;
         }
 
         //Shows either chart for calories or nutritional values which depends on show attribute of state which user changes
@@ -145,52 +188,57 @@ class ViewDiaryEntries extends Component {
         let barsHtml = [];
         if (this.state.show === 'kcal') {
             barsHtml.push(<Bar dataKey="kcal" fill="#18139c" stroke="#18139c" stackId="a" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="goalKcal" fill="none" stroke="#18139c" stackId="a" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
         } else {
             barsHtml.push(<Bar dataKey="carbs" stackId="a" fill="#d67e0f" stroke="#d67e0f" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="goalCarbs" stackId="a" fill="none" stroke="#d67e0f" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="protein" stackId="b" fill="#ab1d1d" stroke="#ab1d1d" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="goalProtein" stackId="b" fill="none" stroke="#ab1d1d" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="fibre" stackId="c" fill="#1c7800" stroke="#1c7800" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="goalFibre" stackId="c" fill="none" stroke="#1c7800" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="fat" stackId="d" fill="saddlebrown" stroke="saddlebrown" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
             barsHtml.push(<Bar dataKey="goalFat" stackId="d" fill="none" stroke="saddlebrown" key={this.getKey()}
-                               isAnimationActive={false}/>);
+                               isAnimationActive={false} maxBarSize={100}/>);
         }
 
+        //Generates text of the button which switches between the graph showing kcal and nutritional values
+        let buttonText = this.state.show==="kcal" ? "Ukázat nutriční hodnoty" : "Ukázat kilokalorie";
+
         return (
-            <div>
-                Select more than one day <input type="checkbox" onClick={this.handleCheckbox}/>
-                <Calendar onChange={this.changeDate} selectRange={this.state.multipleSelection}
-                          value={this.state.date}/>
-                <button onClick={this.handleSubmit}>Submit</button>
-                <button onClick={() => {
-                    console.log(this.state)
-                }}>Debug
-                </button>
+            <div className="view-diaryentries-wrapper">
+                <div className="calendar-wrapper" style={{display: displayCalendar}}>
+                    <div className="range-div">
+                        <span className="range-label">{"Vybrat více než jeden den"}</span>
+                        <label className="container">
+                            <input type="checkbox" onChange={this.handleCheckbox}/>
+                            <span className="checkmark" />
+                        </label>
+                    </div>
+                    <Calendar onChange={this.changeDate} selectRange={this.state.multipleSelection}
+                              value={this.state.date} maxDetail="month"/>
+                    <button className="view-diaryentries-submit" onClick={this.handleSubmit}>{"Ukázat záznamy"}</button>
+                </div>
 
-                <select value={this.state.show} onChange={this.handleSelect}>
-                    <option value="kcal">Energeticka hodnota</option>
-                    <option value="nutrients">Nutricni hodnoty</option>
-                </select>
-
-                <div style={{display: displayChart}}>
+                <div className="chart-wrapper" style={{display: displayChart}}>
+                    <div className="buttons-wrapper">
+                    <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
                     {conditionalDelete}
-                    <BarChart width={730} height={250} data={this.state.data}>
+                    </div>
+                    <BarChart width={900} height={360} margin={{top: 20, right: 85, bottom: 20, left: 25}} data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>
                         <YAxis label={{
                             value: this.state.show === "kcal" ? "kcal" : "g",
-                            position: 'insideLeft', offset: this.state.show === "kcal" ? -15 : 5
+                            position: 'insideLeft', offset: this.state.show === "kcal" ? -20 : 5
                         }}/>
                         <Tooltip content={<CustomTooltip/>}/>
                         <Legend formatter={this.renderLegendText}/>
@@ -198,6 +246,7 @@ class ViewDiaryEntries extends Component {
                     </BarChart>
                     {this.state.tableHtml}
                 </div>
+                <button className="view-diaryentries-back" style={{display: displayChart}} onClick={this.diaryEntriesCleanUp}>{"Zpět"}</button>
                 {deleteMessage}
             </div>
         );
@@ -209,8 +258,8 @@ class ViewDiaryEntries extends Component {
         //The html representing table cells is stored in cells variable and html representing table rows in the rows variable
         let cells;
         let rows = [];
-        let mealNames = ["Snidane", "Dopoledni svacina", "Obed", "Odpoledni svacina", "Vecere", "Ostatni"];
-        let nuritionNames = ["Chod", "Energeticka hodnota", "Bilkoviny", "Sacharidy", "Tuky", "Vlaknina", "Obsah chodu"];
+        let mealNames = ["Snídaně", "Dopolední svačina", "Oběd", "Odpolední svačina", "Večeře", "Ostatní"];
+        let nuritionNames = ["Chod", "Kilokalorie", "Bílkoviny", "Sacharidy", "Tuky", "Vláknina", "Obsah chodu"];
         let meals = data.meals;
         let activities = data.activities;
         //Generates a row for each meal and one for the headers
@@ -224,21 +273,21 @@ class ViewDiaryEntries extends Component {
             //Generates a column for nutritional value, a column for the content of the meal and one column for the name of the meal
             for (let j = 0; j < nuritionNames.length; j++) {
                 if (i === 0) {
-                    cells.push(<th key={this.getKey()}>{nuritionNames[j]}</th>);
+                    cells.push(<th className="view-diaryentries-table-header" key={this.getKey()}>{nuritionNames[j]}</th>);
                 } else if (j === 0) {
-                    cells.push(<td key={this.getKey()}>{mealNames[i - 1]}</td>);
+                    cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealNames[i - 1]}</td>);
                 } else {
                     if (j === 1) {
-                        cells.push(<td key={this.getKey()}>{mealEntry[j - 1][1] + " kcal"}</td>);
+                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealEntry[j - 1][1]}</td>);
                     } else if (j > 1 && j < mealNames.length) {
-                        cells.push(<td key={this.getKey()}>{mealEntry[j - 1][1] + " g"}</td>);
+                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealEntry[j - 1][1] + " g"}</td>);
                     } else {
                         // eslint-disable-next-line
                         mealEntry[j - 1][1].forEach(meal => {
                             mealContent += meal + ", ";
                         });
                         mealContent = mealContent.substring(0, mealContent.length - 2);
-                        cells.push(<td key={this.getKey()}>{mealContent}</td>);
+                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealContent}</td>);
                     }
                 }
             }
@@ -247,13 +296,12 @@ class ViewDiaryEntries extends Component {
 
         //Puts the html tags together
         let table = <div>
-            <table>
+            <table className="view-diaryentries-table">
                 <tbody>{rows}</tbody>
             </table>
-            <div>
-                {"Kalorií spáleno aktivitami: " + activities.kcal}
-                <p/>
-                {"Popis aktivit: " + activities.description}
+            <div className="burned-calories-wrapper">
+                <div className="burned-calories-count">{"Kalorií spáleno aktivitami: " + activities.kcal}</div>
+                <div className="burned-calories-description">{"Popis aktivit: " + activities.description}</div>
             </div>
         </div>;
 
@@ -288,7 +336,7 @@ const CustomTooltip = ({active, payload, label}) => {
         }
 
         return (
-            <div className="custom-tooltip" style={{"background-color": "white"}}>
+            <div className="custom-tooltip" style={{backgroundColor: "white"}}>
                 <p className="label">{`${label}:`}</p>
                 <p>{responseString}</p>
             </div>

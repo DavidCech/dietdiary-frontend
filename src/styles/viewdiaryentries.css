@@ -1,0 +1,252 @@
+.react-calendar {
+    width: 750px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 20px;
+    border: 2px solid var(--primary-color);
+    line-height: 26px;
+    position: fixed;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%
+}
+
+.react-calendar__tile {
+    padding: 22px 8px;
+    font-size: 16px;
+}
+
+.react-calendar__month-view__days__day:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.react-calendar__tile--active {
+    background: var(--primary-color-hover);
+    color: var(--secondary-color);
+}
+
+.react-calendar__navigation__label {
+    font-size: 18px;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: var(--primary-color-hover);
+}
+
+.view-diaryentries-submit, .view-diaryentries-back{
+    color: var(--secondary-color);
+    width: 15%;
+    height: 50px;
+    background-color: var(--primary-color);
+    display: block;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    box-sizing: padding-box;
+    font-size: 22px;
+    left: 50%;
+    top: 77%;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.view-diaryentries-back {
+    top: 88%;
+}
+
+.view-diaryentries-submit:hover, .view-diaryentries-back:hover {
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border: 2px solid var(--primary-color-hover);
+}
+
+.range-div {
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    position: fixed;
+    left: 50%;
+    top: 22%;
+}
+
+/* Customize the label (the container) */
+.container {
+    display: inline-block;
+    margin-left: 12px;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    -ms-transform: translate(0%, -15%);
+    transform: translate(0%, -15%);
+    width: 25px;
+    background-color: var(--primary-color);
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: var(--primary-color-hover);
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+}
+
+.container:hover input:checked ~ .checkmark {
+    background-color: var(--primary-color-hover);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.range-label {
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--secondary-color);
+    vertical-align: middle;
+}
+
+.chart-wrapper {
+    position: fixed;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    border: 2px solid var(--primary-color);
+}
+
+.legend-item-0 {
+    padding-left: 100px;
+}
+
+.recharts-legend-item {
+    padding-top: 10px;
+}
+
+.recharts-wrapper {
+    z-index: -1;
+}
+
+.buttons-wrapper > .delete-button {
+    font-size: 22px;
+    float: right;
+    width: 43px;
+    z-index: 1;
+}
+
+.chart-toggle {
+    font-size: 21px;
+    padding: 5px 5px;
+    border: none;
+    border-right: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    width: 300px;
+    height: 36px;
+    background-color: var(--primary-color);
+    display: inline-block;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 1;
+}
+
+.chart-wrapper > select:hover {
+    cursor: pointer;
+}
+
+.buttons-wrapper {
+    width: 100%;
+    height: 40px;
+}
+
+.chart-toggle:hover{
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border-bottom: 2px solid var(--primary-color-hover);
+    border-right: 2px solid var(--primary-color-hover);
+}
+
+.chart-wrapper > select:focus {
+    outline: none;
+}
+
+.view-diaryentries-table {
+    width: 100%;
+    border-top: 1px solid var(--primary-color);
+    border-collapse: collapse;
+}
+
+.view-diaryentries-table-header {
+    padding: 2px 0;
+    border-top: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.view-diaryentries-table-header + .view-diaryentries-table-header,
+.view-diaryentries-table-cell + .view-diaryentries-table-cell{
+    border-left: 1px solid var(--primary-color);
+}
+
+.view-diaryentries-table-cell {
+    text-align: center;
+    max-width: 350px;
+    padding: 4px 0;
+    border-top: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+    overflow-y: scroll;
+}
+
+.burned-calories-description {
+
+}
+
+.burned-calories-count {
+
+}

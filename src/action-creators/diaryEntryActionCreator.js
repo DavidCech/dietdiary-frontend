@@ -90,7 +90,7 @@ export const deleteDiaryEntry = (diaryEntry) => dispatch => {
 //Sets all properties of diaryEntryReducer in Store to their initial values
 export const diaryEntryCleanUp = () => dispatch => {
     dispatch({
-        type: 'SEACHED_DIARYENTRY_CLEANUP',
+        type: 'SEARCHED_DIARYENTRY_CLEANUP',
     })
 
 };
