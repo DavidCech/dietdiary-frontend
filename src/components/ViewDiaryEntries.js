@@ -27,34 +27,41 @@ class ViewDiaryEntries extends Component {
     state = {
         date: null,
         multipleSelection: false,
-        show: "kcal",
+        show: "nutrition",
         data: [],
         additionalData: null,
         tableHtml: <div/>,
-        inputError: ""
+        inputError: "",
+        reRender: false
     };
 
     //Deals with the reception of props from backend
     componentDidUpdate(prevProps) {
         //Checks if the component receives new props and if so whether it is an array or a single item
-        if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null && Array.isArray(this.props.searchedDiaryEntries)) {
-            //If it is an array the function changes state properties accordingly
-            this.setState({data: this.props.searchedDiaryEntries, tableHtml: <div/>});
-        } else if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null) {
-            if (this.props.searchedDiaryEntries.hasOwnProperty('enrichedData')) {
-                //If it is a single item the function changes state properties accordingly and generates an html table based on the received data
-                this.setState({
-                    data: [this.props.searchedDiaryEntries.data],
-                    additionalData: this.props.searchedDiaryEntries.enrichedData,
-                });
-                this.generateTable(this.props.searchedDiaryEntries.enrichedData);
-            } else {
-                //If it is an empty pattern it shows a message for the user
-                this.setState({
-                    data: [this.props.searchedDiaryEntries],
-                    tableHtml: <div>Žádná data k zobrazení</div>,
-                });
+        if(!this.state.reRender) {
+            if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null && Array.isArray(this.props.searchedDiaryEntries)) {
+                //If it is an array the function changes state properties accordingly
+                this.setState({data: this.props.searchedDiaryEntries, reRender: true, tableHtml: <div/>});
+            } else if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null) {
+                if (this.props.searchedDiaryEntries.hasOwnProperty('enrichedData')) {
+                    //If it is a single item the function changes state properties accordingly and generates an html table based on the received data
+                    this.setState({
+                        data: [this.props.searchedDiaryEntries.data],
+                        additionalData: this.props.searchedDiaryEntries.enrichedData,
+                        reRender: true
+                    });
+                    this.generateTable(this.props.searchedDiaryEntries.enrichedData);
+                } else {
+                    //If it is an empty pattern it shows a message for the user
+                    this.setState({
+                        data: [this.props.searchedDiaryEntries],
+                        reRender: true,
+                        tableHtml: <div className="view-diaryentries-no-data">Žádná data k zobrazení</div>,
+                    });
+                }
             }
+        } else {
+            this.setState({reRender: false})
         }
     }
 
@@ -129,7 +136,8 @@ class ViewDiaryEntries extends Component {
         this.setState({
             date: null,
             multipleSelection: false,
-            show: "kcal",
+            show: "nutrition",
+            additionalData: null,
             inputError: ""
         });
         if(this.props.diaryEntryCleanUp){
@@ -213,6 +221,18 @@ class ViewDiaryEntries extends Component {
         //Generates text of the button which switches between the graph showing kcal and nutritional values
         let buttonText = this.state.show==="kcal" ? "Ukázat nutriční hodnoty" : "Ukázat kilokalorie";
 
+        //Changes the position of the back button depending on whether there's preview to be rendered or not
+        let buttonPosition = "90.5%";
+        if(this.state.data.length>1){
+            buttonPosition = "72%";
+        } else if (this.state.tableHtml.props){
+            if(this.state.tableHtml.props.children==="Žádná data k zobrazení"){
+                buttonPosition = "75%";
+            }
+        }
+
+        console.log(this.state.reRender)
+
         return (
             <div className="view-diaryentries-wrapper">
                 <div className="calendar-wrapper" style={{display: displayCalendar}}>
@@ -233,7 +253,7 @@ class ViewDiaryEntries extends Component {
                     <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
                     {conditionalDelete}
                     </div>
-                    <BarChart width={900} height={360} margin={{top: 20, right: 85, bottom: 20, left: 25}} data={this.state.data}>
+                    <BarChart width={900} height={350} margin={{top: 20, right: 85, bottom: 25, left: 25}} data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>
                         <YAxis label={{
@@ -241,12 +261,12 @@ class ViewDiaryEntries extends Component {
                             position: 'insideLeft', offset: this.state.show === "kcal" ? -20 : 5
                         }}/>
                         <Tooltip content={<CustomTooltip/>}/>
-                        <Legend formatter={this.renderLegendText}/>
+                        <Legend height={30} formatter={this.renderLegendText}/>
                         {barsHtml}
                     </BarChart>
                     {this.state.tableHtml}
                 </div>
-                <button className="view-diaryentries-back" style={{display: displayChart}} onClick={this.diaryEntriesCleanUp}>{"Zpět"}</button>
+                <button className="view-diaryentries-back" style={{display: displayChart, top: buttonPosition}} onClick={this.diaryEntriesCleanUp}>{"Zpět"}</button>
                 {deleteMessage}
             </div>
         );
@@ -273,21 +293,48 @@ class ViewDiaryEntries extends Component {
             //Generates a column for nutritional value, a column for the content of the meal and one column for the name of the meal
             for (let j = 0; j < nuritionNames.length; j++) {
                 if (i === 0) {
-                    cells.push(<th className="view-diaryentries-table-header" key={this.getKey()}>{nuritionNames[j]}</th>);
+                    cells.push(
+                        <th className="view-diaryentries-table-header" key={this.getKey()}>
+                            <div className="table-cell-restriction">
+                                {nuritionNames[j]}
+                            </div>
+                        </th>);
                 } else if (j === 0) {
-                    cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealNames[i - 1]}</td>);
+                    cells.push(
+                        <td className="view-diaryentries-table-cell" key={this.getKey()}>
+                            <div className="table-cell-restriction">
+                                {mealNames[i - 1]}
+                            </div>
+                        </td>);
                 } else {
                     if (j === 1) {
-                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealEntry[j - 1][1]}</td>);
+                        cells.push(
+                            <td className="view-diaryentries-table-cell" key={this.getKey()}>
+                                <div className="table-cell-restriction">
+                                    {mealEntry[j - 1][1]}
+                                </div>
+                            </td>
+                        );
                     } else if (j > 1 && j < mealNames.length) {
-                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealEntry[j - 1][1] + " g"}</td>);
+                        cells.push(
+                            <td className="view-diaryentries-table-cell" key={this.getKey()}>
+                                <div className="table-cell-restriction">
+                                    {mealEntry[j - 1][1] + " g"}
+                                </div>
+                            </td>
+                        );
                     } else {
                         // eslint-disable-next-line
                         mealEntry[j - 1][1].forEach(meal => {
                             mealContent += meal + ", ";
                         });
                         mealContent = mealContent.substring(0, mealContent.length - 2);
-                        cells.push(<td className="view-diaryentries-table-cell" key={this.getKey()}>{mealContent}</td>);
+                        cells.push(
+                            <td className="view-diaryentries-table-cell" key={this.getKey()}>
+                                <div className="table-cell-restriction">
+                                    {mealContent}
+                                </div>
+                            </td>);
                     }
                 }
             }
@@ -359,7 +406,7 @@ const CustomTooltip = ({active, payload, label}) => {
         }
 
         return (
-            <div className="custom-tooltip" style={{"background-color": "white"}}>
+            <div className="custom-tooltip" style={{backgroundColor: "white"}}>
                 <p className="label">{`${label}:`}</p>
                 {html}
             </div>
