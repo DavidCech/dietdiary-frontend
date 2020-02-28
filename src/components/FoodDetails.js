@@ -75,7 +75,7 @@ class FoodDetails extends Component {
         let descriptionDisplay = "block";
         let styleWithIngredients = {};
         if (this.props.searchedFood) {
-            if (this.props.searchedFood.authorUsername) {
+            if (this.props.searchedFood.authorUsername && !this.props.viewOnly) {
                 let deleteButton = <i onClick={this.deleteFood} className="far fa-trash-alt delete-button" />;
                 conditionalDelete = localStorage.getItem('username') === this.props.searchedFood.authorUsername ? deleteButton :
                     <div/>;

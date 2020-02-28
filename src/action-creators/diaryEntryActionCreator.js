@@ -17,6 +17,14 @@ export const createDiaryEntry = (diaryEntry) => dispatch => {
                     message: "Záznam v deníčku úspěšně vytvořen"
                 },
             });
+        } else if (response.status === 403) {
+            dispatch({
+                type: 'CREATE_DIARYENTRY_TO_STATE',
+                payload: {
+                    response: response.status,
+                    message: "Záznam v deníčku pro daný den již existuje, musíte změnit datum"
+                },
+            });
         } else {
             dispatch({
                 type: 'CREATE_DIARYENTRY_TO_STATE',

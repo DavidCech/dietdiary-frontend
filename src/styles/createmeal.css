@@ -130,11 +130,6 @@
     border-top: 1px solid var(--primary-color);
 }
 
-.create-meal-add-ingredient-wrapper > .create-meal-searched-food {
-    position: static;
-    display: block;
-}
-
 .create-meal-add-ingredient-wrapper {
     display: block;
     width: 100%;

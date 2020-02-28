@@ -3,6 +3,9 @@ import Calendar from 'react-calendar';
 import {connect} from 'react-redux';
 import {createDiaryEntry, messageCleanUp} from "../action-creators/diaryEntryActionCreator";
 import SearchFood from "./SearchFood";
+import {searchedFoodCleanUp} from "../action-creators/foodActionCreator";
+import '../styles/creatediaryentry.css';
+import FoodDetails from "./FoodDetails";
 
 //This component serves as GUI for creating dietDiaryEntries
 class CreateDiaryEntry extends Component {
@@ -15,11 +18,14 @@ class CreateDiaryEntry extends Component {
         this.getKey = this.getKey.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeDate = this.changeDate.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
         this.changeGrams = this.changeGrams.bind(this);
         this.addFood = this.addFood.bind(this);
         this.removeFood = this.removeFood.bind(this);
         this.changeActivity = this.changeActivity.bind(this);
+        this.nextMeal = this.nextMeal.bind(this);
+        this.previousMeal = this.previousMeal.bind(this);
+        this.nextStep = this.nextStep.bind(this);
+        this.previousStep = this.previousStep.bind(this);
     }
 
     //Initializes state property of the component
@@ -37,9 +43,12 @@ class CreateDiaryEntry extends Component {
             "dinner": [],
             "other": []
         },
-        mealName: "no_select",
+        step: 1,
+        mealName: "breakfast",
+        mealIndex: 0,
         grams: "",
-        tableHtml: <div/>
+        tableHtml: <div/>,
+        createdMessage: "",
     };
 
     //Generates unique keys for html elements
@@ -53,10 +62,10 @@ class CreateDiaryEntry extends Component {
     }
 
     //Adds food to a given meal array in addedFoods attribute of state, requires mealName and grams to be assigned
-    //values by the user through and html form and then generates an html table with these foods
+    //values by the user through an html form and then it clears seachedFood from Store for rendering purposes
     addFood = (event) => {
         event.preventDefault();
-        if (this.props.searchedFood !== null && this.state.grams !== "" && this.state.mealName !== "no_select") {
+        if (this.props.searchedFood !== null && this.state.grams !== "" && this.props.searchedFoodCleanUp) {
             let keys = Object.keys(this.state.addedFoods);
             let entries = Object.entries(this.state.addedFoods);
             keys.forEach(key => {
@@ -64,10 +73,10 @@ class CreateDiaryEntry extends Component {
                     entries[keys.indexOf(key)][1].push({food: this.props.searchedFood, grams: this.state.grams});
                 }
             });
-            this.generateTable(entries);
-            this.setState({addedFoods: Object.fromEntries(entries)})
+            this.setState({addedFoods: Object.fromEntries(entries), createdMessage: "Jídlo přidáno"});
+            this.props.searchedFoodCleanUp();
         } else {
-            console.log("Tady nemam bejt");
+            this.setState({createdMessage: "Nejprve musíte zadat gramy"});
         }
     };
 
@@ -78,14 +87,61 @@ class CreateDiaryEntry extends Component {
         }
     };
 
-    //Changes attribute mealName in state when user selects one of the options in the html form
-    handleSelect = (event) => {
-        this.setState({mealName: event.target.value})
+    //Changes the meal to which the user is adding their meals to the one after the current one
+    nextMeal = (event) => {
+        let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
+        for(let i = 0; i < mealNames.length-1; i++){
+            if(this.state.mealName===mealNames[i]){
+                this.setState({mealName: mealNames[i+1], mealIndex: i+1});
+                break;
+            }
+        }
+    };
+
+    //Changes the meal to which the user is adding their meals to the one before the current one
+    previousMeal = (event) => {
+        let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
+        for(let i = 1; i < mealNames.length; i++){
+            if(this.state.mealName===mealNames[i]){
+                this.setState({mealName: mealNames[i-1], mealIndex: i-1});
+                break;
+            }
+        }
+    };
+
+    //Adds 1 to the step property of state which determines rendering of the html elements, resets some properties of the
+    //state and generates the preview html table if it is to be rendered in the following step
+    nextStep = (event) => {
+        event.preventDefault();
+        if (this.state.step < 4 && this.props.searchedFoodCleanUp) {
+            this.setState({
+                step: this.state.step + 1,
+                grams: "",
+            });
+            if(this.state.step===3){
+                let entries = Object.entries(this.state.addedFoods);
+                this.generateTable(entries);
+            }
+            this.props.searchedFoodCleanUp();
+        }
+    };
+
+    //Subtracts 1 from the step property of state which determines rendering of the html elements, resets some properties of the
+    //state
+    previousStep = (event) => {
+        event.preventDefault();
+        if (this.state.step > 1 && this.props.searchedFoodCleanUp) {
+            this.setState({
+                step: this.state.step - 1,
+                grams: "",
+            });
+            this.props.searchedFoodCleanUp();
+        }
     };
 
     //Changes attribute date in state when user selects one of the dates in the html form
     changeDate = (date) => {
-        this.setState({date: date});
+        this.setState({date: date, step: 2});
     };
 
     //Checks whether user put in all necessary data, calls function createDiaryEntry from diaryEntryActionCreator
@@ -104,7 +160,7 @@ class CreateDiaryEntry extends Component {
             let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
             this.props.createDiaryEntry(diaryEntry);
         } else {
-            console.log("Musite zadat datum a alespon jedno jidlo")
+            console.log("Musíte zadat datum a alespoň jedno jídlo")
         }
     };
 
@@ -122,6 +178,7 @@ class CreateDiaryEntry extends Component {
         }
     }
 
+    //Cleans the message from state whenever the component dismounts the DOM
     componentWillUnmount() {
         if (this.props.messageCleanUp) {
             this.props.messageCleanUp();
@@ -139,7 +196,7 @@ class CreateDiaryEntry extends Component {
                 }
             })
         } else {
-            console.log("Chyba v zadani aktivit")
+            console.log("Chyba v zadání aktivit")
         }
     };
 
@@ -156,38 +213,107 @@ class CreateDiaryEntry extends Component {
             }
         }
 
+        //Determines whether html elements for adding ingredient will be shown or not and the styling of the message
+        //which is shown to the user after he adds an ingredient to the meal
+        let renderSearchedFood = "none";
+        let renderSearchbar = true;
+        if (this.props.searchedFood && this.state.step === 2) {
+            renderSearchedFood = "block";
+        } else if (this.state.step === 2) {
+            renderSearchbar = false;
+        }
+
+        //Changes the mealName property of state to according String which is to be rendered in its stead
+        let renderNames = ["Snídaně", "Dopolední svačina", "Oběd", "Odpolední svačina", "Večeře", "Ostatní"];
+        let mealRenderName = renderNames[this.state.mealIndex];
+
+        //Defines the style of the html elements which assures rendering only some of them each step as well as styling
+        //of the elements which inform the user about what step they're at
+        let renderStepOne = "block";
+        let renderStepTwo = "none";
+        let renderStepThree = "none";
+        let renderStepFour = "none";
+        let stepStyle = {top: "24%"};
+        let stepButtonStyle = {top: "26%"};
+
+        if(this.state.step===2){
+            stepStyle = {top: "15%"};
+            stepButtonStyle = {top: "17%"};
+            renderStepOne = "none";
+            renderStepTwo = "block";
+        } else if (this.state.step===3){
+            renderStepOne = "none";
+            renderStepThree = "block";
+        } else if (this.state.step===4){
+            stepStyle = {top: "15%"};
+            stepButtonStyle = {top: "20%"};
+            renderStepOne = "none";
+            renderStepFour = "block";
+        }
+
+        let renderGrams = "none";
+        if(this.props.searchedFood){
+            renderGrams = "block";
+        }
+
+        //Determines rendering of the next and previous step buttons
+        let singleButtonStyle = {
+            "display": "block",
+            "msTransform": "translate(-50%, -50%)",
+            "transform": "translate(-50%, -50%)",
+            "left": "50%",
+            ...stepButtonStyle,
+        };
+        let renderNextStep = {display: "none"};
+        let renderPreviousStep = {display: "none"};
+        if (this.state.step >= 4 && this.state.step!==1) {
+            if (this.state.step === 4) {
+                renderPreviousStep = singleButtonStyle;
+            }
+            renderNextStep = {display: "none"};
+        } else if (this.state.step >= 2) {
+            renderNextStep = {...stepButtonStyle, display: "block"};
+            renderPreviousStep = {...stepButtonStyle, display: "block"};
+        }
+
+        //Determines whether to render FoodDetails or an empty span
+        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> : <div style={{display: renderSearchedFood}}/>;
+
+        //Specifies if nextMeal and previousMeal buttons as well as the mealName div should be rendered depending on the
+        //render of the Searchbar/FoodDetails
+        let renderMealName = !renderSearchbar ?  "block" : "none";
+
         return (
             <div>
                 <div className="create-diaryentry-wrapper" style={{display: displayDE}}>
-                    <Calendar onChange={this.changeDate}/>
-                    <button onClick={this.handleSubmit}>Submit</button>
-                    <select value={this.state.mealName} onChange={this.handleSelect}>
-                        <option value="no_select" disabled hidden>Vyberte chod</option>
-                        <option value="breakfast">Snidane</option>
-                        <option value="morning_snack">Dopoledni svacina</option>
-                        <option value="lunch">Obed</option>
-                        <option value="afternoon_snack">Odpoledni svacina</option>
-                        <option value="dinner">Vecere</option>
-                        <option value="other">Ostatni</option>
-                    </select>
-                    <SearchFood addMode={true} disabled={this.state.mealName === "no_select"}/>
-                    {/*Currently being added*/}
+                    <div style={{display:renderStepOne}}><Calendar onChange={this.changeDate}/></div>
+                    <div style={{display: renderMealName}}>
+                        <button className="create-diaryentry-previous-meal" style={{display:renderStepTwo}} onClick={this.previousMeal}>{"Předchozí chod"}</button>
+                        <span className="current-meal" style={{display:renderStepTwo}}>{mealRenderName}</span>
+                        <button className="create-diaryentry-next-meal" style={{display:renderStepTwo}} onClick={this.nextMeal}>{"Další chod"}</button>
+                    </div>
+                    <SearchFood addMode={true} disabled={renderSearchbar}/>
+                    <button className="create-diaryentry-previous-step" onClick={this.previousStep} style={renderPreviousStep}>{"Předchozí krok"}</button>
+                    <button className="create-diaryentry-next-step" onClick={this.nextStep} style={renderNextStep}>{"Další krok"}</button>
+                    <span className="create-meal-step" style={stepStyle}>{"Krok " + this.state.step + "/4"}</span>
                     <div>
-                        {this.props.searchedFood ? this.props.searchedFood.name : "Ahoj"}
                         <form>
-                            <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
-                                   placeholder="Zadejte gramy" value={this.state.grams}/>
-                            <button onClick={this.addFood}>Add</button>
-                            {this.state.tableHtml}
-                            <h3>Denni aktivita</h3>
-                            <input placeholder="Zadejte spalene kalorie" value={this.state.activities.kcal}
-                                   onChange={this.changeActivity} className="kcal"/>
-                            <textarea placeholder="Popis aktivity... napr: jmeno, dodatecne informace pro vas"
+                            <div className="create-diaryentry-add-food-wrapper" style={{display: renderSearchedFood}}>
+                                {foodDetails}
+                                <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
+                                       className="create-diaryentry-grams" placeholder="Zadejte gramy" style={{display:renderGrams}} value={this.state.grams}/>
+                                <button onClick={this.addFood} style={{display:renderGrams}} className="create-diaryentry-add-food">{"Přidat jídlo"}</button>
+                            </div>
+                            <div className="table-preview" style={{display:renderStepFour}}>{this.state.tableHtml}</div>
+                            <h3 style={{display:renderStepThree}}>Denni aktivita</h3>
+                            <input placeholder="Zadejte spálené kalorie" value={this.state.activities.kcal}
+                                   onChange={this.changeActivity} style={{display:renderStepThree}} className="kcal"/>
+                            <textarea placeholder="Popis aktivity"
                                       value={this.state.activities.description} onChange={this.changeActivity}
-                                      className="description"/>
+                                      className="description" style={{display:renderStepThree}}/>
+                            <button style={{display:renderStepFour}}onClick={this.handleSubmit}>Potvrdit</button>
                         </form>
                     </div>
-                    <button onClick={() => console.log(this.state.date)}>Debug</button>
                 </div>
                 <span style={{display: displayMess}}>{messageText}</span>
             </div>
@@ -207,7 +333,7 @@ class CreateDiaryEntry extends Component {
 
         let cells;
         let rows = [];
-        let mealNames = ["Snidane", "Dopoledni svacina", "Obed", "Odpoledni svacina", "Vecere", "Ostatni"];
+        let mealNames = ["Snídaně", "Dopolední svačina", "Oběd", "Odpolední svačina", "Večeře", "Ostatní"];
 
         //i represents number of columns rows and j number of columns, if the meals arrays are empty it generates a
         //placeholder instead
@@ -234,7 +360,7 @@ class CreateDiaryEntry extends Component {
                             </td>
                         )
                     } else if (i === 1) {
-                        cells.push(<td key={this.getKey()}>{"Pridejte chod"}</td>)
+                        cells.push(<td key={this.getKey()}>{"Přidejte chod"}</td>)
                     } else {
                         cells.push(<td key={this.getKey()}/>)
                     }
@@ -246,7 +372,7 @@ class CreateDiaryEntry extends Component {
             if (longest === 0) {
                 cells = [];
                 for (let j = 0; j < 6; j++) {
-                    cells.push(<td key={this.getKey()}>{"Pridejte chod"}</td>)
+                    cells.push(<td key={this.getKey()}>{"Přidejte chod"}</td>)
                 }
                 rows.push(<tr key={this.getKey()}>{cells}</tr>);
             }
@@ -281,6 +407,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     messageCleanUp: () => {
         dispatch(messageCleanUp());
+    },
+    searchedFoodCleanUp: () => {
+        dispatch(searchedFoodCleanUp());
     }
 });
 

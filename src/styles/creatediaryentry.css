@@ -1,0 +1,73 @@
+.create-diaryentry-previous-step, .create-diaryentry-next-step, .create-diaryentry-add-food {
+    color: var(--secondary-color);
+    width: 15%;
+    height: 50px;
+    background-color: var(--primary-color);
+    display: block;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    box-sizing: padding-box;
+    font-size: 22px;
+    left: 50%;
+}
+
+.create-diaryentry-next-step  {
+    left: 50%;
+    top: 17%;
+}
+
+.create-diaryentry-previous-step {
+    left: 35%;
+    top: 17%;
+}
+
+.create-diaryentry-previous-step:hover, .create-diaryentry-next-step:hover, .create-diaryentry-add-food:hover {
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    border: 2px solid var(--primary-color-hover);
+}
+
+.create-diaryentry-grams {
+    color: var(--secondary-color);
+    display: block;
+    height: 36px;
+    line-height: 24px;
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    background-color: white;
+    left: 50%;
+    top: 84%;
+    width: 30%;
+    position: static;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.create-diaryentry-add-food {
+    position: static;
+    margin-top: 40px;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.create-diaryentry-add-food-wrapper {
+    display: block;
+    width: 100%;
+    background: none;
+    line-height: 36px;
+    font-size: 22px;
+    position: fixed;
+    vertical-align: middle;
+    left: 50%;
+    top: 30%;
+}
+
+.create-diaryentry-add-food-wrapper > .food-details-wrapper{
+    position: static;
+    margin-bottom: 40px;
+}
+

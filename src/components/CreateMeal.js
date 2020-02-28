@@ -71,6 +71,8 @@ class CreateMeal extends Component {
             this.setState({ingredients: newIngredients, createdMessage: "Ingredience přidána", grams: ""});
             this.generatePreview(newIngredients);
             this.props.searchedFoodCleanUp();
+        } else {
+            this.setState({createdMessage: "Musíte zadat gramy jídla"});
         }
 
     };
@@ -221,6 +223,19 @@ class CreateMeal extends Component {
                     fontSize: "16px",
                 };
             }
+        } else if (this.state.createdMessage !== "" && this.state.step === 2){
+            if (this.state.createdMessage === "Musíte zadat gramy jídla") {
+                messageStyle = {
+                    display: "block",
+                    color: "red",
+                    position: "fixed",
+                    top: "69%",
+                    left: "50%",
+                    msTransform: "translate(-50%, -50%)",
+                    transform: "translate(-50%, -50%)",
+                    fontSize: "16px",
+                };
+            }
         }
 
         //Defines the style of the html elements which assures rendering only some of them each step as well as styling
@@ -270,7 +285,7 @@ class CreateMeal extends Component {
         }
 
         //Determines whether to render FoodDetails or an empty span
-        let foodDetails = this.props.searchedFood ? <FoodDetails/> : <div style={{display: renderSearchedFood}}/>;
+        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> : <div style={{display: renderSearchedFood}}/>;
 
         return (
             <div className="create-meal-wrapper">
