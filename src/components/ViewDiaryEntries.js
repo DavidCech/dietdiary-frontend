@@ -298,7 +298,8 @@ class ViewDiaryEntries extends Component {
                             <div className="table-cell-restriction">
                                 {nuritionNames[j]}
                             </div>
-                        </th>);
+                        </th>
+                    );
                 } else if (j === 0) {
                     cells.push(
                         <td className="view-diaryentries-table-cell" key={this.getKey()}>

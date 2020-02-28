@@ -1,4 +1,5 @@
-.create-diaryentry-previous-step, .create-diaryentry-next-step, .create-diaryentry-add-food {
+.create-diaryentry-previous-step, .create-diaryentry-next-step, .create-diaryentry-add-food, .create-diaryentry-submit,
+.create-diaryentry-previous-meal, .create-diaryentry-next-meal {
     color: var(--secondary-color);
     width: 15%;
     height: 50px;
@@ -13,17 +14,39 @@
     left: 50%;
 }
 
-.create-diaryentry-next-step  {
-    left: 50%;
+.create-diaryentry-next-meal  {
     top: 17%;
 }
 
-.create-diaryentry-previous-step {
+.create-diaryentry-previous-meal {
     left: 35%;
     top: 17%;
 }
 
-.create-diaryentry-previous-step:hover, .create-diaryentry-next-step:hover, .create-diaryentry-add-food:hover {
+.create-diaryentry-next-step {
+    z-index: 6;
+    top: 50%;
+    left: 85%;
+    -ms-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+}
+
+.create-diaryentry-previous-step {
+    left: 15%;
+    top: 50%;
+    -ms-transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%);
+}
+
+.create-diaryentry-submit{
+    position: relative;
+    left: 23.5%;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.create-diaryentry-previous-step:hover, .create-diaryentry-next-step:hover, .create-diaryentry-add-food:hover,
+.create-diaryentry-submit:hover, .create-diaryentry-previous-meal:hover, .create-diaryentry-next-meal:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
@@ -71,3 +94,146 @@
     margin-bottom: 40px;
 }
 
+.create-diaryentry-form > .description {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    font-size: 16px;
+    position: fixed;
+    height: 250px;
+    overflow-y: scroll;
+    border: 2px solid var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+    top: 58%;
+    padding: 5px 10px 5px 10px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.create-diaryentry-form > .kcal {
+    color: var(--secondary-color);
+    display: block;
+    width: 30%;
+    height: 40px;
+    line-height: 36px;
+    font-size: 20px;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background-color: white;
+    left: 50%;
+    top: 39%;
+}
+
+.choose-date-label {
+    font-size: 20px;
+    position: fixed;
+    display: block;
+    color: var(--primary-color);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 25%;
+    z-index: 5;
+}
+
+.table-preview-wrapper {
+    display: block;
+    width: 95%;
+    background: none;
+    font-size: 20px;
+    position: fixed;
+    vertical-align: middle;
+    left: 50%;
+    top: 37.5%;
+    max-height: 600px;
+    -ms-transform: translate(-23.5%, 0);
+    transform: translate(-23.5%, 0);
+}
+
+.table-restriction {
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    margin: 0 auto;
+    margin-bottom: 45px;
+    max-height: 450px;
+    width: 965px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.create-diaryentry-preview-table {
+    width: 950px;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border: 2px solid var(--primary-color);
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.create-diaryentry-table-header {
+    padding: 2px 0;
+    border: 1px solid var(--primary-color);
+}
+
+
+.create-diaryentry-table-cell {
+    padding: 0;
+    border: 1px solid var(--primary-color);
+}
+
+
+.create-diaryentry-table-cell > .table-cell-restriction,
+.create-diaryentry-table-header > .table-cell-restriction {
+    max-width: 160px;
+    max-height: 45px;
+    overflow-y: scroll;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.create-diaryentry-table-cell > .table-cell-restriction {
+    padding: 4px 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.table-cell-restriction > .delete-button {
+    background-color: white;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+    width: 22px;
+    position: relative;
+    margin-left: 5px;
+}
+
+.table-cell-restriction > .delete-button:hover {
+    color: var(--primary-color-hover);
+}
+
+.meal-adding-explanation {
+    color: var(--secondary-color);
+    font-size: 12px;
+    text-align: justify;
+    position: fixed;
+    left: 50%;
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: 33%;
+    z-index: -5;
+    width: 30%;
+}
+
+.create-diaryentry-calories-label {
+    top: 34%;
+    position: fixed;
+    left: 35%
+}

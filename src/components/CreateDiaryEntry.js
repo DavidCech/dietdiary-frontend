@@ -90,9 +90,9 @@ class CreateDiaryEntry extends Component {
     //Changes the meal to which the user is adding their meals to the one after the current one
     nextMeal = (event) => {
         let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
-        for(let i = 0; i < mealNames.length-1; i++){
-            if(this.state.mealName===mealNames[i]){
-                this.setState({mealName: mealNames[i+1], mealIndex: i+1});
+        for (let i = 0; i < mealNames.length - 1; i++) {
+            if (this.state.mealName === mealNames[i]) {
+                this.setState({mealName: mealNames[i + 1], mealIndex: i + 1});
                 break;
             }
         }
@@ -101,9 +101,9 @@ class CreateDiaryEntry extends Component {
     //Changes the meal to which the user is adding their meals to the one before the current one
     previousMeal = (event) => {
         let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
-        for(let i = 1; i < mealNames.length; i++){
-            if(this.state.mealName===mealNames[i]){
-                this.setState({mealName: mealNames[i-1], mealIndex: i-1});
+        for (let i = 1; i < mealNames.length; i++) {
+            if (this.state.mealName === mealNames[i]) {
+                this.setState({mealName: mealNames[i - 1], mealIndex: i - 1});
                 break;
             }
         }
@@ -118,7 +118,7 @@ class CreateDiaryEntry extends Component {
                 step: this.state.step + 1,
                 grams: "",
             });
-            if(this.state.step===3){
+            if (this.state.step === 3) {
                 let entries = Object.entries(this.state.addedFoods);
                 this.generateTable(entries);
             }
@@ -172,12 +172,6 @@ class CreateDiaryEntry extends Component {
         this.setState({addedFoods: Object.fromEntries(entries)})
     };
 
-    //Probably does nothing serves debugging purposes
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.searchedFood !== prevProps.searchedFood && this.state.mealName !== "no_select") {
-        }
-    }
-
     //Cleans the message from state whenever the component dismounts the DOM
     componentWillUnmount() {
         if (this.props.messageCleanUp) {
@@ -195,8 +189,6 @@ class CreateDiaryEntry extends Component {
                     [event.target.className]: event.target.value
                 }
             })
-        } else {
-            console.log("Chyba v zadání aktivit")
         }
     };
 
@@ -230,43 +222,36 @@ class CreateDiaryEntry extends Component {
         //Defines the style of the html elements which assures rendering only some of them each step as well as styling
         //of the elements which inform the user about what step they're at
         let renderStepOne = "block";
-        let renderStepTwo = "none";
         let renderStepThree = "none";
         let renderStepFour = "none";
-        let stepStyle = {top: "24%"};
-        let stepButtonStyle = {top: "26%"};
+        let stepStyle = {top: "21%"};
+        let stepButtonStyle = {top: "50%"};
 
-        if(this.state.step===2){
+        if (this.state.step === 2) {
             stepStyle = {top: "15%"};
-            stepButtonStyle = {top: "17%"};
             renderStepOne = "none";
-            renderStepTwo = "block";
-        } else if (this.state.step===3){
+        } else if (this.state.step === 3) {
+            stepStyle = {top: "29.5%"};
             renderStepOne = "none";
             renderStepThree = "block";
-        } else if (this.state.step===4){
-            stepStyle = {top: "15%"};
-            stepButtonStyle = {top: "20%"};
+        } else if (this.state.step === 4) {
+            stepStyle = {top: "28%"};
             renderStepOne = "none";
             renderStepFour = "block";
         }
 
         let renderGrams = "none";
-        if(this.props.searchedFood){
+        if (this.props.searchedFood) {
             renderGrams = "block";
         }
 
         //Determines rendering of the next and previous step buttons
         let singleButtonStyle = {
-            "display": "block",
-            "msTransform": "translate(-50%, -50%)",
-            "transform": "translate(-50%, -50%)",
-            "left": "50%",
             ...stepButtonStyle,
         };
         let renderNextStep = {display: "none"};
         let renderPreviousStep = {display: "none"};
-        if (this.state.step >= 4 && this.state.step!==1) {
+        if (this.state.step >= 4 && this.state.step !== 1) {
             if (this.state.step === 4) {
                 renderPreviousStep = singleButtonStyle;
             }
@@ -277,41 +262,87 @@ class CreateDiaryEntry extends Component {
         }
 
         //Determines whether to render FoodDetails or an empty span
-        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> : <div style={{display: renderSearchedFood}}/>;
+        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> :
+            <div style={{display: renderSearchedFood}}/>;
 
-        //Specifies if nextMeal and previousMeal buttons as well as the mealName div should be rendered depending on the
-        //render of the Searchbar/FoodDetails
-        let renderMealName = !renderSearchbar ?  "block" : "none";
+        //Changes the text of the label which guides user through the steps of creating a DiaryEntry
+        let renderStepLabel = "";
+        if(this.state.step===2){
+            renderStepLabel = " - " + mealRenderName;
+        } else if (this.state.step===3) {
+            renderStepLabel = " - Denní aktivita";
+        } else if (this.state.step===4){
+            renderStepLabel = " - Přehled a potvrzení";
+        }
+
+        //Determines rendering of the guide which tells the user how to create a Diary Entry
+        let renderGuide = "none";
+        if(this.state.step===2 && !renderSearchbar){
+            renderGuide = "block";
+        }
+
+        let renderNextMeal = "none";
+        let renderPreviousMeal = "none";
+        if(this.state.step===2) {
+            renderNextMeal = "block";
+            renderPreviousMeal = "block";
+            if (this.state.mealName === "breakfast") {
+                renderPreviousMeal = "none";
+            } else if (this.state.mealName === "other") {
+                renderNextMeal = "none";
+            }
+        }
 
         return (
             <div>
                 <div className="create-diaryentry-wrapper" style={{display: displayDE}}>
-                    <div style={{display:renderStepOne}}><Calendar onChange={this.changeDate}/></div>
-                    <div style={{display: renderMealName}}>
-                        <button className="create-diaryentry-previous-meal" style={{display:renderStepTwo}} onClick={this.previousMeal}>{"Předchozí chod"}</button>
-                        <span className="current-meal" style={{display:renderStepTwo}}>{mealRenderName}</span>
-                        <button className="create-diaryentry-next-meal" style={{display:renderStepTwo}} onClick={this.nextMeal}>{"Další chod"}</button>
+                    <div className="choose-date-label"
+                         style={{display: renderStepOne}}>{"Vyberte den, pro který chcete vytvořit zápis"}</div>
+                    <div style={{display: renderStepOne}}><Calendar onChange={this.changeDate}/></div>
+                    <div>
+                        <button className="create-diaryentry-previous-meal" style={{display: renderPreviousMeal}}
+                                onClick={this.previousMeal}>{"Předchozí chod"}</button>
+                        <button className="create-diaryentry-next-meal" style={{display: renderNextMeal}}
+                                onClick={this.nextMeal}>{"Další chod"}</button>
                     </div>
                     <SearchFood addMode={true} disabled={renderSearchbar}/>
-                    <button className="create-diaryentry-previous-step" onClick={this.previousStep} style={renderPreviousStep}>{"Předchozí krok"}</button>
-                    <button className="create-diaryentry-next-step" onClick={this.nextStep} style={renderNextStep}>{"Další krok"}</button>
-                    <span className="create-meal-step" style={stepStyle}>{"Krok " + this.state.step + "/4"}</span>
+                    <div style={{display: renderGuide}} className="meal-adding-explanation">
+                        {"Vysvětlivka: Talčítky Předchozí chod a Další chod přepínate mezi chody," +
+                        " aktuální chod vídíte u ukazatele kroku. Jídlo k danému chodu přidáte tím, že " +
+                        "jej nejprve vyhledáte a pak zadáte, kolik gramů daného jídla chcete k AKTUÁLNÍMU chodu přidat. " +
+                        "Není povinné ke každému chodu přidat jídlo."}
+                    </div>
+                    <button className="create-diaryentry-previous-step" onClick={this.previousStep}
+                            style={renderPreviousStep}>{"Předchozí krok"}</button>
+                    <button className="create-diaryentry-next-step" onClick={this.nextStep}
+                            style={renderNextStep}>{"Další krok"}</button>
+                    <span className="create-meal-step" style={stepStyle}>{"Krok " + this.state.step + "/4" + renderStepLabel}</span>
                     <div>
-                        <form>
+                        <form className="create-diaryentry-form">
                             <div className="create-diaryentry-add-food-wrapper" style={{display: renderSearchedFood}}>
                                 {foodDetails}
                                 <input onChange={this.changeGrams} disabled={this.props.searchedFood === null}
-                                       className="create-diaryentry-grams" placeholder="Zadejte gramy" style={{display:renderGrams}} value={this.state.grams}/>
-                                <button onClick={this.addFood} style={{display:renderGrams}} className="create-diaryentry-add-food">{"Přidat jídlo"}</button>
+                                       className="create-diaryentry-grams" placeholder="Zadejte gramy"
+                                       style={{display: renderGrams}} value={this.state.grams}/>
+                                <button onClick={this.addFood} style={{display: renderGrams}}
+                                        className="create-diaryentry-add-food">{"Přidat jídlo"}</button>
                             </div>
-                            <div className="table-preview" style={{display:renderStepFour}}>{this.state.tableHtml}</div>
-                            <h3 style={{display:renderStepThree}}>Denni aktivita</h3>
+                            <div className="create-diaryentry-calories-label voluntary" style={{display: renderStepThree}}>
+                                {"Tento krok je nepovinný"}
+                            </div>
                             <input placeholder="Zadejte spálené kalorie" value={this.state.activities.kcal}
-                                   onChange={this.changeActivity} style={{display:renderStepThree}} className="kcal"/>
+                                   onChange={this.changeActivity} style={{display: renderStepThree}} className="kcal"/>
                             <textarea placeholder="Popis aktivity"
                                       value={this.state.activities.description} onChange={this.changeActivity}
-                                      className="description" style={{display:renderStepThree}}/>
-                            <button style={{display:renderStepFour}}onClick={this.handleSubmit}>Potvrdit</button>
+                                      className="description" style={{display: renderStepThree}}/>
+                            <div className="table-preview-wrapper" style={{display: renderStepFour}}>
+                                <div className="table-restriction">
+                                    {this.state.tableHtml}
+                                </div>
+                                <button style={{display: renderStepFour}} onClick={this.handleSubmit}
+                                        className="create-diaryentry-submit">Potvrdit
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -341,7 +372,13 @@ class CreateDiaryEntry extends Component {
             cells = [];
             for (let j = 0; j < entries.length; j++) {
                 if (i === 0) {
-                    cells.push(<th key={this.getKey()}>{mealNames[j]}</th>);
+                    cells.push(
+                        <th className="create-diaryentry-table-header" key={this.getKey()}>
+                            <div className="table-cell-restriction">
+                                {mealNames[j]}
+                            </div>
+                        </th>
+                    );
                 } else {
                     if (entries[j][1].length > i - 1) {
                         let inflection;
@@ -350,19 +387,27 @@ class CreateDiaryEntry extends Component {
                         } else if (parseInt(entries[j][1][i - 1].grams) > 1 && parseInt(entries[j][1][i - 1].grams) < 5) {
                             inflection = "gramy"
                         } else {
-                            inflection = "gramu"
+                            inflection = "gramů"
                         }
 
                         cells.push(
-                            <td key={this.getKey()}>
-                                {entries[j][1][i - 1].food.name + " " + entries[j][1][i - 1].grams + " " + inflection}
-                                <RemoveFoodButton foodIndex={[j, i - 1]} onClick={this.removeFood}/>
+                            <td className="create-diaryentry-table-cell" key={this.getKey()}>
+                                <div className="table-cell-restriction">
+                                    {entries[j][1][i - 1].food.name + " " + entries[j][1][i - 1].grams + " " + inflection}
+                                    <RemoveFoodButton foodIndex={[j, i - 1]} onClick={this.removeFood}/>
+                                </div>
                             </td>
                         )
                     } else if (i === 1) {
-                        cells.push(<td key={this.getKey()}>{"Přidejte chod"}</td>)
+                        cells.push(
+                            <td className="create-diaryentry-table-cell" key={this.getKey()}>
+                                <div className="table-cell-restriction">
+                                    {"Přidejte chod"}
+                                </div>
+                            </td>
+                        )
                     } else {
-                        cells.push(<td key={this.getKey()}/>)
+                        cells.push(<td className="create-diaryentry-table-cell" key={this.getKey()} />)
                     }
                 }
             }
@@ -372,13 +417,19 @@ class CreateDiaryEntry extends Component {
             if (longest === 0) {
                 cells = [];
                 for (let j = 0; j < 6; j++) {
-                    cells.push(<td key={this.getKey()}>{"Přidejte chod"}</td>)
+                    cells.push(
+                        <td className="create-diaryentry-table-cell" key={this.getKey()}>
+                            <div className="table-cell-restriction">
+                                {"Přidejte chod"}
+                            </div>
+                        </td>
+                    )
                 }
                 rows.push(<tr key={this.getKey()}>{cells}</tr>);
             }
         }
 
-        let table = <table>
+        let table = <table className="create-diaryentry-preview-table">
             <tbody>{rows}</tbody>
         </table>;
 
@@ -395,7 +446,7 @@ class RemoveFoodButton extends Component {
 
     render() {
         return (
-            <button onClick={this.handleClick}>X</button>
+            <i onClick={this.handleClick} className="far fa-trash-alt delete-button"/>
         )
     }
 }
