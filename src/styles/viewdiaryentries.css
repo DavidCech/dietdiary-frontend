@@ -165,10 +165,6 @@
     padding-left: 100px;
 }
 
-.recharts-legend-item {
-    padding-top: 10px;
-}
-
 .recharts-wrapper {
     z-index: -1;
 }
@@ -259,4 +255,12 @@
     max-width: 300px;
     max-height: 35px;
     overflow-y: scroll;
+}
+
+.recharts-legend-item{
+    margin-top: 20px;
+}
+
+.legend-item-5, .legend-item-7, .legend-item-1, .legend-item-3 {
+    display: none !important;
 }

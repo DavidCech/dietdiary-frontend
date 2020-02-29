@@ -32,36 +32,29 @@ class ViewDiaryEntries extends Component {
         additionalData: null,
         tableHtml: <div/>,
         inputError: "",
-        reRender: false
     };
 
     //Deals with the reception of props from backend
     componentDidUpdate(prevProps) {
         //Checks if the component receives new props and if so whether it is an array or a single item
-        if(!this.state.reRender) {
-            if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null && Array.isArray(this.props.searchedDiaryEntries)) {
-                //If it is an array the function changes state properties accordingly
-                this.setState({data: this.props.searchedDiaryEntries, reRender: true, tableHtml: <div/>});
-            } else if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null) {
-                if (this.props.searchedDiaryEntries.hasOwnProperty('enrichedData')) {
-                    //If it is a single item the function changes state properties accordingly and generates an html table based on the received data
-                    this.setState({
-                        data: [this.props.searchedDiaryEntries.data],
-                        additionalData: this.props.searchedDiaryEntries.enrichedData,
-                        reRender: true
-                    });
-                    this.generateTable(this.props.searchedDiaryEntries.enrichedData);
-                } else {
-                    //If it is an empty pattern it shows a message for the user
-                    this.setState({
-                        data: [this.props.searchedDiaryEntries],
-                        reRender: true,
-                        tableHtml: <div className="view-diaryentries-no-data">Žádná data k zobrazení</div>,
-                    });
-                }
+        if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null && Array.isArray(this.props.searchedDiaryEntries)) {
+            //If it is an array the function changes state properties accordingly
+            this.setState({data: this.props.searchedDiaryEntries, tableHtml: <div/>});
+        } else if (this.props.searchedDiaryEntries !== prevProps.searchedDiaryEntries && this.props.searchedDiaryEntries !== null) {
+            if (this.props.searchedDiaryEntries.hasOwnProperty('enrichedData')) {
+                //If it is a single item the function changes state properties accordingly and generates an html table based on the received data
+                this.setState({
+                    data: [this.props.searchedDiaryEntries.data],
+                    additionalData: this.props.searchedDiaryEntries.enrichedData,
+                });
+                this.generateTable(this.props.searchedDiaryEntries.enrichedData);
+            } else {
+                //If it is an empty pattern it shows a message for the user
+                this.setState({
+                    data: [this.props.searchedDiaryEntries],
+                    tableHtml: <div className="view-diaryentries-no-data">Žádná data k zobrazení</div>,
+                });
             }
-        } else {
-            this.setState({reRender: false})
         }
     }
 
@@ -98,35 +91,22 @@ class ViewDiaryEntries extends Component {
     //Changes the show property of state which determines whether the BarChart will show information about calories or
     //nutritional values
     handleSelect = (event) => {
-        if(this.state.show==="kcal"){
+        if (this.state.show === "kcal") {
             this.setState({show: "nutrition"})
-        }else {
+        } else {
             this.setState({show: "kcal"})
         }
 
     };
 
-    //Alters the Legend text used by the BarChart, it prevents the Legend from rendering items used by the BarChart to
-    //render Bars representing user's goal
-    renderLegendText(value, entry) {
-        let noRender = ["goalKcal", "goalProtein", "goalCarbs", "goalFibre", "goalFat"];
-        const {color} = entry;
-
-        if (value && !noRender.includes(value)) {
-            return <span style={{color}}>{value}</span>;
-        }
-
-        return null;
-    }
-
     //Cleans up searched diaryEntries from the Redux Store
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.diaryEntriesCleanUp();
     }
 
     //Deletes the given diaryEntry if it is the author of the diaryEntry who calls this function
     deleteDiaryEntry = () => {
-        if(this.props.deleteDiaryEntry){
+        if (this.props.deleteDiaryEntry) {
             this.props.deleteDiaryEntry(this.props.searchedDiaryEntries);
         }
     };
@@ -140,7 +120,7 @@ class ViewDiaryEntries extends Component {
             additionalData: null,
             inputError: ""
         });
-        if(this.props.diaryEntryCleanUp){
+        if (this.props.diaryEntryCleanUp) {
             this.props.diaryEntryCleanUp();
         }
     };
@@ -160,10 +140,11 @@ class ViewDiaryEntries extends Component {
         let conditionalDelete;
         let deleteMessage;
         let messageStyle = {display: "none"};
-        if(!Array.isArray(this.props.searchedDiaryEntries) && this.props.searchedDiaryEntries){
-            let deleteButton = <i onClick={this.deleteDiaryEntry} className="far fa-trash-alt delete-button" />;
-            conditionalDelete = localStorage.getItem('username')===this.props.searchedDiaryEntries.authorUsername ? deleteButton : <div />;
-        } else if (this.props.deleteMessage && !this.props.searchedDiaryEntries){
+        if (!Array.isArray(this.props.searchedDiaryEntries) && this.props.searchedDiaryEntries) {
+            let deleteButton = <i onClick={this.deleteDiaryEntry} className="far fa-trash-alt delete-button"/>;
+            conditionalDelete = localStorage.getItem('username') === this.props.searchedDiaryEntries.authorUsername ? deleteButton :
+                <div/>;
+        } else if (this.props.deleteMessage && !this.props.searchedDiaryEntries) {
             messageStyle = {
                 display: "block",
                 color: "green",
@@ -177,7 +158,7 @@ class ViewDiaryEntries extends Component {
             displayChart = 'none';
             displayCalendar = 'none';
             deleteMessage = <span style={messageStyle}>{this.props.deleteMessage}</span>;
-        } else if (this.state.inputError!==""){
+        } else if (this.state.inputError !== "") {
             messageStyle = {
                 display: "block",
                 color: "red",
@@ -219,19 +200,17 @@ class ViewDiaryEntries extends Component {
         }
 
         //Generates text of the button which switches between the graph showing kcal and nutritional values
-        let buttonText = this.state.show==="kcal" ? "Ukázat nutriční hodnoty" : "Ukázat kilokalorie";
+        let buttonText = this.state.show === "kcal" ? "Ukázat nutriční hodnoty" : "Ukázat kilokalorie";
 
         //Changes the position of the back button depending on whether there's preview to be rendered or not
         let buttonPosition = "90.5%";
-        if(this.state.data.length>1){
+        if (this.state.data.length > 1) {
             buttonPosition = "72%";
-        } else if (this.state.tableHtml.props){
-            if(this.state.tableHtml.props.children==="Žádná data k zobrazení"){
+        } else if (this.state.tableHtml.props) {
+            if (this.state.tableHtml.props.children === "Žádná data k zobrazení") {
                 buttonPosition = "75%";
             }
         }
-
-        console.log(this.state.reRender)
 
         return (
             <div className="view-diaryentries-wrapper">
@@ -240,7 +219,7 @@ class ViewDiaryEntries extends Component {
                         <span className="range-label">{"Vybrat více než jeden den"}</span>
                         <label className="container">
                             <input type="checkbox" onChange={this.handleCheckbox}/>
-                            <span className="checkmark" />
+                            <span className="checkmark"/>
                         </label>
                     </div>
                     <Calendar onChange={this.changeDate} selectRange={this.state.multipleSelection}
@@ -250,10 +229,11 @@ class ViewDiaryEntries extends Component {
 
                 <div className="chart-wrapper" style={{display: displayChart}}>
                     <div className="buttons-wrapper">
-                    <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
-                    {conditionalDelete}
+                        <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
+                        {conditionalDelete}
                     </div>
-                    <BarChart width={900} height={350} margin={{top: 20, right: 85, bottom: 25, left: 25}} data={this.state.data}>
+                    <BarChart width={900} height={350} margin={{top: 20, right: 85, bottom: 25, left: 25}}
+                              data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>
                         <YAxis label={{
@@ -261,12 +241,13 @@ class ViewDiaryEntries extends Component {
                             position: 'insideLeft', offset: this.state.show === "kcal" ? -20 : 5
                         }}/>
                         <Tooltip content={<CustomTooltip/>}/>
-                        <Legend height={30} formatter={this.renderLegendText}/>
+                        <Legend height={30}/>
                         {barsHtml}
                     </BarChart>
                     {this.state.tableHtml}
                 </div>
-                <button className="view-diaryentries-back" style={{display: displayChart, top: buttonPosition}} onClick={this.diaryEntriesCleanUp}>{"Zpět"}</button>
+                <button className="view-diaryentries-back" style={{display: displayChart, top: buttonPosition}}
+                        onClick={this.diaryEntriesCleanUp}>{"Zpět"}</button>
                 {deleteMessage}
             </div>
         );

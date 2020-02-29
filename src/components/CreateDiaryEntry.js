@@ -62,7 +62,8 @@ class CreateDiaryEntry extends Component {
     }
 
     //Adds food to a given meal array in addedFoods attribute of state, requires mealName and grams to be assigned
-    //values by the user through an html form and then it clears seachedFood from Store for rendering purposes
+    //values by the user through an html form and then it clears seachedFood from Store for rendering purposes, finally
+    //it generates a message which communicates to user whether the action was successful
     addFood = (event) => {
         event.preventDefault();
         if (this.props.searchedFood !== null && this.state.grams !== "" && this.props.searchedFoodCleanUp) {
@@ -73,7 +74,17 @@ class CreateDiaryEntry extends Component {
                     entries[keys.indexOf(key)][1].push({food: this.props.searchedFood, grams: this.state.grams});
                 }
             });
-            this.setState({addedFoods: Object.fromEntries(entries), createdMessage: "Jídlo přidáno"});
+
+            let renderNames = ["snídaně", "dopolední svačiny", "obědu", "odpolední svačiny", "večeře", "ostatního"];
+            let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
+            let messageMealName = "";
+            for (let i = 0; i < renderNames.length; i++) {
+                if(mealNames[i]===this.state.mealName){
+                    messageMealName = renderNames[i];
+                    break;
+                }
+            }
+            this.setState({addedFoods: Object.fromEntries(entries), createdMessage: "Jídlo přidáno do " + messageMealName});
             this.props.searchedFoodCleanUp();
         } else {
             this.setState({createdMessage: "Nejprve musíte zadat gramy"});
@@ -117,6 +128,7 @@ class CreateDiaryEntry extends Component {
             this.setState({
                 step: this.state.step + 1,
                 grams: "",
+                createdMessage: ""
             });
             if (this.state.step === 3) {
                 let entries = Object.entries(this.state.addedFoods);
@@ -130,12 +142,14 @@ class CreateDiaryEntry extends Component {
     //state
     previousStep = (event) => {
         event.preventDefault();
-        if (this.state.step > 1 && this.props.searchedFoodCleanUp) {
+        if (this.state.step > 1 && this.props.searchedFoodCleanUp && this.props.messageCleanUp) {
             this.setState({
                 step: this.state.step - 1,
                 grams: "",
+                createdMessage: ""
             });
             this.props.searchedFoodCleanUp();
+            this.props.messageCleanUp();
         }
     };
 
@@ -145,7 +159,8 @@ class CreateDiaryEntry extends Component {
     };
 
     //Checks whether user put in all necessary data, calls function createDiaryEntry from diaryEntryActionCreator
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
         //Checks whether user put in some courses into the entry, if not isEmpty is true and vice versa
         let entries = Object.entries(this.state.addedFoods);
         let isEmpty = true;
@@ -160,7 +175,8 @@ class CreateDiaryEntry extends Component {
             let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
             this.props.createDiaryEntry(diaryEntry);
         } else {
-            console.log("Musíte zadat datum a alespoň jedno jídlo")
+            this.setState({createdMessage: "Musíte zadat datum a alespoň jedno jídlo, prázdný záznam je výchozí " +
+                    "nastavení, tudíž ho není třeba zapisovat."});
         }
     };
 
@@ -193,18 +209,6 @@ class CreateDiaryEntry extends Component {
     };
 
     render() {
-        //Changes the render from form to message about the outcome after the user submits data
-        let displayDE = "block";
-        let displayMess = "none";
-        let messageText;
-        if (this.props.message) {
-            if (this.props.message !== "") {
-                messageText = this.props.message;
-                displayDE = "none";
-                displayMess = "block";
-            }
-        }
-
         //Determines whether html elements for adding ingredient will be shown or not and the styling of the message
         //which is shown to the user after he adds an ingredient to the meal
         let renderSearchedFood = "none";
@@ -261,29 +265,30 @@ class CreateDiaryEntry extends Component {
             renderPreviousStep = {...stepButtonStyle, display: "block"};
         }
 
-        //Determines whether to render FoodDetails or an empty span
+        //Dictates whether to render FoodDetails or an empty span
         let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> :
             <div style={{display: renderSearchedFood}}/>;
 
         //Changes the text of the label which guides user through the steps of creating a DiaryEntry
         let renderStepLabel = "";
-        if(this.state.step===2){
+        if (this.state.step === 2) {
             renderStepLabel = " - " + mealRenderName;
-        } else if (this.state.step===3) {
+        } else if (this.state.step === 3) {
             renderStepLabel = " - Denní aktivita";
-        } else if (this.state.step===4){
+        } else if (this.state.step === 4) {
             renderStepLabel = " - Přehled a potvrzení";
         }
 
         //Determines rendering of the guide which tells the user how to create a Diary Entry
         let renderGuide = "none";
-        if(this.state.step===2 && !renderSearchbar){
+        if (this.state.step === 2 && !renderSearchbar) {
             renderGuide = "block";
         }
 
+        //Decides whether the Next Meal and Previous Meal buttons will be rendered or not
         let renderNextMeal = "none";
         let renderPreviousMeal = "none";
-        if(this.state.step===2) {
+        if (this.state.step === 2) {
             renderNextMeal = "block";
             renderPreviousMeal = "block";
             if (this.state.mealName === "breakfast") {
@@ -291,6 +296,64 @@ class CreateDiaryEntry extends Component {
             } else if (this.state.mealName === "other") {
                 renderNextMeal = "none";
             }
+        }
+
+        //Defines rendering of the messages which communicate to the user if they have made a mistake while putting in
+        //data into the forms or if they have put the data in successfully
+        let deleteMessage;
+        let displayDE = "block";
+        let messageStyle = {display: "none", position: "fixed", msTransform: "translate(-50%, 0)", transform: "translate(-50%, 0)", fontSize: "16px"};
+        if (this.props.message && this.state.step===4) {
+            if (this.props.message === "Záznam v deníčku úspěšně vytvořen") {
+                messageStyle = {
+                    ...messageStyle,
+                    display: "block",
+                    color: "green",
+                    top: "50%",
+                    left: "50%",
+                    msTransform: "translate(-50%, -50%)",
+                    transform: "translate(-50%, -50%)",
+                    fontSize: "24px",
+                };
+                displayDE = 'none';
+            } else {
+                messageStyle = {
+                    ...messageStyle,
+                    display: "block",
+                    color: "red",
+                    top: "32%",
+                    left: "50%",
+                };
+            }
+            deleteMessage = this.props.message;
+        } else if (this.state.createdMessage !== "") {
+            if(this.state.createdMessage === "Nejprve musíte zadat gramy" && renderSearchbar && this.state.step===2) {
+                messageStyle = {
+                    ...messageStyle,
+                    display: "block",
+                    color: "red",
+                    top: "26%",
+                    left: "50%",
+                };
+            } else if (this.state.createdMessage === "Musíte zadat datum a alespoň jedno jídlo, prázdný" +
+                " záznam je výchozí nastavení, tudíž ho není třeba zapisovat." && this.state.step===4){
+                messageStyle = {
+                    ...messageStyle,
+                    display: "block",
+                    color: "red",
+                    top: "32%",
+                    left: "50%",
+                };
+            } else if (this.state.step===2 && !renderSearchbar){
+                messageStyle = {
+                    ...messageStyle,
+                    display: "block",
+                    color: "green",
+                    top: "79%",
+                    left: "50%",
+                };
+            }
+            deleteMessage = this.state.createdMessage;
         }
 
         return (
@@ -316,7 +379,8 @@ class CreateDiaryEntry extends Component {
                             style={renderPreviousStep}>{"Předchozí krok"}</button>
                     <button className="create-diaryentry-next-step" onClick={this.nextStep}
                             style={renderNextStep}>{"Další krok"}</button>
-                    <span className="create-meal-step" style={stepStyle}>{"Krok " + this.state.step + "/4" + renderStepLabel}</span>
+                    <span className="create-meal-step"
+                          style={stepStyle}>{"Krok " + this.state.step + "/4" + renderStepLabel}</span>
                     <div>
                         <form className="create-diaryentry-form">
                             <div className="create-diaryentry-add-food-wrapper" style={{display: renderSearchedFood}}>
@@ -327,7 +391,8 @@ class CreateDiaryEntry extends Component {
                                 <button onClick={this.addFood} style={{display: renderGrams}}
                                         className="create-diaryentry-add-food">{"Přidat jídlo"}</button>
                             </div>
-                            <div className="create-diaryentry-calories-label voluntary" style={{display: renderStepThree}}>
+                            <div className="create-diaryentry-calories-label voluntary"
+                                 style={{display: renderStepThree}}>
                                 {"Tento krok je nepovinný"}
                             </div>
                             <input placeholder="Zadejte spálené kalorie" value={this.state.activities.kcal}
@@ -346,7 +411,7 @@ class CreateDiaryEntry extends Component {
                         </form>
                     </div>
                 </div>
-                <span style={{display: displayMess}}>{messageText}</span>
+                <span style={messageStyle}>{deleteMessage}</span>
             </div>
         )
     }
@@ -407,7 +472,7 @@ class CreateDiaryEntry extends Component {
                             </td>
                         )
                     } else {
-                        cells.push(<td className="create-diaryentry-table-cell" key={this.getKey()} />)
+                        cells.push(<td className="create-diaryentry-table-cell" key={this.getKey()}/>)
                     }
                 }
             }
