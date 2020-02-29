@@ -50,8 +50,10 @@ class Register extends Component {
             this.props.register(credentials);
             this.setState({inputError: ""})
         } else {
-            this.setState({inputError: "Špatné údaje: musíte vyplnit nezabrané uživatelské jméno, nezabranou validní" +
-                    " emailovou adresu a hesla se musí shodovat"})
+            this.setState({
+                inputError: "Špatné údaje: musíte vyplnit nezabrané uživatelské jméno, nezabranou validní" +
+                    " emailovou adresu a hesla se musí shodovat"
+            })
         }
     };
 
@@ -73,7 +75,7 @@ class Register extends Component {
                 displayForm = "none";
                 displayMess = "block";
             }
-        } else if (this.state.inputError!==""){
+        } else if (this.state.inputError !== "") {
             messageText = this.state.inputError;
             displayMess = "block";
         }
@@ -81,7 +83,7 @@ class Register extends Component {
         //Changes the color and position of the message depending on the outcome
         let messColor = "red";
         let position = "23%";
-        if(this.props.registered){
+        if (this.props.registered) {
             messColor = "green";
             position = "50%"
         }
@@ -92,9 +94,11 @@ class Register extends Component {
                     <form className="register-form">
                         <input placeholder="E-mail" value={this.state.email} onChange={this.updateInputValue}
                                className="email" autoComplete="new-email"/>
-                        <input placeholder="Uživatelské jméno" value={this.state.username} onChange={this.updateInputValue}
+                        <input placeholder="Uživatelské jméno" value={this.state.username}
+                               onChange={this.updateInputValue}
                                className="username" autoComplete="new-username"/>
-                        <input placeholder="Heslo" value={this.state.password} onChange={this.updateInputValue} type="password"
+                        <input placeholder="Heslo" value={this.state.password} onChange={this.updateInputValue}
+                               type="password"
                                className="password" autoComplete="new-password"/>
                         <input placeholder="Heslo znovu" value={this.state.repassword} type="password"
                                onChange={this.updateInputValue}
@@ -102,7 +106,8 @@ class Register extends Component {
                         <button onClick={this.handleSubmit} className="register-button">Potvrdit</button>
                     </form>
                 </div>
-                <span className="register-message" style={{display: displayMess, color: messColor, top: position}}>{messageText}</span>
+                <span className="register-message"
+                      style={{display: displayMess, color: messColor, top: position}}>{messageText}</span>
             </div>
         )
     }

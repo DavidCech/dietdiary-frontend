@@ -83,8 +83,7 @@
     top: 90%;
 }
 
-
-.create-ingredient-submit-button:hover{
+.create-ingredient-submit-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);

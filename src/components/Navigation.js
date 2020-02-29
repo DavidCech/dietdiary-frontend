@@ -35,17 +35,27 @@ class Navigation extends Component {
         return (
             <div className="navigation-wrapper">
                 <NavLink className="navigation-item" to="/createIngredient"
-                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[6]}}> Vytvořit ingredienci </NavLink>
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[6]}}> Vytvořit
+                    ingredienci </NavLink>
                 <NavLink className="navigation-item" to="/createMeal"
-                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[5]}}> Vytvořit pokrm </NavLink>
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[5]}}> Vytvořit
+                    pokrm </NavLink>
                 <NavLink className="navigation-item" to="/createDiaryEntry"
-                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[4]}}> Vytvořit zápis dne </NavLink>
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[4]}}> Vytvořit
+                    zápis dne </NavLink>
                 <NavLink className="navigation-item" to="/viewDiaryEntries"
-                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[3]}}> Prohlédnout si zápis dne </NavLink>
-                <NavLink className="navigation-item" to="/" style={{left: leftMargin, backgroundColor: currentUrlDisplay[0]}}> Vyhledat jídla </NavLink>
-                <NavLink className="navigation-item" to="/login" style={{left: leftMargin, backgroundColor: currentUrlDisplay[1]}}> {loginText} </NavLink>
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[3]}}> Prohlédnout
+                    si zápis dne </NavLink>
+                <NavLink className="navigation-item" to="/"
+                         style={{left: leftMargin, backgroundColor: currentUrlDisplay[0]}}> Vyhledat jídla </NavLink>
+                <NavLink className="navigation-item" to="/login"
+                         style={{left: leftMargin, backgroundColor: currentUrlDisplay[1]}}> {loginText} </NavLink>
                 <NavLink className="navigation-item" to="/register"
-                         style={{display: antiSecret, left: leftMargin, backgroundColor: currentUrlDisplay[2]}}> Zaregistrovat se </NavLink>
+                         style={{
+                             display: antiSecret,
+                             left: leftMargin,
+                             backgroundColor: currentUrlDisplay[2]
+                         }}> Zaregistrovat se </NavLink>
                 <span style={{display: secret}}>{<UserInformation/>}</span>
             </div>
         )

@@ -76,25 +76,25 @@ class FoodDetails extends Component {
         let styleWithIngredients = {};
         if (this.props.searchedFood) {
             if (this.props.searchedFood.authorUsername && !this.props.viewOnly) {
-                let deleteButton = <i onClick={this.deleteFood} className="far fa-trash-alt delete-button" />;
+                let deleteButton = <i onClick={this.deleteFood} className="far fa-trash-alt delete-button"/>;
                 conditionalDelete = localStorage.getItem('username') === this.props.searchedFood.authorUsername ? deleteButton :
                     <div/>;
             }
             if (this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu") {
                 styleWithIngredients = {top: "40%"};
                 descriptionDisplay = "none";
-            } else if (this.props.searchedFood.ingredients.length > 0){
-                    if(this.props.searchedFood.ingredients.length<=2){
-                        styleWithIngredients = {top: "27%"};
-                    } else {
-                        styleWithIngredients = {top: "23%"};
-                    }
+            } else if (this.props.searchedFood.ingredients.length > 0) {
+                if (this.props.searchedFood.ingredients.length <= 2) {
+                    styleWithIngredients = {top: "27%"};
+                } else {
+                    styleWithIngredients = {top: "23%"};
+                }
             }
             if (this.props.searchedFood.ingredients.length > 0 &&
                 (this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu")) {
                 styleWithIngredients = {top: "31.2%"};
-            } else if((this.props.searchedFood.ingredients.length === 0 &&
-                !(this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu"))){
+            } else if ((this.props.searchedFood.ingredients.length === 0 &&
+                !(this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu"))) {
                 styleWithIngredients = {top: "32%"};
             }
         }
@@ -110,7 +110,8 @@ class FoodDetails extends Component {
                 <div className="food-details-ingredients-wrapper" style={{display: showIngredients}}>
                     {this.state.html}
                 </div>
-                <span className="food-details-label" style={{textAlign: "center"}}>{"Kalorické údaje na 100 gramů"}</span>
+                <span className="food-details-label"
+                      style={{textAlign: "center"}}>{"Kalorické údaje na 100 gramů"}</span>
                 <table className="food-details-table">
                     <tbody>
                     <tr>
@@ -143,7 +144,8 @@ class FoodDetails extends Component {
                     </tr>
                     </tbody>
                 </table>
-                <div key={this.getKey()} style={{display:descriptionDisplay}} className="food-details-description">{this.props.searchedFood.desc}</div>
+                <div key={this.getKey()} style={{display: descriptionDisplay}}
+                     className="food-details-description">{this.props.searchedFood.desc}</div>
                 {conditionalDelete}
             </div>
         )

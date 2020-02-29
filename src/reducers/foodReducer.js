@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
                 ...state,
                 foods: action.payload.foodArray,
                 last: action.payload.last,
-                empty: action.payload.foodArray.length===0,
+                empty: action.payload.foodArray.length === 0,
             };
         case 'SEARCH_CLEANUP':
             return {
@@ -24,17 +24,17 @@ export default function (state = initialState, action) {
                 searchedFood: null,
             };
         case 'SEARCHED_FOOD_TO_STATE':
-            return{
+            return {
                 ...state,
                 searchedFood: action.payload,
             };
         case 'SEARCHED_FOOD_CLEANUP':
-            return{
+            return {
                 ...state,
                 searchedFood: null
             };
         case 'DELETE':
-            return{
+            return {
                 ...state,
                 searchedFood: null,
                 deleteMessage: action.payload,

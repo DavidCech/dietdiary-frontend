@@ -60,7 +60,7 @@
 }
 
 .create-meal-submit {
-    left:0;
+    left: 0;
     position: static;
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
@@ -73,7 +73,7 @@
     transform: translate(-50%, -50%);
 }
 
-.create-meal-button:hover, .create-meal-submit:hover, .create-meal-add-ingredient:hover{
+.create-meal-button:hover, .create-meal-submit:hover, .create-meal-add-ingredient:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
@@ -126,7 +126,7 @@
     overflow-y: scroll;
 }
 
-.create-meal-ingredient + .create-meal-ingredient{
+.create-meal-ingredient + .create-meal-ingredient {
     border-top: 1px solid var(--primary-color);
 }
 
@@ -142,17 +142,17 @@
     top: 30%;
 }
 
-.create-meal-add-ingredient-wrapper > .food-details-wrapper{
+.create-meal-add-ingredient-wrapper > .food-details-wrapper {
     position: static;
     margin-bottom: 40px;
 }
 
-.create-meal-add-ingredient-wrapper > .grams, .create-meal-add-ingredient-wrapper > .create-meal-add-ingredient{
+.create-meal-add-ingredient-wrapper > .grams, .create-meal-add-ingredient-wrapper > .create-meal-add-ingredient {
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
 }
 
-.create-meal-ingredient{
+.create-meal-ingredient {
     height: 32px;
     line-height: 32px;
     vertical-align: middle;

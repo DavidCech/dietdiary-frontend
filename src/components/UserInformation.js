@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 class UserInformation extends Component {
 
     render() {
-        let content = localStorage.getItem('logged') ? <p className="user-information-p">{localStorage.getItem('email')}</p> : "";
+        let content = localStorage.getItem('logged') ?
+            <p className="user-information-p">{localStorage.getItem('email')}</p> : "";
         return (
             <div>
                 {content}

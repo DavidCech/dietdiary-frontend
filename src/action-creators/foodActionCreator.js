@@ -56,7 +56,7 @@ export const deleteFood = (food) => dispatch => {
         },
         body: JSON.stringify(food)
     }).then(response => {
-        if(response.status === 200) {
+        if (response.status === 200) {
             dispatch({
                 type: 'DELETE',
                 payload: "Úspěšně smazáno",

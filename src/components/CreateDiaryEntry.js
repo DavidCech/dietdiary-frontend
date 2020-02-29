@@ -79,12 +79,15 @@ class CreateDiaryEntry extends Component {
             let mealNames = ["breakfast", "morning_snack", "lunch", "afternoon_snack", "dinner", "other"];
             let messageMealName = "";
             for (let i = 0; i < renderNames.length; i++) {
-                if(mealNames[i]===this.state.mealName){
+                if (mealNames[i] === this.state.mealName) {
                     messageMealName = renderNames[i];
                     break;
                 }
             }
-            this.setState({addedFoods: Object.fromEntries(entries), createdMessage: "Jídlo přidáno do " + messageMealName});
+            this.setState({
+                addedFoods: Object.fromEntries(entries),
+                createdMessage: "Jídlo přidáno do " + messageMealName
+            });
             this.props.searchedFoodCleanUp();
         } else {
             this.setState({createdMessage: "Nejprve musíte zadat gramy"});
@@ -175,8 +178,10 @@ class CreateDiaryEntry extends Component {
             let diaryEntry = {meals: this.state.addedFoods, date: this.state.date, activities: this.state.activities};
             this.props.createDiaryEntry(diaryEntry);
         } else {
-            this.setState({createdMessage: "Musíte zadat datum a alespoň jedno jídlo, prázdný záznam je výchozí " +
-                    "nastavení, tudíž ho není třeba zapisovat."});
+            this.setState({
+                createdMessage: "Musíte zadat datum a alespoň jedno jídlo, prázdný záznam je výchozí " +
+                    "nastavení, tudíž ho není třeba zapisovat."
+            });
         }
     };
 
@@ -302,8 +307,14 @@ class CreateDiaryEntry extends Component {
         //data into the forms or if they have put the data in successfully
         let deleteMessage;
         let displayDE = "block";
-        let messageStyle = {display: "none", position: "fixed", msTransform: "translate(-50%, 0)", transform: "translate(-50%, 0)", fontSize: "16px"};
-        if (this.props.message && this.state.step===4) {
+        let messageStyle = {
+            display: "none",
+            position: "fixed",
+            msTransform: "translate(-50%, 0)",
+            transform: "translate(-50%, 0)",
+            fontSize: "16px"
+        };
+        if (this.props.message && this.state.step === 4) {
             if (this.props.message === "Záznam v deníčku úspěšně vytvořen") {
                 messageStyle = {
                     ...messageStyle,
@@ -327,7 +338,7 @@ class CreateDiaryEntry extends Component {
             }
             deleteMessage = this.props.message;
         } else if (this.state.createdMessage !== "") {
-            if(this.state.createdMessage === "Nejprve musíte zadat gramy" && renderSearchbar && this.state.step===2) {
+            if (this.state.createdMessage === "Nejprve musíte zadat gramy" && renderSearchbar && this.state.step === 2) {
                 messageStyle = {
                     ...messageStyle,
                     display: "block",
@@ -336,7 +347,7 @@ class CreateDiaryEntry extends Component {
                     left: "50%",
                 };
             } else if (this.state.createdMessage === "Musíte zadat datum a alespoň jedno jídlo, prázdný" +
-                " záznam je výchozí nastavení, tudíž ho není třeba zapisovat." && this.state.step===4){
+                " záznam je výchozí nastavení, tudíž ho není třeba zapisovat." && this.state.step === 4) {
                 messageStyle = {
                     ...messageStyle,
                     display: "block",
@@ -344,7 +355,7 @@ class CreateDiaryEntry extends Component {
                     top: "32%",
                     left: "50%",
                 };
-            } else if (this.state.step===2 && !renderSearchbar){
+            } else if (this.state.step === 2 && !renderSearchbar) {
                 messageStyle = {
                     ...messageStyle,
                     display: "block",

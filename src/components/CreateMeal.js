@@ -223,7 +223,7 @@ class CreateMeal extends Component {
                     fontSize: "16px",
                 };
             }
-        } else if (this.state.createdMessage !== "" && this.state.step === 2){
+        } else if (this.state.createdMessage !== "" && this.state.step === 2) {
             if (this.state.createdMessage === "Musíte zadat gramy jídla") {
                 messageStyle = {
                     display: "block",
@@ -285,7 +285,8 @@ class CreateMeal extends Component {
         }
 
         //Determines whether to render FoodDetails or an empty span
-        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> : <div style={{display: renderSearchedFood}}/>;
+        let foodDetails = this.props.searchedFood ? <FoodDetails viewOnly={true}/> :
+            <div style={{display: renderSearchedFood}}/>;
 
         return (
             <div className="create-meal-wrapper">

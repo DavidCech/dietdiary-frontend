@@ -1,4 +1,4 @@
-.password, .email{
+.password, .email {
     color: var(--secondary-color);
     display: block;
     width: 30%;
@@ -15,7 +15,7 @@
     left: 50%;
 }
 
-.login-form > .email{
+.login-form > .email {
     top: 42%;
 }
 
@@ -44,20 +44,19 @@
     top: 58%;
 }
 
-.login-button:hover{
+.login-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
-::-webkit-input-placeholder,  ::placeholder {
+::-webkit-input-placeholder, ::placeholder {
     color: var(--placeholder);
 }
 
 :-ms-input-placeholder {
     color: var(--placeholder);
 }
-
 
 .login-error {
     display: block;

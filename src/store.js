@@ -8,9 +8,9 @@ import {composeWithDevTools} from "redux-devtools-extension";
 
 //Combines all the reducers from ./reducers into rootReducer which is single Object
 let rootReducer = combineReducers({
-        authReducer,
-        diaryEntryReducer,
-        foodReducer,
+    authReducer,
+    diaryEntryReducer,
+    foodReducer,
 });
 
 //Composes Enhancers with given arguments

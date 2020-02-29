@@ -31,7 +31,7 @@ class SearchFood extends Component {
     handleChange = (event) => {
         if (!this.props.disabled) {
             let foodInput = event.target.value;
-            this.setState({foodInput: foodInput, currentPage:0});
+            this.setState({foodInput: foodInput, currentPage: 0});
 
             this.debouncedDispatch(foodInput, 0)
         }
@@ -54,7 +54,7 @@ class SearchFood extends Component {
     //Clears the item searchedFood from Redux Store and therefore toggles the view from viewing the searched food back to
     //the search bar
     cleanSearchedFood = () => {
-        if(this.props.searchedFoodCleanUp){
+        if (this.props.searchedFoodCleanUp) {
             this.props.searchedFoodCleanUp();
         }
     };
@@ -114,7 +114,7 @@ class SearchFood extends Component {
         } else if (this.props.deleteMessage && !this.props.searchedFood) {
             searchedFoodHtml = this.props.deleteMessage;
         }
-        let showSearchBar = showSearchedFood==="none" ? "block" : "none";
+        let showSearchBar = showSearchedFood === "none" ? "block" : "none";
 
         //Hides the entire component if disabled is true
         let selectCheck = this.props.disabled ? "none" : "block";
@@ -127,7 +127,8 @@ class SearchFood extends Component {
                     <button style={{display: previousPageDisplay}} className="previous-page-button"
                             onClick={this.previousPage}> {"Předchozí výsledky"}
                     </button>
-                    <button style={{display: nextPageDisplay}} className="next-page-button" onClick={this.nextPage}> {"Další výsledky"}
+                    <button style={{display: nextPageDisplay}} className="next-page-button"
+                            onClick={this.nextPage}> {"Další výsledky"}
                     </button>
                 </div>
 

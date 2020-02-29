@@ -34,7 +34,7 @@
     background: var(--primary-color-hover);
 }
 
-.view-diaryentries-submit, .view-diaryentries-back{
+.view-diaryentries-submit, .view-diaryentries-back {
     color: var(--secondary-color);
     width: 15%;
     height: 50px;
@@ -202,7 +202,7 @@
     height: 40px;
 }
 
-.chart-toggle:hover{
+.chart-toggle:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border-bottom: 2px solid var(--primary-color-hover);
@@ -226,7 +226,7 @@
 }
 
 .view-diaryentries-table-header + .view-diaryentries-table-header,
-.view-diaryentries-table-cell + .view-diaryentries-table-cell{
+.view-diaryentries-table-cell + .view-diaryentries-table-cell {
     border-left: 1px solid var(--primary-color);
 }
 
@@ -248,7 +248,7 @@
 }
 
 .view-diaryentries-no-data {
-    padding: 0 0 15px 10px ;
+    padding: 0 0 15px 10px;
 }
 
 .table-cell-restriction {
@@ -257,7 +257,7 @@
     overflow-y: scroll;
 }
 
-.recharts-legend-item{
+.recharts-legend-item {
     margin-top: 20px;
 }
 
