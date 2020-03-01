@@ -13,3 +13,7 @@
 *:focus {
     outline: none;
 }
+
+body {
+    margin:0;
+}

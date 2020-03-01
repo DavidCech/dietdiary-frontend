@@ -233,7 +233,7 @@ class CreateDiaryEntry extends Component {
         let renderStepOne = "block";
         let renderStepThree = "none";
         let renderStepFour = "none";
-        let stepStyle = {top: "21%"};
+        let stepStyle = {top: "19%"};
         let stepButtonStyle = {top: "50%"};
 
         if (this.state.step === 2) {
