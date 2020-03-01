@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
                 ...state,
                 foods: action.payload.foodArray,
                 last: action.payload.last,
-                empty: action.payload.foodArray.length === 0,
+                isEmpty: action.payload.foodArray.length === 0,
             };
         case 'SEARCH_CLEANUP':
             return {

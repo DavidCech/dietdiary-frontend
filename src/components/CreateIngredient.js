@@ -123,7 +123,7 @@ class CreateIngredient extends Component {
                     <span className="create-ingredient-message voluntary">{"Nepovinné pole"}</span>
                     <textarea placeholder="Popis" className="desc" onChange={this.changeInputText}
                               value={this.state.desc}/>
-                    <button className="create-ingredient-submit-button" onClick={this.handleSubmit}>Submit</button>
+                    <button className="create-ingredient-submit-button" onClick={this.handleSubmit}>Potvrdit</button>
                 </form>
                 <span style={messageStyle} className="create-ingredient-message error">{this.state.errorMessage}</span>
             </div>
