@@ -11,7 +11,7 @@ import CreateDiaryEntry from "./CreateDiaryEntry";
 import ViewDiaryEntries from "./ViewDiaryEntries";
 
 //This component assigns which components should be displayed at various urls
-class ForumRouter extends Component {
+class DietDiaryRouter extends Component {
 
     render() {
         return (
@@ -30,4 +30,4 @@ class ForumRouter extends Component {
     }
 }
 
-export default ForumRouter;
+export default DietDiaryRouter;

@@ -1,6 +1,5 @@
 //Stores information regarding diaryEntries received from the database
 const initialState = {
-    createEntryFoods: [],
     searchedDiaryEntries: null,
     deleteMessage: "",
     createMessage: "",
@@ -15,7 +14,7 @@ export default function (state = initialState, action) {
             };
         case 'SEARCHED_DIARYENTRY_CLEANUP':
             return {
-                createEntryFoods: [],
+                ...state,
                 searchedDiaryEntries: null,
             };
         case 'DELETE':

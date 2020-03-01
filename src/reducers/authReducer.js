@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
             };
         case 'LOG_OUT':
             return {
+                ...state,
                 loggedIn: false,
                 username: "",
                 email: "",

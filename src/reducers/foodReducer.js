@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
             };
         case 'SEARCH_CLEANUP':
             return {
+                ...state,
                 foods: [],
                 last: false,
                 isEmpty: false,
