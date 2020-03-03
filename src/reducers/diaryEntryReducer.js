@@ -15,6 +15,8 @@ export default function (state = initialState, action) {
         case 'SEARCHED_DIARYENTRY_CLEANUP':
             return {
                 ...state,
+                createMessage: null,
+                deleteMessage: null,
                 searchedDiaryEntries: null,
             };
         case 'DELETE':

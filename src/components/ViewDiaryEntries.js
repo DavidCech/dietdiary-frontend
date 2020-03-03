@@ -309,7 +309,7 @@ class ViewDiaryEntries extends Component {
                         cells.push(
                             <td className="view-diaryentries-table-cell" key={this.getKey()}>
                                 <div className="table-cell-restriction">
-                                    {mealEntry[j - 1][1]}
+                                    {Math.round(mealEntry[j - 1][1])}
                                 </div>
                             </td>
                         );
@@ -317,7 +317,7 @@ class ViewDiaryEntries extends Component {
                         cells.push(
                             <td className="view-diaryentries-table-cell" key={this.getKey()}>
                                 <div className="table-cell-restriction">
-                                    {mealEntry[j - 1][1] + " g"}
+                                    {Math.round(mealEntry[j - 1][1]) + " g"}
                                 </div>
                             </td>
                         );
@@ -375,9 +375,9 @@ const CustomTooltip = ({active, payload, label}) => {
         let responseString = "";
         //Checks whether the user overflowed their current goal as to not show negative values of consumed calories
         if (payload[1].value < 0) {
-            responseString = `Energie: Zkonzumováno ${payload[0].value} kcal, více než cíl o ${-payload[1].value} kcal`;
+            responseString = `Energie: Zkonzumováno ${Math.round(payload[0].value)} kcal, více než cíl o ${-Math.round(payload[1].value)} kcal`;
         } else {
-            responseString = `Energie: Zkonzumováno ${payload[0].value} kcal, do cíle zbývá ${payload[1].value} kcal`;
+            responseString = `Energie: Zkonzumováno ${Math.round(payload[0].value)} kcal, do cíle zbývá ${Math.round(payload[1].value)} kcal`;
         }
 
         return (
@@ -394,12 +394,12 @@ const CustomTooltip = ({active, payload, label}) => {
             //Checks whether the user overflowed their current goal as to not show negative values of consumed grams
             if (payload[i + 1].value < 0) {
                 html.push(<p
-                    key={i}>{`${names[i / 2]}: Zkonzumováno ${payload[i].value} ${handleInflection(payload[i].value)},
-              více než cíl o ${-payload[i + 1].value} ${handleInflection(payload[i + 1].value)}`}</p>);
+                    key={i}>{`${names[i / 2]}: Zkonzumováno ${Math.round(payload[i].value)} ${handleInflection(payload[i].value)},
+              více než cíl o ${-Math.round(payload[i + 1].value)} ${handleInflection(payload[i + 1].value)}`}</p>);
             } else {
                 html.push(<p
-                    key={i}>{`${names[i / 2]}: Zkonzumováno ${payload[i].value} ${handleInflection(payload[i].value)},
-              do cíle zbývá ${payload[i + 1].value} ${handleInflection(payload[i + 1].value)}`}</p>);
+                    key={i}>{`${names[i / 2]}: Zkonzumováno ${Math.round(payload[i].value)} ${handleInflection(payload[i].value)},
+              do cíle zbývá ${Math.round(payload[i + 1].value)} ${handleInflection(payload[i + 1].value)}`}</p>);
             }
         }
 
