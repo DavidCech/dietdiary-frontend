@@ -71,3 +71,28 @@
     color: red;
     opacity: 0.75;
 }
+
+@media only screen and (max-height: 900px) {
+    .password, .email {
+        width: 40%;
+    }
+
+    .login-form > .email {
+        top: 40%;
+    }
+
+    .login-form > .password {
+        top: 50%;
+    }
+
+
+    .login-button {
+        top: 60%;
+        width: 24%;
+    }
+
+
+    .login-error {
+        top: 32%;
+    }
+}

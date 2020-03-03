@@ -6,9 +6,15 @@ import '../styles/createingredient.css';
 //This component serves as GUI for creating ingredients
 class CreateIngredient extends Component {
 
-    //Initializes functions and in this class
+    //Initializes functions in this class and tracks the window resolution
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
         this.changeInputText = this.changeInputText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -93,6 +99,9 @@ class CreateIngredient extends Component {
         //Renders message only when there is one and hides the form if the submit was successful
         let displayForm = "block";
         let messageStyle = {display: "none", color: "red", top: "15%"};
+        if(this.state.height<=900){
+            messageStyle = {...messageStyle, top: "13%", width: "40%"};
+        }
         if (this.state.errorMessage !== "") {
             messageStyle = {...messageStyle, display: "block"};
             if (this.state.errorMessage === "Úspěšně vytvořeno") {

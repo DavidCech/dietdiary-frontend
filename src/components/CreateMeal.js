@@ -11,6 +11,11 @@ class CreateMeal extends Component {
     //Initializes functions, variable keyCount in this class and initial state
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         this.keyCount = 0;
         this.getKey = this.getKey.bind(this);
@@ -183,6 +188,9 @@ class CreateMeal extends Component {
                 transform: "translate(-50%, -50%)",
                 fontSize: "20px",
             };
+            if(this.state.height<=900){
+                messageStyle = {...messageStyle, top: "90%"};
+            }
         }
 
         //Renders message only when there is one and hides the form if the submit was successful
@@ -235,6 +243,9 @@ class CreateMeal extends Component {
                     transform: "translate(-50%, -50%)",
                     fontSize: "16px",
                 };
+                if(this.state.height<=900){
+                    messageStyle = {...messageStyle, top: "74%"};
+                }
             }
         }
 
@@ -258,6 +269,7 @@ class CreateMeal extends Component {
             }
             renderStepOne = "none";
         }
+
 
         //Determines whether the buttons for switching steps will be rendered or not and how they will be rendered
         //(centered or next to one another)

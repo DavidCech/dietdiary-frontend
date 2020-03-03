@@ -117,3 +117,15 @@
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
+
+
+@media only screen and (max-height: 900px) {
+    .food-details-ingredients-wrapper {
+        max-height: 60px;
+    }
+
+    .food-details-description {
+        max-height: 65px;
+    }
+
+}

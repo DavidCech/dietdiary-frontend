@@ -6,9 +6,14 @@ import '../styles/register.css';
 //This component serves as a form for creating new accounts in the database
 class Register extends Component {
 
-    //Initializes functions
+    //Initializes functions and tracks the window resolution
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         this.updateInputValue = this.updateInputValue.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +43,6 @@ class Register extends Component {
         //eslint-disable-next-line
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        console.log("tu");
         if (this.state.password !== "" && this.state.repassword !== "" && this.state.password === this.state.repassword
             && this.state.username !== "" && this.state.email !== "" && re.test(String(this.state.email))) {
             let credentials = {
@@ -82,7 +86,7 @@ class Register extends Component {
 
         //Changes the color and position of the message depending on the outcome
         let messColor = "red";
-        let position = "23%";
+        let position = "22%";
         if (this.props.registered) {
             messColor = "green";
             position = "50%"

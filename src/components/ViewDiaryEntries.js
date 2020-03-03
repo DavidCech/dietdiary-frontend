@@ -11,6 +11,11 @@ class ViewDiaryEntries extends Component {
     //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         this.keyCount = 0;
         this.getKey = this.getKey.bind(this);
@@ -209,7 +214,18 @@ class ViewDiaryEntries extends Component {
         } else if (this.state.tableHtml.props) {
             if (this.state.tableHtml.props.children === "Žádná data k zobrazení") {
                 buttonPosition = "75%";
+                if(this.state.height<=900){
+                    buttonPosition = "83%";
+                }
             }
+        }
+
+        let chartWidth = 900;
+        let chartHeight = 350;
+
+        if(this.state.height<=900){
+            chartWidth = 900;
+            chartHeight = 280;
         }
 
         return (
@@ -232,7 +248,7 @@ class ViewDiaryEntries extends Component {
                         <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
                         {conditionalDelete}
                     </div>
-                    <BarChart width={900} height={350} margin={{top: 20, right: 85, bottom: 25, left: 25}}
+                    <BarChart width={chartWidth} height={chartHeight} margin={{top: 20, right: 85, bottom: 25, left: 25}}
                               data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>

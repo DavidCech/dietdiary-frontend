@@ -167,3 +167,40 @@
     top: 44%;
 }
 
+@media only screen and (max-height: 900px) {
+    .create-meal-form > .desc {
+        top: 61%;
+        width: 40%;
+        height: 240px;
+    }
+
+    .create-meal-form > .name {
+        width: 40%;
+        top: 38%;
+    }
+
+    .create-meal-button, .create-meal-submit, .create-meal-add-ingredient {
+        width: 20%;
+    }
+
+    .create-meal-previous {
+        left: 30%;
+        top: 17%;
+    }
+
+    .create-meal-add-ingredient {
+        margin-top: 26px;
+    }
+
+    .create-meal-add-ingredient-wrapper > .food-details-wrapper {
+        position: static;
+        margin-bottom: 26px;
+    }
+
+    .create-meal-preview-table {
+        width: 40%;
+    }
+
+
+}
+

@@ -184,6 +184,7 @@
 
 .create-diaryentry-table-cell {
     padding: 0;
+    overflow-x: hidden;
     border: 1px solid var(--primary-color);
 }
 
@@ -234,4 +235,68 @@
     top: 34%;
     position: fixed;
     left: 35%
+}
+
+@media only screen and (max-height: 900px) {
+    .create-diaryentry-previous-meal, .create-diaryentry-next-meal {
+        width: 20%;
+    }
+
+    .create-diaryentry-previous-meal {
+        left: 30%;
+    }
+
+    .meal-adding-explanation {
+        color: var(--secondary-color);
+        font-size: 12px;
+        text-align: justify;
+        position: fixed;
+        left: 50%;
+        -ms-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+        top: 33%;
+        z-index: -5;
+        width: 40%;
+    }
+
+    .create-diaryentry-form > .description {
+        width: 40%;
+        height: 250px;
+        top: 61%;
+    }
+
+    .create-diaryentry-form > .kcal {
+        width: 40%;
+        top: 39%;
+    }
+
+    .create-diaryentry-previous-step, .create-diaryentry-next-step {
+        width: 12%;
+    }
+
+    .create-diaryentry-next-step {
+        left: 90%;
+    }
+
+    .create-diaryentry-previous-step {
+        left: 10%;
+    }
+
+    .table-preview-wrapper {
+        -ms-transform: translate(-23.5%, 0);
+        transform: translate(-23.5%, 0);
+    }
+
+    .table-restriction {
+        width: 965px;
+        max-height: 320px;
+        -ms-transform: translate(-34.5%, 0);
+        transform: translate(-34.5%, 0);
+    }
+
+    .create-diaryentry-table-cell > .table-cell-restriction,
+    .create-diaryentry-table-header > .table-cell-restriction {
+        max-width: 140px;
+        max-height: 45px;
+    }
 }

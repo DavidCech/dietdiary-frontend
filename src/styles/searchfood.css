@@ -95,3 +95,32 @@
     background-color: var(--primary-color-hover);
     border-color: var(--primary-color-hover);
 }
+
+@media only screen and (max-height: 900px) {
+    .search-bar-wrapper > .search-input {
+        width: 40%;
+    }
+
+    .search-bar-wrapper > .searched-names-wrapper {
+        width: 40%;
+        height: 50%;
+    }
+
+    .search-bar-wrapper > .next-page-button, .search-bar-wrapper > .previous-page-button {
+        top: 83%;
+        width: 20%;
+    }
+
+    .search-bar-wrapper > .previous-page-button {
+        left: 30%;
+    }
+
+    .searched-food-wrapper > .previous-page-button {
+        top: 73%;
+        width: 20%;
+    }
+
+    .search-bar-wrapper > .searched-names-wrapper {
+        top: 56%;
+    }
+}

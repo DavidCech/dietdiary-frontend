@@ -13,6 +13,11 @@ class CreateDiaryEntry extends Component {
     //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         this.keyCount = 0;
         this.getKey = this.getKey.bind(this);
@@ -238,6 +243,9 @@ class CreateDiaryEntry extends Component {
 
         if (this.state.step === 2) {
             stepStyle = {top: "15%"};
+            if(this.state.height<=900){
+                stepStyle = {top: "13%"};
+            }
             renderStepOne = "none";
         } else if (this.state.step === 3) {
             stepStyle = {top: "29.5%"};
@@ -263,6 +271,9 @@ class CreateDiaryEntry extends Component {
         if (this.state.step >= 4 && this.state.step !== 1) {
             if (this.state.step === 4) {
                 renderPreviousStep = singleButtonStyle;
+                if(this.state.height<=900){
+                    renderPreviousStep = {...singleButtonStyle, left: "7%"};
+                }
             }
             renderNextStep = {display: "none"};
         } else if (this.state.step >= 2) {
@@ -363,6 +374,9 @@ class CreateDiaryEntry extends Component {
                     top: "79%",
                     left: "50%",
                 };
+                if(this.state.height<=900){
+                    messageStyle = {...messageStyle, top: "92%"};
+                }
             }
             deleteMessage = this.state.createdMessage;
         }

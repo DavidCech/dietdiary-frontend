@@ -129,3 +129,51 @@
     background: none;
 }
 
+@media only screen and (max-height: 900px) {
+    .create-ingredient-nutri-wrapper > .kcal {
+        top: 35%;
+        width: 40%;
+    }
+
+    .create-ingredient-nutri-wrapper > .carbs {
+        top: 42%;
+        width: 40%;
+    }
+
+    .create-ingredient-nutri-wrapper > .fat {
+        top: 49%;
+        width: 40%;
+    }
+
+    .create-ingredient-nutri-wrapper > .protein {
+        top: 56%;
+        width: 40%;
+    }
+
+    .create-ingredient-nutri-wrapper > .fibre {
+        top: 63%;
+        width: 40%;
+    }
+
+    .create-ingredient-label {
+        font-size: 20px;
+        top: 30%;
+        left: 44.8%;
+    }
+
+    .create-ingredient-form > .desc {
+        top: 77%;
+        height: 120px;
+        width: 40%;
+    }
+
+    .voluntary {
+        top: 68%;
+        left: 45%;
+    }
+
+    .create-ingredient-form > .name {
+        width: 40%;
+    }
+}
+

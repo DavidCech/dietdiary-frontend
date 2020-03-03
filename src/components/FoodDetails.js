@@ -10,6 +10,11 @@ class FoodDetails extends Component {
     //Initializes functions and variable keyCount in this class
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
 
         this.keyCount = 0;
         this.getKey = this.getKey.bind(this);
@@ -88,6 +93,9 @@ class FoodDetails extends Component {
                     styleWithIngredients = {top: "27%"};
                 } else {
                     styleWithIngredients = {top: "23%"};
+                    if(this.state.height<=900){
+                        styleWithIngredients = {top: "20%"};
+                    }
                 }
             }
             if (this.props.searchedFood.ingredients.length > 0 &&
@@ -95,6 +103,7 @@ class FoodDetails extends Component {
                 styleWithIngredients = {top: "31.2%"};
             } else if ((this.props.searchedFood.ingredients.length === 0 &&
                 !(this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu"))) {
+
                 styleWithIngredients = {top: "32%"};
             }
         }

@@ -43,7 +43,7 @@ class Navigation extends Component {
                 <NavLink className="navigation-item" to="/createDiaryEntry"
                          style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[4]}}> Vytvořit
                     zápis dne </NavLink>
-                <NavLink className="navigation-item" to="/viewDiaryEntries"
+                <NavLink className="navigation-item long-nav-item" to="/viewDiaryEntries"
                          style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[3]}}> Prohlédnout
                     si zápis dne </NavLink>
                 <NavLink className="navigation-item" to="/"

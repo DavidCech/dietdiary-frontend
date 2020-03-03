@@ -8,7 +8,7 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     left: 50%;
-    top: 50%
+    top: 50%;
 }
 
 .react-calendar__tile {
@@ -263,4 +263,29 @@
 
 .legend-item-5, .legend-item-7, .legend-item-1, .legend-item-3 {
     display: none !important;
+}
+
+
+@media only screen and (max-height: 900px) {
+    .react-calendar {
+        width: 750px;
+        font-size: 20px;
+        line-height: 26px;
+        top: 55%;
+    }
+
+    .react-calendar__tile {
+        padding: 17px 6px;
+        font-size: 14px;
+    }
+
+    .view-diaryentries-submit {
+        top: 85%;
+    }
+
+    .view-diaryentries-table-cell {
+        padding: 2px 0;
+    }
+
+
 }

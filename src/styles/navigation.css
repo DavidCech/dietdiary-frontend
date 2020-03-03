@@ -44,3 +44,26 @@
     background-color: var(--primary-color-hover) !important;
 }
 
+@media only screen and (max-height: 900px) {
+    .navigation-item {
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+    }
+
+    .long-nav-item {
+        height: 50px;
+        line-height: 25px;
+    }
+
+    .user-information-p {
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+    }
+
+    .navigation-wrapper {
+        height: 50px;
+    }
+}
+
