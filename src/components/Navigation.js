@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import UserInformation from './UserInformation';
 import '../styles/navigation.css';
 
 //This component creates links to the urls at which all the components are located
@@ -20,11 +19,12 @@ class Navigation extends Component {
         }
 
         //The link at whose url the user is currently changes color for better clarity of the application
-        let paths = ["/", "/login", "/register", "/viewDiaryEntries", "/createDiaryEntry", "/createMeal", "/createIngredient"];
+        let paths = ["/", "/login", "/register", "/viewDiaryEntries", "/createDiaryEntry", "/createMeal", "/createIngredient", "/user"];
         let currentUrlDisplay = ["gold", "gold", "gold", "gold", "gold", "gold", "gold", "gold"];
         if (this.props.history) {
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < currentUrlDisplay.length; i++) {
                 if (this.props.history.location.pathname === paths[i]) {
+
                     currentUrlDisplay[i] = "goldenrod";
                 } else {
                     currentUrlDisplay[i] = "gold";
@@ -56,7 +56,8 @@ class Navigation extends Component {
                              left: leftMargin,
                              backgroundColor: currentUrlDisplay[2]
                          }}> Zaregistrovat se </NavLink>
-                <span style={{display: secret}}>{<UserInformation/>}</span>
+                <NavLink className="navigation-item" to="/user"
+                         style={{display: secret, left: leftMargin, backgroundColor: currentUrlDisplay[7]}}> {"Profil"} </NavLink>
             </div>
         )
     }
