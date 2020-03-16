@@ -3,8 +3,10 @@ const initialState = {
     loggedIn: false,
     username: "",
     email: "",
+    userGoal: null,
     registerMessage: "",
     loginMessage: "",
+    goalMessage: "",
     registered: false
 };
 
@@ -41,6 +43,19 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loginMessage: "",
+            };
+        case 'CREATE_USER_GOAL':
+            return {
+                ...state,
+                goalMessage: action.message,
+            };
+        case 'GET_USER_INFORMATION':
+            return {
+                ...state,
+                username: action.payload.username,
+                email: action.payload.email,
+                userGoal: action.payload.userGoal,
+                goalMessage: action.message,
             };
         default:
             return state

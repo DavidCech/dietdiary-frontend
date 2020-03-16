@@ -58,6 +58,62 @@ export const logOut = () => dispatch => {
     window.location.reload();
 };
 
+//
+export const getUserInformation = () => dispatch => {
+    fetch("http://localhost:6767/users/userInformation", {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('authHeader')
+        },
+    }).then(response => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            dispatch({
+                type: 'GET_USER_INFORMATION',
+                message: "Bohužel došlo k chybě při hledání cíle",
+                payload: null,
+            });
+        }
+    }).then(response => {
+        dispatch({
+            type: 'GET_USER_INFORMATION',
+            message: "",
+            payload: response,
+        });
+    }).catch(e =>
+        console.log(e)
+    )
+};
+
+//
+export const createUserGoal = (userGoal) => dispatch => {
+    fetch("http://localhost:6767/users/intake", {
+        body: JSON.stringify(userGoal),
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('authHeader')
+        },
+    }).then(async response => {
+        if (response.status === 200) {
+            console.log("tu");
+            dispatch({
+                type: "CREATE_USER_GOAL",
+                message: "Cíl úspěšně vytvořen",
+            });
+        } else {
+            dispatch({
+                type: "CREATE_USER_GOAL",
+                message: "Bohužel došlo k chybě při vytvoření cíle",
+            });
+        }
+    }).catch(e =>
+        console.log(e)
+    )
+};
+
 //Takes credentials which the user submitted and calls register function from backend with these credentials which then
 //creates a new user in the database, receives status code and generates appropriate message for the user
 export const register = (credentials) => dispatch => {
