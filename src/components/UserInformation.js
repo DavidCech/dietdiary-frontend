@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {createUserGoal, getUserInformation} from "../action-creators/authActionCreator";
 import connect from "react-redux/es/connect/connect";
+import '../styles/userinformation.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 //This component shows information about the user that is currently logged in
 class UserInformation extends Component {
@@ -8,7 +10,9 @@ class UserInformation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...this.state
+            ...this.state,
+            width: window.innerWidth,
+            windowHeight: window.innerHeight
         };
 
         this.keyCount = 0;
@@ -83,20 +87,31 @@ class UserInformation extends Component {
     toggleSexSelect = () => {
         if (this.state.sexHtml.type === 'div') {
             let html = [
-                <div key={this.getKey()} onClick={() => this.setState({sex: "male", sexText: "Muž", sexHtml: <div/>})}>
+                <div key={this.getKey()} className="userinfo-sex"
+                     onClick={() => this.setState({sex: "male", sexText: "Muž", sexHtml: <div/>})}>
                     {"Muž"}</div>,
-                <div key={this.getKey()}
+                <div key={this.getKey()} className="userinfo-sex"
                      onClick={() => this.setState({sex: "female", sexText: "Žena", sexHtml: <div/>})}>
                     {"Žena"}</div>
             ];
             this.setState({
                 sexHtml: html
             })
+        } else {
+            this.setState({
+                sexHtml: <div/>
+            })
         }
     };
 
     handleActivitySelect = (event) => {
-        let activities = ["Sedentary", "Lightly active", "Moderately active", "Very active", "Extra active"];
+        let activities = [
+            "Sedentary userinfo-activity",
+            "Lightly active userinfo-activity",
+            "Moderately active userinfo-activity",
+            "Very active userinfo-activity",
+            "Extra active userinfo-activity"
+        ];
         let activityNames = ["Sedavý způsob života", "Lehká aktivita", "Střední aktivita", "Vysoká aktivita", "Extrémní aktivita"];
         for (let i = 0; i < activities.length; i++) {
             if (event.target.className === activities[i]) {
@@ -108,19 +123,23 @@ class UserInformation extends Component {
     toggleActivitySelect = () => {
         if (this.state.activityHtml.type === 'div') {
             let html = [
-                <div key={this.getKey()} className="Sedentary" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Sedentary userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Sedavý způsob života"}</div>,
-                <div key={this.getKey()} className="Lightly active" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Lightly active userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Lehká aktivita"}</div>,
-                <div key={this.getKey()} className="Moderately active" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Moderately active userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Střední aktivita"}</div>,
-                <div key={this.getKey()} className="Very active" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Very active userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Vysoká aktivita"}</div>,
-                <div key={this.getKey()} className="Extra active" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Extra active userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Extrémní aktivita"}</div>
             ];
             this.setState({
                 activityHtml: html
+            })
+        } else {
+            this.setState({
+                activityHtml: <div/>
             })
         }
     };
@@ -132,10 +151,11 @@ class UserInformation extends Component {
     };
 
     render() {
-        console.log(this.state.activity);
+        console.log(this.state.windowHeight);
         let displayForm = !this.state.sceneOne ? "block" : "none";
         let displayInfo = !this.state.sceneOne ? "none" : "block";
         let changeInfoText = "Nastavit cíl";
+        let buttonStyle = {top: "78%"};
         if (!this.props.userGoal) {
             changeInfoText = "Nastavit cíl";
         } else if (this.state.sceneOne) {
@@ -143,18 +163,27 @@ class UserInformation extends Component {
         }
         if (!this.state.sceneOne) {
             changeInfoText = "Zpět";
+            buttonStyle = {top: "27%"};
         }
 
         let grid = <div/>;
         if (this.props.userGoal) {
             grid =
                 <div className="userinfo-goal-grid">
-                    <div className="userinfo-goal-grid-item">{"Váš cíl: "}</div>
+                    <div className="userinfo-goal-grid-item">{"Váš nutriční cíl: "}</div>
                     <div className="userinfo-goal-grid-item">{"Kilokalorie: " + this.props.userGoal.kcal}</div>
-                    <div className="userinfo-goal-grid-item">{"Bílkoviny: " + this.props.userGoal.protein}</div>
-                    <div className="userinfo-goal-grid-item">{"Sacharidy: " + this.props.userGoal.carbs}</div>
-                    <div className="userinfo-goal-grid-item">{"Tuky: " + this.props.userGoal.fat}</div>
-                    <div className="userinfo-goal-grid-item">{"Vláknina: " + this.props.userGoal.fibre}</div>
+                    <div className="userinfo-goal-grid-item">
+                        {"Bílkoviny: " + this.props.userGoal.protein + handleInflection(this.props.userGoal.protein)}
+                    </div>
+                    <div className="userinfo-goal-grid-item">
+                        {"Sacharidy: " + this.props.userGoal.carbs + handleInflection(this.props.userGoal.carbs)}
+                    </div>
+                    <div className="userinfo-goal-grid-item">
+                        {"Tuky: " + this.props.userGoal.fat + handleInflection(this.props.userGoal.fat)}
+                    </div>
+                    <div className="userinfo-goal-grid-item">
+                        {"Vláknina: " + this.props.userGoal.fibre + handleInflection(this.props.userGoal.fibre)}
+                    </div>
                 </div>
         } else {
             grid = <div className="userinfo-goal-grid">{"Nemáte vytvořený žádný cíl"}</div>
@@ -163,11 +192,35 @@ class UserInformation extends Component {
         return (
             <div>
                 <div className="userinfo-scene-one" style={{display: displayInfo}}>
-                    <span className="userinfo-username">{"Přihlášen jako " + this.props.username}</span>
-                    <span className="userinfo-email">{"Email: " + this.props.email}</span>
+                    <div className="userinfo-username">{"Přihlášen jako " + this.props.username}</div>
+                    <div className="userinfo-email">{"Email: " + this.props.email}</div>
                     {grid}
                 </div>
                 <div className="userinfo-scene-two" style={{display: displayForm}}>
+
+                    <input onChange={this.handleInput} className="user-height" placeholder="Výška"
+                           value={this.state.height}/>
+                    <input onChange={this.handleInput} className="user-weight" placeholder="Váha"
+                           value={this.state.weight}/>
+                    <input onChange={this.handleInput} className="user-age" placeholder="Věk" value={this.state.age}/>
+                    <div className="userinfo-sex-select" onClick={this.toggleSexSelect}>
+                        <div className="userinfo-select-label">
+                            {this.state.sexText}
+                            <i className="fas fa-sort-down" />
+                        </div>
+                        <div className="userinfo-list-wrapper">
+                            {this.state.sexHtml}
+                        </div>
+                    </div>
+                    <div className="userinfo-activity-select" onClick={this.toggleActivitySelect}>
+                        <div className="userinfo-select-label">
+                            {this.state.activityText}
+                            <i className="fas fa-sort-down" />
+                        </div>
+                        <div className="userinfo-list-wrapper">
+                            {this.state.activityHtml}
+                        </div>
+                    </div>
                     <div className="user-goal-guide">
                         {"Vysvětlivka: Výška se zadává v centimetrech, váha v kilogramech a věk v letech. " +
                         "Sedavý způsob života nezahrnuje skoro žádnou fyzickou aktivitu, lehká aktivita zahrnuje lehkou " +
@@ -176,26 +229,29 @@ class UserInformation extends Component {
                         "velkou fyzickou zátěž více než jednou denně. K výpočtu kalorického cíle je využívána " +
                         "tzv. Rovnice Mifflin-St Jeor."}
                     </div>
-                    <input onChange={this.handleInput} className="user-height" placeholder="Výška"
-                           value={this.state.height}/>
-                    <input onChange={this.handleInput} className="user-weight" placeholder="Váha"
-                           value={this.state.weight}/>
-                    <input onChange={this.handleInput} className="user-age" placeholder="Věk" value={this.state.age}/>
-                    <div onClick={this.toggleSexSelect} style={{position: "absolute", paddingTop: "100px"}}>
-                        {this.state.sexText}
-                        {this.state.sexHtml}
-                    </div>
-                    <div onClick={this.toggleActivitySelect} style={{position: "absolute"}}>
-                        {this.state.activityText}
-                        {this.state.activityHtml}
-                    </div>
-                    <button onClick={this.handleSubmit} style={{marginTop: "20px"}}>{"Potvrdit"}</button>
+                    <button className="userinfo-submit" onClick={this.handleSubmit}>{"Potvrdit"}</button>
                 </div>
-                <button onClick={this.changeScene}>{changeInfoText}</button>
+                <button className="userinfo-change-scene" onClick={this.changeScene} style={buttonStyle}>
+                    {changeInfoText}
+                </button>
             </div>
         )
     }
 }
+
+//Deals with the inflection of the word grams in Czech language
+const handleInflection = (number) => {
+    let inflection;
+    if (parseInt(number) === 1) {
+        inflection = " gram";
+    } else if (parseInt(number) > 1 && parseInt(number) < 5) {
+        inflection = " gramy"
+    } else {
+        inflection = " gramů"
+    }
+
+    return inflection;
+};
 
 //Ensures reception of the properties from React-Redux Store in props
 const mapStateToProps = state => ({
