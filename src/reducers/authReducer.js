@@ -55,7 +55,7 @@ export default function (state = initialState, action) {
                 username: action.payload.username,
                 email: action.payload.email,
                 userGoal: action.payload.userGoal,
-                goalMessage: action.message,
+                goalMessage: "",
             };
         default:
             return state

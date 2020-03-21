@@ -58,7 +58,9 @@ export const logOut = () => dispatch => {
     window.location.reload();
 };
 
-//
+//Sends a get request with authentication token in header to backend from which it then in turn receives status code. If
+//the status code is 200, it dispatches an action with the json from response, else it dispatches an action with error
+//message and a placeholder object.
 export const getUserInformation = () => dispatch => {
     fetch("http://localhost:6767/users/userInformation", {
         method: "get",
@@ -73,7 +75,7 @@ export const getUserInformation = () => dispatch => {
             dispatch({
                 type: 'GET_USER_INFORMATION',
                 message: "Bohužel došlo k chybě při hledání cíle",
-                payload: null,
+                payload: {email: "", username: "", userGoal: ""},
             });
         }
     }).then(response => {
@@ -87,7 +89,9 @@ export const getUserInformation = () => dispatch => {
     )
 };
 
-//
+//Sends a post request with authentication token in header and userGoal in body which it receives as a parameter to backend
+//from which it then in turn receives status code. Depending on the status code it creates appropriate message for the user
+//and dispatches an action with it.
 export const createUserGoal = (userGoal) => dispatch => {
     fetch("http://localhost:6767/users/intake", {
         body: JSON.stringify(userGoal),
@@ -98,7 +102,6 @@ export const createUserGoal = (userGoal) => dispatch => {
         },
     }).then(async response => {
         if (response.status === 200) {
-            console.log("tu");
             dispatch({
                 type: "CREATE_USER_GOAL",
                 message: "Cíl úspěšně vytvořen",

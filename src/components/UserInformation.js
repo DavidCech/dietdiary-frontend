@@ -7,11 +7,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 //This component shows information about the user that is currently logged in
 class UserInformation extends Component {
 
+    //Initializes functions and loads the resolution of the window as well as variable keyCount in this class
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
-            width: window.innerWidth,
+            windowWidth: window.innerWidth,
             windowHeight: window.innerHeight
         };
 
@@ -23,6 +24,7 @@ class UserInformation extends Component {
         this.toggleSexSelect = this.toggleSexSelect.bind(this);
     }
 
+    //Initializes state and all its properties
     state = {
         userInfo: false,
         sceneOne: true,
@@ -38,6 +40,7 @@ class UserInformation extends Component {
         activityHtml: <div/>
     };
 
+    //After the component mounts call getUserInformation function from authActionCreator
     componentDidMount() {
         this.props.getUserInformation();
     }
@@ -47,6 +50,8 @@ class UserInformation extends Component {
         return this.keyCount++;
     };
 
+    //Receives input data from an html form, checks whether the input is a number or whether its an empty string
+    //in which case changes state properties accordingly
     handleInput = (event) => {
         if (Number(event.target.value) || event.target.value === "") {
             if (event.target.className === "user-age") {
@@ -65,6 +70,9 @@ class UserInformation extends Component {
         }
     };
 
+    //Checks whether the user put in all the necessary information in order to send a request to the backend if that is
+    //the case, it creates and object with these data and calls function createUserGoal from authActionCreator with the
+    //object as a parameter. Otherwise creates and error message about the input for the user.
     handleSubmit = (event) => {
         if (this.state.age !== "" && this.state.weight !== "" && this.state.height !== "" && this.state.sex !== "" && this.state.activity !== "") {
             if (this.props.createUserGoal) {
@@ -79,11 +87,12 @@ class UserInformation extends Component {
             }
         } else {
             this.setState({
-                erroMessage: "Musíte zadat věk, výšku, váhu, pohlaví a míru aktivity",
+                errorMessage: "Musíte zadat věk, výšku, váhu, pohlaví a míru aktivity",
             })
         }
     };
 
+    //Creates custom select element with two items and toggles between it being active and inactive
     toggleSexSelect = () => {
         if (this.state.sexHtml.type === 'div') {
             let html = [
@@ -104,30 +113,38 @@ class UserInformation extends Component {
         }
     };
 
+    //Triggers after the user clicks on one of the items in a custom select tag. Receives classname of the target in
+    //event which it then parses to match one of the activities. The activity matching with the parsed classname is then
+    //saved into the properties of state.
     handleActivitySelect = (event) => {
-        let activities = [
-            "Sedentary userinfo-activity",
-            "Lightly active userinfo-activity",
-            "Moderately active userinfo-activity",
-            "Very active userinfo-activity",
-            "Extra active userinfo-activity"
-        ];
+        let parseArray = event.target.className.split(" ");
+        parseArray.pop();
+        let parsedString = "";
+        parseArray.forEach(string => {
+            parsedString += string + " ";
+        });
+        parsedString = parsedString.slice(0, -1);
+
+        let activities = ["Sedentary", "Lightly active", "Moderately active", "Very active", "Extra active"];
         let activityNames = ["Sedavý způsob života", "Lehká aktivita", "Střední aktivita", "Vysoká aktivita", "Extrémní aktivita"];
         for (let i = 0; i < activities.length; i++) {
-            if (event.target.className === activities[i]) {
+            if (parsedString === activities[i]) {
                 this.setState({activity: activities[i], activityText: activityNames[i], activityHtml: <div/>});
             }
         }
     };
 
+    //Creates custom select element with five items and toggles between it being active and inactive
     toggleActivitySelect = () => {
         if (this.state.activityHtml.type === 'div') {
             let html = [
                 <div key={this.getKey()} className="Sedentary userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Sedavý způsob života"}</div>,
-                <div key={this.getKey()} className="Lightly active userinfo-activity" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Lightly active userinfo-activity"
+                     onClick={this.handleActivitySelect}>
                     {"Lehká aktivita"}</div>,
-                <div key={this.getKey()} className="Moderately active userinfo-activity" onClick={this.handleActivitySelect}>
+                <div key={this.getKey()} className="Moderately active userinfo-activity"
+                     onClick={this.handleActivitySelect}>
                     {"Střední aktivita"}</div>,
                 <div key={this.getKey()} className="Very active userinfo-activity" onClick={this.handleActivitySelect}>
                     {"Vysoká aktivita"}</div>,
@@ -144,6 +161,7 @@ class UserInformation extends Component {
         }
     };
 
+    //Changes the sceneOne property of the state to its opposite value
     changeScene = (event) => {
         this.setState({
             sceneOne: !this.state.sceneOne
@@ -151,21 +169,67 @@ class UserInformation extends Component {
     };
 
     render() {
-        console.log(this.state.windowHeight);
+        //Initializes variables responsible for showing/hiding div elements representing the two scenes of this component
         let displayForm = !this.state.sceneOne ? "block" : "none";
         let displayInfo = !this.state.sceneOne ? "none" : "block";
+
+        //Sets the text and the position of the button which the user uses in order to move between the scenes
         let changeInfoText = "Nastavit cíl";
         let buttonStyle = {top: "78%"};
         if (!this.props.userGoal) {
             changeInfoText = "Nastavit cíl";
+            buttonStyle = {top: "70%"};
         } else if (this.state.sceneOne) {
             changeInfoText = "Změnit cíl";
         }
         if (!this.state.sceneOne) {
             changeInfoText = "Zpět";
-            buttonStyle = {top: "27%"};
+            buttonStyle = {top: "29%"};
         }
 
+        //Sets the text and the style of the error message depending on the type of the error. If there isn't one it
+        //doesn't show the div with the errorMessage.
+        let errorText = "";
+        let messageStyle = {
+            display: "none",
+            position: "absolute",
+            msTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+            left: "50%",
+            color: "red",
+            top: "24%"
+        };
+        if (this.state.errorMessage === "Musíte zadat věk, výšku, váhu, pohlaví a míru aktivity") {
+            errorText = this.state.errorMessage;
+            messageStyle = {...messageStyle, display: "block"};
+        }
+
+        if (this.props.goalMessage === "Bohužel došlo k chybě při hledání cíle") {
+            errorText = this.props.goalMessage;
+            messageStyle = {...messageStyle, display: "block"};
+            if (!this.props.userGoal) {
+                messageStyle = {...messageStyle, display: "block", top: "33%"};
+            }
+        } else if (this.props.goalMessage === "Bohužel došlo k chybě při vytvoření cíle") {
+            errorText = this.props.goalMessage;
+            messageStyle = {...messageStyle, display: "block"};
+        } else if (this.props.goalMessage === "Cíl úspěšně vytvořen") {
+            errorText = this.props.goalMessage;
+            messageStyle = {
+                ...messageStyle,
+                display: "block",
+                top: "50%",
+                left: "50%",
+                color: "green",
+                fontSize: "24px"
+            };
+            displayInfo = "none";
+            displayForm = "none";
+            buttonStyle = {display: "none"};
+        }
+
+        //If the user has a goal already set is renders it so that user knows what their goal is, if the user doesn't have
+        //a goal it is a div with appropriate message instead
         let grid = <div/>;
         if (this.props.userGoal) {
             grid =
@@ -191,13 +255,13 @@ class UserInformation extends Component {
 
         return (
             <div>
+                <div style={messageStyle}>{errorText}</div>
                 <div className="userinfo-scene-one" style={{display: displayInfo}}>
                     <div className="userinfo-username">{"Přihlášen jako " + this.props.username}</div>
                     <div className="userinfo-email">{"Email: " + this.props.email}</div>
                     {grid}
                 </div>
                 <div className="userinfo-scene-two" style={{display: displayForm}}>
-
                     <input onChange={this.handleInput} className="user-height" placeholder="Výška"
                            value={this.state.height}/>
                     <input onChange={this.handleInput} className="user-weight" placeholder="Váha"
@@ -206,7 +270,7 @@ class UserInformation extends Component {
                     <div className="userinfo-sex-select" onClick={this.toggleSexSelect}>
                         <div className="userinfo-select-label">
                             {this.state.sexText}
-                            <i className="fas fa-sort-down" />
+                            <i className="fas fa-sort-down"/>
                         </div>
                         <div className="userinfo-list-wrapper">
                             {this.state.sexHtml}
@@ -215,7 +279,7 @@ class UserInformation extends Component {
                     <div className="userinfo-activity-select" onClick={this.toggleActivitySelect}>
                         <div className="userinfo-select-label">
                             {this.state.activityText}
-                            <i className="fas fa-sort-down" />
+                            <i className="fas fa-sort-down"/>
                         </div>
                         <div className="userinfo-list-wrapper">
                             {this.state.activityHtml}
