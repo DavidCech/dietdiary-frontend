@@ -240,10 +240,23 @@
 @media only screen and (max-height: 900px) {
     .create-diaryentry-previous-meal, .create-diaryentry-next-meal {
         width: 20%;
+        top: 16%;
     }
 
     .create-diaryentry-previous-meal {
         left: 30%;
+    }
+
+    .create-diaryentry-add-food-wrapper > .food-details-wrapper {
+        margin-bottom: 10px;
+    }
+
+    .create-diaryentry-add-food-wrapper > .create-diaryentry-add-food {
+        margin-top: 10px;
+    }
+
+    .choose-date-label {
+        top: 20.5%;
     }
 
     .meal-adding-explanation {
@@ -260,9 +273,9 @@
     }
 
     .create-diaryentry-form > .description {
-        width: 40%;
+        width: 40.3%;
         height: 250px;
-        top: 61%;
+        top: 66%;
     }
 
     .create-diaryentry-form > .kcal {
@@ -283,13 +296,19 @@
     }
 
     .table-preview-wrapper {
+        top: 38%;
         -ms-transform: translate(-23.5%, 0);
         transform: translate(-23.5%, 0);
     }
 
+    .create-diaryentry-form > .voluntary {
+        top: 45%;
+        left: 30%;
+    }
+
     .table-restriction {
         width: 965px;
-        max-height: 320px;
+        max-height: 270px;
         -ms-transform: translate(-34.5%, 0);
         transform: translate(-34.5%, 0);
     }

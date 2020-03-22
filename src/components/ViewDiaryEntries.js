@@ -174,7 +174,7 @@ class ViewDiaryEntries extends Component {
                 transform: "translate(-50%, -50%)",
                 fontSize: "16px",
             };
-            if(this.state.height<800){
+            if (this.state.height < 800) {
                 messageStyle = {...messageStyle, top: "15%"}
             }
             deleteMessage = <span style={messageStyle}>{this.state.inputError}</span>;
@@ -212,19 +212,19 @@ class ViewDiaryEntries extends Component {
 
         //Changes the position of the back button depending on whether there's preview to be rendered or not
         let buttonPosition = "90.5%";
-        if(this.state.height<900){
+        if (this.state.height < 900) {
             buttonPosition = "92.5%";
             console.log("tu")
         }
         if (this.state.data.length > 1) {
             buttonPosition = "72%";
-            if(this.state.height<800){
+            if (this.state.height < 800) {
                 buttonPosition = "78%";
             }
         } else if (this.state.tableHtml.props) {
             if (this.state.tableHtml.props.children === "Žádná data k zobrazení") {
                 buttonPosition = "75%";
-                if(this.state.height<=900){
+                if (this.state.height <= 900) {
                     buttonPosition = "83%";
                 }
             }
@@ -233,7 +233,7 @@ class ViewDiaryEntries extends Component {
         let chartWidth = 900;
         let chartHeight = 350;
 
-        if(this.state.height<=900){
+        if (this.state.height <= 900) {
             chartWidth = 900;
             chartHeight = 255;
         }
@@ -258,7 +258,8 @@ class ViewDiaryEntries extends Component {
                         <button className="chart-toggle" onClick={this.handleSelect}>{buttonText}</button>
                         {conditionalDelete}
                     </div>
-                    <BarChart width={chartWidth} height={chartHeight} margin={{top: 20, right: 85, bottom: 25, left: 25}}
+                    <BarChart width={chartWidth} height={chartHeight}
+                              margin={{top: 20, right: 85, bottom: 25, left: 25}}
                               data={this.state.data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="date" label={{value: 'Data', position: 'insideBottomRight', offset: -5}}/>
@@ -267,7 +268,7 @@ class ViewDiaryEntries extends Component {
                             position: 'insideLeft', offset: this.state.show === "kcal" ? -20 : 5
                         }}/>
                         <Tooltip content={<CustomTooltip/>}/>
-                        <Legend height={30}/>
+                        <Legend height={30} formatter={this.renderLegendText}/>
                         {barsHtml}
                     </BarChart>
                     {this.state.tableHtml}
@@ -277,6 +278,24 @@ class ViewDiaryEntries extends Component {
                 {deleteMessage}
             </div>
         );
+    }
+
+    //Alters the Legend text used by the BarChart, it prevents the Legend from rendering items used by the BarChart to
+    //render Bars representing user's goal
+    renderLegendText(value, entry) {
+        let legendItems = ["kcal", "carbs", "protein", "fibre", "fat"];
+        let renderItemNames = ["Kilokalorie", "Sacharidy", "Bílkoviny", "Vláknina", "Tuky"];
+        const {color} = entry;
+
+        if(value){
+            for (let i = 0; i < legendItems.length; i++) {
+                if(legendItems[i]===value){
+                    return <span style={{color}}>{renderItemNames[i]}</span>;
+                }
+            }
+        }
+
+        return null;
     }
 
     //Generates an html table which displays the number of consumed nutrients and calories for each meal of the day

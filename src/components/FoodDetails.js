@@ -88,6 +88,9 @@ class FoodDetails extends Component {
             if (this.props.searchedFood.desc === "No description" || this.props.searchedFood.desc === "Bez popisu") {
                 styleWithIngredients = {top: "40%"};
                 descriptionDisplay = "none";
+                if(this.props.viewOnly){
+                    styleWithIngredients = {...styleWithIngredients, marginTop: "40px"};
+                }
             } else if (this.props.searchedFood.ingredients.length > 0) {
                 if (this.props.searchedFood.ingredients.length <= 2) {
                     styleWithIngredients = {top: "27%"};

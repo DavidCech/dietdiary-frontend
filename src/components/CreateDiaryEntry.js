@@ -241,7 +241,11 @@ class CreateDiaryEntry extends Component {
         let stepStyle = {top: "19%"};
         let stepButtonStyle = {top: "50%"};
 
-        if (this.state.step === 2) {
+        if(this.state.step === 1){
+            if(this.state.height<=900){
+                stepStyle = {top: "17%"};
+            }
+        } else if (this.state.step === 2) {
             stepStyle = {top: "15%"};
             if(this.state.height<=900){
                 stepStyle = {top: "13%"};
