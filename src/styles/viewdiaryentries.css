@@ -280,12 +280,33 @@
     }
 
     .view-diaryentries-submit {
-        top: 85%;
+        top: 88%;
     }
 
     .view-diaryentries-table-cell {
         padding: 2px 0;
     }
 
+    .table-cell-restriction {
+        max-height: 20px;
+    }
+
+    .range-div {
+        -ms-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+        position: fixed;
+        left: 50%;
+        top: 18%;
+    }
+
+    .recharts-legend-item {
+        margin-top: 20px;
+    }
+
+    .view-diaryentries-back {
+        height:40px;
+        font-size: 20px;
+        left: 50%;
+    }
 
 }

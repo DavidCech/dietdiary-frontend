@@ -116,11 +116,11 @@
     }
 
     .searched-food-wrapper > .previous-page-button {
-        top: 73%;
+        top: 80%;
         width: 20%;
     }
 
     .search-bar-wrapper > .searched-names-wrapper {
-        top: 56%;
+        top: 56.5%;
     }
 }

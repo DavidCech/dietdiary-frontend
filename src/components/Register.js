@@ -85,11 +85,9 @@ class Register extends Component {
         }
 
         //Changes the color and position of the message depending on the outcome
-        let messColor = "red";
-        let position = "22%";
+        let messageStyle = {display: displayMess, color: "red", top: "22%"};
         if (this.props.registered) {
-            messColor = "green";
-            position = "50%"
+            messageStyle = {...messageStyle, color: "green", top: "50%", fontSize: "24px"};
         }
 
         return (
@@ -111,7 +109,7 @@ class Register extends Component {
                     </form>
                 </div>
                 <span className="register-message"
-                      style={{display: displayMess, color: messColor, top: position}}>{messageText}</span>
+                      style={messageStyle}>{messageText}</span>
             </div>
         )
     }

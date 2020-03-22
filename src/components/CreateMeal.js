@@ -174,6 +174,8 @@ class CreateMeal extends Component {
         let renderSearchedFood = "none";
         let renderSearchbar = true;
         let messageStyle = {display: "none"};
+        let gramMessage = "";
+        let gramMessageStyle = {display: "none"};
         if (this.props.searchedFood && this.state.step === 2) {
             renderSearchedFood = "block";
         } else if (this.state.step === 2) {
@@ -189,7 +191,7 @@ class CreateMeal extends Component {
                 fontSize: "20px",
             };
             if(this.state.height<=900){
-                messageStyle = {...messageStyle, top: "90%"};
+                messageStyle = {...messageStyle, top: "94%"};
             }
         }
 
@@ -219,6 +221,9 @@ class CreateMeal extends Component {
                     transform: "translate(-50%, -50%)",
                     fontSize: "16px",
                 };
+                if(this.state.height<=900){
+                    messageStyle = {...messageStyle, top: "16%"};
+                }
             } else if (this.state.createdMessage === "Musíte přidat alespoň jednu ingredienci") {
                 messageStyle = {
                     display: "block",
@@ -233,18 +238,19 @@ class CreateMeal extends Component {
             }
         } else if (this.state.createdMessage !== "" && this.state.step === 2) {
             if (this.state.createdMessage === "Musíte zadat gramy jídla") {
-                messageStyle = {
+                gramMessage=this.state.createdMessage;
+                gramMessageStyle = {
                     display: "block",
                     color: "red",
                     position: "fixed",
-                    top: "69%",
-                    left: "50%",
-                    msTransform: "translate(-50%, -50%)",
-                    transform: "translate(-50%, -50%)",
+                    msTransform: "translate(-50%, 0)",
+                    transform: "translate(-50%, 0)",
                     fontSize: "16px",
                 };
-                if(this.state.height<=900){
-                    messageStyle = {...messageStyle, top: "74%"};
+                if(this.state.height<800){
+                    gramMessageStyle = {
+                        ...gramMessageStyle,
+                    };
                 }
             }
         }
@@ -258,14 +264,26 @@ class CreateMeal extends Component {
         if (this.state.step === 1) {
             renderStepOne = "block";
             messageStyle = {display: "none"};
+            if(this.state.height<800){
+                stepStyle = {top: "21%"};
+                stepButtonStyle = {top: "28%"};
+            }
         } else if (this.state.step === 2) {
             stepStyle = {top: "15%"};
             stepButtonStyle = {top: "17%"};
             renderStepOne = "none";
             renderStepThree = "none";
+            if(this.state.height<800){
+                stepStyle = {top: "12.5%"};
+                stepButtonStyle = {top: "15%"};
+            }
         } else if (this.state.step === 3) {
             if (this.state.ingredients.length > 0) {
                 renderStepThree = "block";
+            }
+            if(this.state.height<800){
+                stepStyle = {top: "21%"};
+                stepButtonStyle = {top: "28%"};
             }
             renderStepOne = "none";
         }
@@ -323,6 +341,7 @@ class CreateMeal extends Component {
                                     onClick={this.addIngredient}>
                                 {"Přidat ingredienci"}
                             </button>
+                            <div className="create-meal-gram-message" style={gramMessageStyle}>{gramMessage}</div>
                         </div>
                         <button className="create-meal-button create-meal-next" style={renderNext}
                                 onClick={this.nextStep}>{"Další krok"}</button>

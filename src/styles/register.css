@@ -76,15 +76,15 @@
 
 @media only screen and (max-height: 900px) {
     .register-form > .email {
-        top: 40%;
+        top: 42%;
     }
 
     .register-form > .password {
-        top: 49%;
+        top: 53%;
     }
 
     .register-form > .repassword {
-        top: 58%;
+        top: 64%;
     }
 
     .register-form > .username {
@@ -92,7 +92,7 @@
     }
 
     .register-button {
-        top: 69%;
+        top: 75%;
         width: 24%;
     }
 

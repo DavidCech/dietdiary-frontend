@@ -130,29 +130,32 @@
 }
 
 @media only screen and (max-height: 900px) {
+
+    .create-ingredient-nutri-wrapper > .carbs, .create-ingredient-nutri-wrapper > .fat, .create-ingredient-nutri-wrapper > .protein,
+    .create-ingredient-nutri-wrapper > .fibre, .create-ingredient-nutri-wrapper > .kcal, .create-ingredient-form > .desc,
+    .create-ingredient-form > .name {
+        width: 40%;
+        height: 34px;
+    }
+
     .create-ingredient-nutri-wrapper > .kcal {
         top: 35%;
-        width: 40%;
     }
 
     .create-ingredient-nutri-wrapper > .carbs {
         top: 42%;
-        width: 40%;
     }
 
     .create-ingredient-nutri-wrapper > .fat {
         top: 49%;
-        width: 40%;
     }
 
     .create-ingredient-nutri-wrapper > .protein {
         top: 56%;
-        width: 40%;
     }
 
     .create-ingredient-nutri-wrapper > .fibre {
         top: 63%;
-        width: 40%;
     }
 
     .create-ingredient-label {
@@ -163,17 +166,16 @@
 
     .create-ingredient-form > .desc {
         top: 77%;
-        height: 120px;
-        width: 40%;
+        height: 100px;
     }
 
     .voluntary {
-        top: 68%;
+        top: 69%;
         left: 45%;
     }
 
     .create-ingredient-form > .name {
-        width: 40%;
+        height: 38px;
     }
 }
 

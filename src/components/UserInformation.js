@@ -179,12 +179,21 @@ class UserInformation extends Component {
         if (!this.props.userGoal) {
             changeInfoText = "Nastavit cíl";
             buttonStyle = {top: "70%"};
+            if(this.state.windowHeight<900){
+                buttonStyle = {top: "74%"};
+            }
         } else if (this.state.sceneOne) {
             changeInfoText = "Změnit cíl";
+            if(this.state.windowHeight<900){
+                buttonStyle = {top: "84%"};
+            }
         }
         if (!this.state.sceneOne) {
             changeInfoText = "Zpět";
             buttonStyle = {top: "29%"};
+            if(this.state.windowHeight<900){
+                buttonStyle = {top: "18%"};
+            }
         }
 
         //Sets the text and the style of the error message depending on the type of the error. If there isn't one it
@@ -199,7 +208,7 @@ class UserInformation extends Component {
             color: "red",
             top: "24%"
         };
-        if (this.state.errorMessage === "Musíte zadat věk, výšku, váhu, pohlaví a míru aktivity") {
+        if (this.state.errorMessage === "Musíte zadat věk, výšku, váhu, pohlaví a míru aktivity" && !this.state.sceneOne) {
             errorText = this.state.errorMessage;
             messageStyle = {...messageStyle, display: "block"};
         }
@@ -207,8 +216,14 @@ class UserInformation extends Component {
         if (this.props.goalMessage === "Bohužel došlo k chybě při hledání cíle") {
             errorText = this.props.goalMessage;
             messageStyle = {...messageStyle, display: "block"};
+            if(this.state.windowHeight<900){
+                messageStyle = {...messageStyle, display: "block", top: "18%"};
+            }
             if (!this.props.userGoal) {
                 messageStyle = {...messageStyle, display: "block", top: "33%"};
+                if(this.state.windowHeight<900){
+                    messageStyle = {...messageStyle, display: "block", top: "31%"};
+                }
             }
         } else if (this.props.goalMessage === "Bohužel došlo k chybě při vytvoření cíle") {
             errorText = this.props.goalMessage;

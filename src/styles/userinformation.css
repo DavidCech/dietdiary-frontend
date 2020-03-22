@@ -154,3 +154,7 @@
     position: absolute;
     width: 100%;
 }
+
+@media only screen and (max-height: 900px) {
+
+}

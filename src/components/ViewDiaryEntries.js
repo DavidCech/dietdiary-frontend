@@ -174,6 +174,9 @@ class ViewDiaryEntries extends Component {
                 transform: "translate(-50%, -50%)",
                 fontSize: "16px",
             };
+            if(this.state.height<800){
+                messageStyle = {...messageStyle, top: "15%"}
+            }
             deleteMessage = <span style={messageStyle}>{this.state.inputError}</span>;
         }
 
@@ -209,8 +212,15 @@ class ViewDiaryEntries extends Component {
 
         //Changes the position of the back button depending on whether there's preview to be rendered or not
         let buttonPosition = "90.5%";
+        if(this.state.height<900){
+            buttonPosition = "92.5%";
+            console.log("tu")
+        }
         if (this.state.data.length > 1) {
             buttonPosition = "72%";
+            if(this.state.height<800){
+                buttonPosition = "78%";
+            }
         } else if (this.state.tableHtml.props) {
             if (this.state.tableHtml.props.children === "Žádná data k zobrazení") {
                 buttonPosition = "75%";
@@ -225,7 +235,7 @@ class ViewDiaryEntries extends Component {
 
         if(this.state.height<=900){
             chartWidth = 900;
-            chartHeight = 280;
+            chartHeight = 255;
         }
 
         return (

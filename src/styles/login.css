@@ -82,15 +82,15 @@
     }
 
     .login-form > .password {
-        top: 50%;
+        top: 52%;
     }
 
     .login-button {
-        top: 60%;
+        top: 64%;
         width: 24%;
     }
 
     .login-error {
-        top: 32%;
+        top: 31%;
     }
 }
