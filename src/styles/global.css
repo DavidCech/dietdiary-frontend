@@ -1,8 +1,8 @@
 :root {
     --background-color: white;
-    --primary-color: gold;
-    --primary-color-hover: goldenrod;
-    --secondary-color: black;
+    --primary-color: #0400CA;
+    --primary-color-hover: #030144;
+    --secondary-color: white;
     --placeholder: #C0C0C0;
 }
 
@@ -12,6 +12,11 @@
 
 *:focus {
     outline: none;
+}
+
+
+.far, .fas {
+    color: white;
 }
 
 body {

@@ -148,7 +148,7 @@
 .range-label {
     font-size: 20px;
     line-height: 24px;
-    color: var(--secondary-color);
+    color: black;
     vertical-align: middle;
 }
 

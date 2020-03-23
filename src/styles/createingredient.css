@@ -1,7 +1,7 @@
 .create-ingredient-nutri-wrapper > .kcal, .create-ingredient-nutri-wrapper > .protein,
 .create-ingredient-nutri-wrapper > .carbs, .create-ingredient-nutri-wrapper > .fat,
 .create-ingredient-nutri-wrapper > .fibre, .name {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     height: 40px;
@@ -44,7 +44,7 @@
 }
 
 .desc {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     font-size: 16px;
@@ -106,7 +106,7 @@
 }
 
 .create-ingredient-message {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     height: 20px;

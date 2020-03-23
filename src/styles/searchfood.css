@@ -1,5 +1,5 @@
 .search-bar-wrapper > .search-input {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     height: 50px;
@@ -19,7 +19,7 @@
 }
 
 .search-bar-wrapper > .searched-names-wrapper {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     height: 40%;
@@ -94,6 +94,7 @@
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border-color: var(--primary-color-hover);
+    color: var(--secondary-color);
 }
 
 @media only screen and (max-height: 900px) {

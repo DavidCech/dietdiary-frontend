@@ -20,14 +20,14 @@ class Navigation extends Component {
 
         //The link at whose url the user is currently changes color for better clarity of the application
         let paths = ["/", "/login", "/register", "/viewDiaryEntries", "/createDiaryEntry", "/createMeal", "/createIngredient", "/user"];
-        let currentUrlDisplay = ["gold", "gold", "gold", "gold", "gold", "gold", "gold", "gold"];
+        let currentUrlDisplay = ["#0400CA", "#0400CA", "#0400CA", "#0400CA", "#0400CA", "#0400CA", "#0400CA", "#0400CA"];
         if (this.props.history) {
             for (let i = 0; i < currentUrlDisplay.length; i++) {
                 if (this.props.history.location.pathname === paths[i]) {
 
-                    currentUrlDisplay[i] = "goldenrod";
+                    currentUrlDisplay[i] = "#030144";
                 } else {
-                    currentUrlDisplay[i] = "gold";
+                    currentUrlDisplay[i] = "#0400CA";
                 }
             }
         }

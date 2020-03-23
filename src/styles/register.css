@@ -58,7 +58,7 @@
 }
 
 .username, .repassword {
-    color: var(--secondary-color);
+    color: black;
     display: block;
     width: 30%;
     height: 50px;

@@ -33,6 +33,7 @@
 
 .userinfo-change-scene {
     display: block;
+    color: var(--secondary-color);
     width: 15%;
     height: 50px;
     line-height: 36px;
@@ -49,6 +50,7 @@
 }
 
 .userinfo-submit {
+    color: var(--secondary-color);
     display: block;
     width: 30%;
     height: 50px;
@@ -111,6 +113,10 @@
     box-sizing: inherit;
 }
 
+.userinfo-select-label {
+    color: var(--secondary-color);
+}
+
 .userinfo-sex-select {
     z-index: 70;
 }
@@ -148,13 +154,10 @@
 
 .userinfo-sex:hover, .userinfo-activity:hover {
     background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .userinfo-list-wrapper {
     position: absolute;
     width: 100%;
-}
-
-@media only screen and (max-height: 900px) {
-
 }
