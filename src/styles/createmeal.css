@@ -127,6 +127,10 @@
     overflow-y: scroll;
 }
 
+.table-cell-restriction > .fa-trash-alt {
+    color: black;
+}
+
 .create-meal-ingredient + .create-meal-ingredient {
     border-top: 1px solid var(--primary-color);
 }
