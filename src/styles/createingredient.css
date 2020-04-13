@@ -1,7 +1,9 @@
+/*Defines the font, size, position, border, and centers the text of all the input fields inside the CreateIngredient
+ component*/
 .create-ingredient-nutri-wrapper > .kcal, .create-ingredient-nutri-wrapper > .protein,
 .create-ingredient-nutri-wrapper > .carbs, .create-ingredient-nutri-wrapper > .fat,
 .create-ingredient-nutri-wrapper > .fibre, .name {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 40px;
@@ -17,34 +19,41 @@
     left: 50%;
 }
 
+/*Allocates the position of the food name input in the CreateIngredient component and adjusts its size*/
 .create-ingredient-form > .name {
     top: 22%;
     height: 50px;
     font-size: 22px;
 }
 
+/*Allocates the position of the food kilocalories input in the CreateIngredient component*/
 .create-ingredient-nutri-wrapper > .kcal {
     top: 35%;
 }
 
+/*Allocates the position of the food carbohydrates input in the CreateIngredient component*/
 .create-ingredient-nutri-wrapper > .carbs {
     top: 41%;
 }
 
+/*Allocates the position of the food fat input in the CreateIngredient component*/
 .create-ingredient-nutri-wrapper > .fat {
     top: 47%;
 }
 
+/*Allocates the position of the food protein input in the CreateIngredient component*/
 .create-ingredient-nutri-wrapper > .protein {
     top: 53%;
 }
 
+/*Allocates the position of the food fibre input in the CreateIngredient component*/
 .create-ingredient-nutri-wrapper > .fibre {
     top: 59%;
 }
 
+/*Defines the color, font, size, position, border, overflow, and centers the text of the description text area*/
 .desc {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     font-size: 16px;
@@ -60,11 +69,13 @@
     overflow-y: scroll;
 }
 
+/*Adjusts position and size of the description text area inside the CreateIngredient component*/
 .create-ingredient-form > .desc {
     top: 75%;
     height: 140px;
 }
 
+/*Defines the size, font, color, position, border and centers the text of the submit button in the CreateIngredient component*/
 .create-ingredient-submit-button {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
@@ -83,12 +94,15 @@
     top: 90%;
 }
 
+/*Changes the color of the submit button and the cursor whenever user hover over it*/
 .create-ingredient-submit-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the size, position, color, font size, background color, and centers the text of the label in the CreateIngredient
+component*/
 .create-ingredient-label {
     color: var(--primary-color);
     display: block;
@@ -105,8 +119,10 @@
     top: 31%;
 }
 
+/*Defines the size, position, color, font size, background color, and centers the text of the error message in the
+ CreateIngredient component*/
 .create-ingredient-message {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 20px;
@@ -120,6 +136,8 @@
     left: 50%;
 }
 
+/*Defines the size, position, opacity, font size, background, and text align of the message informing the user that it is not
+obligatory to fill the description field in the CreateIngredient component*/
 .voluntary {
     top: 67%;
     text-align: left;
@@ -131,6 +149,7 @@
 
 @media only screen and (max-height: 900px) {
 
+    /*Adjusts the size of all the input fields inside the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .carbs, .create-ingredient-nutri-wrapper > .fat, .create-ingredient-nutri-wrapper > .protein,
     .create-ingredient-nutri-wrapper > .fibre, .create-ingredient-nutri-wrapper > .kcal, .create-ingredient-form > .desc,
     .create-ingredient-form > .name {
@@ -138,42 +157,51 @@
         height: 34px;
     }
 
+    /*Adjusts the position of the food kilocalories input in the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .kcal {
         top: 35%;
     }
 
+    /*Adjusts the position of the food carbohydrates input in the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .carbs {
         top: 42%;
     }
 
+    /*Adjusts the position of the food name fat in the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .fat {
         top: 49%;
     }
 
+    /*Adjusts the position of the food name protein in the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .protein {
         top: 56%;
     }
 
+    /*Adjusts the position of the food name fibre in the CreateIngredient component on smaller devices*/
     .create-ingredient-nutri-wrapper > .fibre {
         top: 63%;
     }
 
+    /*Adjusts the font size and position of the label on smaller devices*/
     .create-ingredient-label {
         font-size: 20px;
         top: 30%;
         left: 44.8%;
     }
 
+    /*Adjusts the size and position of the food description text area on smaller devices*/
     .create-ingredient-form > .desc {
         top: 77%;
         height: 100px;
     }
 
+    /*Adjusts the position of the message informing the user that description text area does not have to be filled on smaller devices*/
     .voluntary {
         top: 69%;
         left: 45%;
     }
 
+    /*Adjusts the size of the food name input in the CreateIngredient component on smaller devices*/
     .create-ingredient-form > .name {
         height: 38px;
     }

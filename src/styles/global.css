@@ -1,24 +1,29 @@
+/*Defines the html variables with colors*/
 :root {
     --background-color: white;
     --primary-color: #0400CA;
     --primary-color-hover: #030144;
     --secondary-color: white;
+    --contrast-to-secondary: black;
     --placeholder: #C0C0C0;
 }
 
+/*Defines the default font for all html elements*/
 * {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
+/*Removes outline when focused on any html element*/
 *:focus {
     outline: none;
 }
 
-
+/*Defines default color for the icons from fontawesome*/
 .far, .fas {
     color: white;
 }
 
+/*Removes margin from the body of any html element*/
 body {
-    margin:0;
+    margin: 0;
 }

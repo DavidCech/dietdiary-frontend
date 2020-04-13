@@ -1,3 +1,5 @@
+/*Defines the size, color, border, position, font size and centers the text of all the buttons in the CreateDiaryEntry
+component*/
 .create-diaryentry-previous-step, .create-diaryentry-next-step, .create-diaryentry-add-food, .create-diaryentry-submit,
 .create-diaryentry-previous-meal, .create-diaryentry-next-meal {
     color: var(--secondary-color);
@@ -14,15 +16,18 @@
     left: 50%;
 }
 
+/*Allocates to position of the next meal button*/
 .create-diaryentry-next-meal {
     top: 17%;
 }
 
+/*Allocates to position of the previous meal button*/
 .create-diaryentry-previous-meal {
     left: 35%;
     top: 17%;
 }
 
+/*Allocates to position of the next step button*/
 .create-diaryentry-next-step {
     z-index: 6;
     top: 50%;
@@ -31,6 +36,7 @@
     transform: translate(-50%, 50%);
 }
 
+/*Allocates to position of the previous step button*/
 .create-diaryentry-previous-step {
     left: 15%;
     top: 50%;
@@ -38,6 +44,7 @@
     transform: translate(-50%, 50%);
 }
 
+/*Allocates to position of the submit button*/
 .create-diaryentry-submit {
     position: relative;
     left: 23.5%;
@@ -45,6 +52,7 @@
     transform: translate(-50%, 0);
 }
 
+/*Changes the color of all the buttons in the CreateDiaryEntry component and the cursor whenever user hovers over them*/
 .create-diaryentry-previous-step:hover, .create-diaryentry-next-step:hover, .create-diaryentry-add-food:hover,
 .create-diaryentry-submit:hover, .create-diaryentry-previous-meal:hover, .create-diaryentry-next-meal:hover {
     cursor: pointer;
@@ -52,8 +60,10 @@
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the color, size, position, font, border and centers the text of the input field for the number of grams of the
+chosen food in the CreateDiaryEntry component*/
 .create-diaryentry-grams {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     height: 36px;
     line-height: 24px;
@@ -70,6 +80,7 @@
     transform: translate(-50%, 0);
 }
 
+/*Defines the margin and position of the add food button*/
 .create-diaryentry-add-food {
     position: static;
     margin-top: 40px;
@@ -77,6 +88,7 @@
     transform: translate(-50%, 0);
 }
 
+/*Defines the size, background, position, and centers the text of the div in which input for grams and add food button is*/
 .create-diaryentry-add-food-wrapper {
     display: block;
     width: 100%;
@@ -89,13 +101,15 @@
     top: 30%;
 }
 
+/*Defines the margin, and position div in which the FoodDetails is*/
 .create-diaryentry-add-food-wrapper > .food-details-wrapper {
     position: static;
     margin-bottom: 40px;
 }
 
+/*Defines the color, size, position, font, and border of the description textarea in the CreateDiaryEntry component*/
 .create-diaryentry-form > .description {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     font-size: 16px;
@@ -113,8 +127,10 @@
     box-sizing: border-box;
 }
 
+/*Defines the color, size, position, font, and border of the burned calories during an activity input in the
+ CreateDiaryEntry component*/
 .create-diaryentry-form > .kcal {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 40px;
@@ -131,6 +147,8 @@
     top: 39%;
 }
 
+/*Defines the color, position, and font of the label which informs the user to choose a date in the CreateDiaryEntry
+ component*/
 .choose-date-label {
     font-size: 20px;
     position: fixed;
@@ -143,6 +161,8 @@
     z-index: 5;
 }
 
+/*Defines the background, size, position, and font of the wrapper around the table with preview of consumed food in the
+ CreateDiaryEntry component*/
 .table-preview-wrapper {
     display: block;
     width: 95%;
@@ -157,6 +177,8 @@
     transform: translate(-23.5%, 0);
 }
 
+/*Defines size, overflow, margin, and position of the div which determines the size of the preview table in the
+ CreateDiaryEntry component*/
 .table-restriction {
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
@@ -168,6 +190,8 @@
     overflow-x: hidden;
 }
 
+/*Defines size, font size, margin, border and text align in the table in the with preview of the foods CreateDiaryEntry
+component*/
 .create-diaryentry-preview-table {
     width: 950px;
     font-size: 18px;
@@ -177,17 +201,21 @@
     text-align: center;
 }
 
+/*Defines the padding and border of the header cells in the preview food table*/
 .create-diaryentry-table-header {
     padding: 2px 0;
     border: 1px solid var(--primary-color);
 }
 
+/*Defines the padding, overflow and border of the regular cells in the preview food table*/
 .create-diaryentry-table-cell {
     padding: 0;
     overflow-x: hidden;
     border: 1px solid var(--primary-color);
 }
 
+/*Defines the maximum height and width, overflow, margin, and padding of the div which determines the size of the table
+cells inside the preview food table*/
 .create-diaryentry-table-cell > .table-cell-restriction,
 .create-diaryentry-table-header > .table-cell-restriction {
     max-width: 160px;
@@ -198,12 +226,16 @@
     padding: 0;
 }
 
+/*Defines the margin, and padding of the div which determines the size of the regular  table cells inside the preview
+ food table*/
 .create-diaryentry-table-cell > .table-cell-restriction {
     padding: 4px 0;
     margin: 0;
     display: inline-block;
 }
 
+/*Defines size, background, position, padding, and margin of the delete buttons in the table cells inside the preview
+ food table*/
 .table-cell-restriction > .delete-button {
     background-color: white;
     border: none;
@@ -214,12 +246,15 @@
     margin-left: 5px;
 }
 
+/*Changes the color of the delete buttons whenever user hovers over them*/
 .table-cell-restriction > .delete-button:hover {
     color: var(--primary-color-hover);
 }
 
+/*Defines the size, position, color, font, and centers the text of the div which explains to the user how to create
+a new diary entry*/
 .meal-adding-explanation {
-    color: black;
+    color: var(--contrast-to-secondary);
     font-size: 12px;
     text-align: justify;
     position: fixed;
@@ -231,6 +266,7 @@
     width: 30%;
 }
 
+/*Defines position of the label which informs that user doesn't have to fill in the burned calories and description fields*/
 .create-diaryentry-calories-label {
     top: 34%;
     position: fixed;
@@ -238,29 +274,36 @@
 }
 
 @media only screen and (max-height: 900px) {
+    /*Adjusts the size and the position of the next and previous meal buttons on smaller devices*/
     .create-diaryentry-previous-meal, .create-diaryentry-next-meal {
         width: 20%;
         top: 16%;
     }
 
+    /*Adjusts the size and the position of previous meal buttons on smaller devices*/
     .create-diaryentry-previous-meal {
         left: 30%;
     }
 
+    /*Adjusts the margin of the wrapper around FoodDetails component, grams input and add food button on smaller devices*/
     .create-diaryentry-add-food-wrapper > .food-details-wrapper {
         margin-bottom: 10px;
     }
 
+    /*Adjusts the margin of add food button on smaller devices*/
     .create-diaryentry-add-food-wrapper > .create-diaryentry-add-food {
         margin-top: 10px;
     }
 
+    /*Adjusts the position of label which informs the user that they have to choose a date on smaller devices*/
     .choose-date-label {
         top: 20.5%;
     }
 
+    /*Adjusts the color, font size, position, text align and size of the guide which explains to the user how to create
+    a new diary entry on smaller devices*/
     .meal-adding-explanation {
-        color: black;
+        color: var(--contrast-to-secondary);
         font-size: 12px;
         text-align: justify;
         position: fixed;
@@ -272,40 +315,48 @@
         width: 40%;
     }
 
+    /*Adjusts the size and position of the description text area on smaller devices*/
     .create-diaryentry-form > .description {
         width: 40.3%;
         height: 250px;
         top: 66%;
     }
 
+    /*Adjusts the size and the position of the burnt calories input on smaller devices*/
     .create-diaryentry-form > .kcal {
         width: 40%;
         top: 39%;
     }
 
+    /*Adjusts the size of the previous and next step buttons on smaller devices*/
     .create-diaryentry-previous-step, .create-diaryentry-next-step {
         width: 12%;
     }
 
+    /*Adjusts the position of the next step button on smaller devices*/
     .create-diaryentry-next-step {
         left: 90%;
     }
 
+    /*Adjusts the position of the previous step button on smaller devices*/
     .create-diaryentry-previous-step {
         left: 10%;
     }
 
+    /*Adjusts the position of the wrapper around the preview consumed food table on smaller devices*/
     .table-preview-wrapper {
         top: 38%;
         -ms-transform: translate(-23.5%, 0);
         transform: translate(-23.5%, 0);
     }
 
+    /*Adjusts the position of the wrapper around the preview consumed food table on smaller devices*/
     .create-diaryentry-form > .voluntary {
         top: 45%;
         left: 30%;
     }
 
+    /*Adjusts the size, and position of the div which determines the size of the preview food table on smaller devices*/
     .table-restriction {
         width: 965px;
         max-height: 270px;
@@ -313,6 +364,8 @@
         transform: translate(-34.5%, 0);
     }
 
+    /*Adjusts the maximum size of the div which determines the size of the table cells inside the preview food table
+     on smaller devices*/
     .create-diaryentry-table-cell > .table-cell-restriction,
     .create-diaryentry-table-header > .table-cell-restriction {
         max-width: 140px;

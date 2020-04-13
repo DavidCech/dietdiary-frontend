@@ -1,5 +1,7 @@
+/*Defines the size, font, position, color and centers the input fields for email and password in the Login and
+Register components*/
 .password, .email {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 50px;
@@ -15,14 +17,17 @@
     left: 50%;
 }
 
+/*Allocates the position of the email input in the Login component*/
 .login-form > .email {
     top: 42%;
 }
 
+/*Allocates the position of the password input in the Login component*/
 .login-form > .password {
     top: 50%;
 }
 
+/*Defines the size, font, color, position and centers the text of the submit button in the Login component*/
 .login-button {
     color: var(--secondary-color);
     width: 10%;
@@ -40,24 +45,29 @@
     left: 50%;
 }
 
+/*Allocates the position of the submit button in the Login component*/
 .login-button {
     top: 58%;
 }
 
+/*Changes the color of the submit button and the cursor whenever user hover over it*/
 .login-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Changes the color of the placeholder inside input fields*/
 ::-webkit-input-placeholder, ::placeholder {
     color: var(--placeholder);
 }
 
+/*Changes the color of the placeholder inside input fields*/
 :-ms-input-placeholder {
     color: var(--placeholder);
 }
 
+/*Defines the size, font, color, position and centers the text of the error message in the Login component*/
 .login-error {
     display: block;
     margin: auto;
@@ -73,23 +83,28 @@
 }
 
 @media only screen and (max-height: 900px) {
+    /*Adjusts the size of the inputs on smaller devices*/
     .password, .email {
         width: 40%;
     }
 
+    /*Adjusts the position of the email input on smaller devices*/
     .login-form > .email {
         top: 40%;
     }
 
+    /*Adjusts the position of the password input on smaller devices*/
     .login-form > .password {
         top: 52%;
     }
 
+    /*Adjusts the size of the submit button on smaller devices*/
     .login-button {
         top: 64%;
         width: 24%;
     }
 
+    /*Adjusts the position of the error message on smaller devices*/
     .login-error {
         top: 31%;
     }

@@ -1,14 +1,18 @@
+/*Defines the size and position of the description text area in the CreateMeal component*/
 .create-meal-form > .desc {
     top: 57%;
     height: 240px;
 }
 
+/*Defines the font size, line height, and position of the name input field in the CreateMeal component*/
 .create-meal-form > .name {
     top: 38%;
     font-size: 24px;
     line-height: 28px;
 }
 
+/*Defines the size, position, background, font, and centers the text of the step and create meal labels in the CreateMeal
+components*/
 .create-meal-step, .create-meal-searched-food {
     display: block;
     width: 30%;
@@ -23,17 +27,20 @@
     left: 50%;
 }
 
+/*Defines the size, color, and position of the step label*/
 .create-meal-step {
     height: 40px;
     top: 15%;
     color: var(--primary-color);
 }
 
+/*Defines the color, and position of the create meal label*/
 .create-meal-searched-food {
     top: 35%;
     color: var(--secondary-color);
 }
 
+/*Defines the position, size, color, border, and centers the text of all the buttons in the CreateMeal component*/
 .create-meal-button, .create-meal-submit, .create-meal-add-ingredient {
     color: var(--secondary-color);
     width: 15%;
@@ -49,16 +56,19 @@
     left: 50%;
 }
 
+/*Allocates the position of the next searched food results button in the CreateMeal component*/
 .create-meal-next {
     left: 50%;
     top: 17%;
 }
 
+/*Allocates the position of the previous searched results button in the CreateMeal component*/
 .create-meal-previous {
     left: 35%;
     top: 17%;
 }
 
+/*Allocates the position of the submit button in the CreateMeal component*/
 .create-meal-submit {
     left: 0;
     position: static;
@@ -66,6 +76,7 @@
     transform: translate(-50%, 0);
 }
 
+/*Defines the position and the margin of the add ingredient button*/
 .create-meal-add-ingredient {
     position: static;
     margin-top: 32px;
@@ -74,14 +85,17 @@
     transform: translate(-50%, -50%);
 }
 
+/*Changes the color of all the buttons and the cursor whenever user hovers over them*/
 .create-meal-button:hover, .create-meal-submit:hover, .create-meal-add-ingredient:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the size, position, font, border, color, and centers the text of the grams of an ingredient input field in the
+CreateMeal component*/
 .create-meal-add-ingredient-wrapper > .grams {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     height: 36px;
     line-height: 24px;
@@ -98,6 +112,8 @@
     position: static;
 }
 
+/*Defines the size, position, font, background, and centers the text of the wrapper around the table which previews the
+ ingredients of the meal which is being created*/
 .create-meal-preview {
     display: block;
     width: 100%;
@@ -110,8 +126,10 @@
     top: 35%;
 }
 
+/*Defines the size, position, font, border, color, and centers the text of the table which previews the ingredients
+of the meal which is being created*/
 .create-meal-preview-table {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     max-height: 250px;
@@ -127,14 +145,18 @@
     overflow-y: scroll;
 }
 
+/*Changes the color of the delete buttons inside the preview ingredients table*/
 .table-cell-restriction > .fa-trash-alt {
-    color: black;
+    color: var(--contrast-to-secondary);
 }
 
+/*Defines the border between two ingredients in the preview table*/
 .create-meal-ingredient + .create-meal-ingredient {
     border-top: 1px solid var(--primary-color);
 }
 
+/*Defines the size, position, background, and font of the wrapper around FoodDetails component, grams of an ingredient
+input and add ingredient button*/
 .create-meal-add-ingredient-wrapper {
     display: block;
     width: 100%;
@@ -147,70 +169,84 @@
     top: 30%;
 }
 
+/*Changes the position of the FoodDetails wrapper when it's inside the wrapper for adding ingredients to a meal*/
 .create-meal-add-ingredient-wrapper > .food-details-wrapper {
     position: static;
     margin-bottom: 40px;
 }
 
+/*Changes the position of the grams of an ingredient input, and add ingredient button*/
 .create-meal-add-ingredient-wrapper > .grams, .create-meal-add-ingredient-wrapper > .create-meal-add-ingredient {
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
 }
 
+/*Defines the size and centers the text of the individual ingredients in the preview table*/
 .create-meal-ingredient {
     height: 32px;
     line-height: 32px;
     vertical-align: middle;
 }
 
+/*Changes the position of the delete buttons inside the preview table*/
 .create-meal-ingredient > .delete-button {
     position: relative;
     float: left;
 }
 
+/*Changes the position of the text which informs the user that the description field does not have to be filled*/
 .create-meal-form > .voluntary {
     top: 44%;
 }
 
 @media only screen and (max-height: 900px) {
+    /*Adjusts the size and position of the description text area on smaller devices*/
     .create-meal-form > .desc {
         top: 63%;
         width: 40%;
         height: 240px;
     }
 
+    /*Adjusts the size and position of the name input on smaller devices*/
     .create-meal-form > .name {
         width: 40%;
         top: 37.5%;
     }
 
+    /*Adjusts the size of all the buttons on smaller devices*/
     .create-meal-button, .create-meal-submit, .create-meal-add-ingredient {
         width: 20%;
     }
 
+    /*Adjusts the margin of the add ingredient button on smaller devices*/
     .create-meal-add-ingredient {
         margin-top: 10px;
         margin-bottom: 0;
     }
 
+    /*Adjusts the position of the previous searched results button on smaller devices*/
     .create-meal-previous {
         left: 30%;
         top: 17%;
     }
 
-    .create-meal-add-ingredient-wrapper  {
+    /*Adjusts the position of the wrapper around FoodDetails, grams input, and add ingredient button on smaller devices*/
+    .create-meal-add-ingredient-wrapper {
         top: 25%;
     }
 
+    /*Adjusts the margin and position of the FoodDetails wrapper on smaller devices*/
     .create-meal-add-ingredient-wrapper > .food-details-wrapper {
         position: static;
         margin-bottom: 18px;
     }
 
+    /*Adjusts the size of the preview ingredients table on smaller devices*/
     .create-meal-preview-table {
         width: 40%;
     }
 
+    /*Adjusts the position of the grams input field on smaller devices*/
     .create-meal-add-ingredient-wrapper > .grams {
         top: 0;
     }

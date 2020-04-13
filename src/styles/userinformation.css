@@ -1,4 +1,5 @@
 /*1366 657*/
+/*Centers the wrapper of the first scene in the UserInformation component and defines its padding and border*/
 .userinfo-scene-one {
     position: absolute;
     top: 50%;
@@ -11,6 +12,7 @@
     border: 3px solid var(--primary-color);
 }
 
+/*Centers the wrapper of the second scene in the UserInformation component*/
 .userinfo-scene-two {
     position: absolute;
     top: 50%;
@@ -19,18 +21,22 @@
     transform: translate(-50%, -50%);
 }
 
+/*Defines the margin of the email input in the UserInformation component*/
 .userinfo-email {
     margin: 5px 0 20px 0;
 }
 
+/*Defines the margin of the username input in the UserInformation component*/
 .userinfo-username {
     margin: 10px 0;
 }
 
+/*Defines the margin of the form inputs in the UserInformation component*/
 .userinfo-goal-grid-item {
     margin: 5px 0;
 }
 
+/*Defines the size, font, color, position and centers the text of the change scene button in the UserInformation component*/
 .userinfo-change-scene {
     display: block;
     color: var(--secondary-color);
@@ -49,6 +55,7 @@
     top: 78%;
 }
 
+/*Defines the size, font, color, position and centers the text of the submit button in the UserInformation component*/
 .userinfo-submit {
     color: var(--secondary-color);
     display: block;
@@ -67,12 +74,15 @@
     margin-top: 35px;
 }
 
+/*Changes the color of the buttons and the cursor whenever user hover over them*/
 .userinfo-change-scene:hover, .userinfo-submit:hover {
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
     cursor: pointer;
 }
 
+/*Defines the position, size, font, border and centers the text of the age, height and weight form inputs in the
+ UserInformation component*/
 .user-weight, .user-height, .user-age {
     position: relative;
     display: block;
@@ -90,6 +100,7 @@
     border: 2px solid var(--primary-color);
 }
 
+/*Defines the size, position, and font of the guide for the user as to how to fill the form*/
 .user-goal-guide {
     position: relative;
     font-size: 12px;
@@ -100,6 +111,7 @@
     transform: translate(-50%, 0);
 }
 
+/*Defines the position, size, margin and border of the select inputs of the form in the UserInformation component*/
 .userinfo-activity-select, .userinfo-sex-select {
     text-align: center;
     font-size: 20px;
@@ -113,32 +125,39 @@
     box-sizing: inherit;
 }
 
+/*Defines the color of the label in the UserInformation component*/
 .userinfo-select-label {
     color: var(--secondary-color);
 }
 
+/*Defines the position of sex select input UserInformation component*/
 .userinfo-sex-select {
     z-index: 70;
 }
 
+/*Defines the background color padding and centers the text of the label in the UserInformation component*/
 .userinfo-select-label {
     padding: 5px 5px;
     text-align: center;
     background-color: var(--primary-color);
 }
 
+/*Changes the color of select input labels in the UserInformation component whenever user hovers over them*/
 .userinfo-select-label:hover {
     background-color: var(--primary-color-hover);
 }
 
+/*Defines the position of the arrow icon in the select tags*/
 .fa-sort-down {
     float: right;
 }
 
+/*Changes the cursor whenever user hovers over the select inputs in the UserInformation component*/
 .userinfo-sex-select:hover, .userinfo-activity-select:hover {
     cursor: pointer;
 }
 
+/*Defines the position, border, background color and centers the items of the select inputs in the UserInformation component*/
 .userinfo-sex, .userinfo-activity {
     border-left: 2px solid var(--primary-color);
     border-right: 2px solid var(--primary-color);
@@ -152,11 +171,13 @@
     box-sizing: inherit;
 }
 
+/*Changes the color of select items in the UserInformation component whenever user hovers over them*/
 .userinfo-sex:hover, .userinfo-activity:hover {
     background-color: var(--primary-color);
     color: var(--secondary-color);
 }
 
+/*Defines the position and size of the wrapper around select items of the select inputs in the UserInformation component*/
 .userinfo-list-wrapper {
     position: absolute;
     width: 100%;

@@ -1,3 +1,5 @@
+/*Defines the size, position, font size, border, and centers the text of the wrapper around other elements inside the
+FoodDetails component*/
 .food-details-wrapper {
     display: block;
     width: 800px;
@@ -13,6 +15,7 @@
     top: 30%;
 }
 
+/*Defines the margin, border, padding and aligns the text of the header of the FoodDetails component*/
 .food-details-header {
     margin: 0;
     text-align: center;
@@ -20,17 +23,20 @@
     padding: 5px 0;
 }
 
+/*Defines the padding and size of the labels inside the FoodDetails component*/
 .food-details-label {
     display: block;
     padding: 3px 0 3px 15px;
     width: 100%;
 }
 
+/*Defines margin and display of the div with ingredients in the FoodDetails component*/
 .food-details-ingredient {
     display: block;
     margin: 5px 0 0 15px;
 }
 
+/*Defines the maximum height, overflow, and border of the wrapper around the ingredients in the FoodDetails component*/
 .food-details-ingredients-wrapper {
     max-height: 90px;
     overflow-y: scroll;
@@ -38,25 +44,31 @@
     border-top: 1px solid var(--primary-color);
 }
 
+/*Defines the border, and size of the table with nutritional values of the food*/
 .food-details-table {
     border-top: 1px solid var(--primary-color);
     width: 100%;
     border-spacing: 0;
 }
 
+/*Defines the border of the header cells in the table with nutritional values of the food*/
 .food-details-table-header {
     border-bottom: 1px solid var(--primary-color);
 }
 
+/*Defines the text align and font size of the cells in the table with nutritional values of the food*/
 .food-details-table-cell, .food-details-table-header {
     text-align: center;
     font-size: 19px;
 }
 
+/*Defines the border between two adjecent cells in the table with nutritional values of the food*/
 .food-details-table-cell + .food-details-table-cell, .food-details-table-header + .food-details-table-header {
     border-left: 1px solid var(--primary-color);
 }
 
+/*Defines the font size, centers text, overflow, padding, margin, maximum height and line height of the div
+ with description of the food*/
 .food-details-description {
     font-size: 16px;
     line-height: 16px;
@@ -65,36 +77,39 @@
     text-overflow: ellipsis;
     max-height: 95px;
     border-top: 2px solid var(--primary-color);
-}
-
-.food-details-description {
     padding: 5px 15px 0 15px;
     margin: 5px 0 5px 0;
 }
 
+/*Defines the font size and line height of the individual ingredient elements*/
 .food-details-ingredient {
     font-size: 18px;
     line-height: 18px;
 }
 
+/*Defines the width of the scrollbar*/
 ::-webkit-scrollbar {
     width: 10px;
 }
 
+/*Defines the background of the scrollbar*/
 ::-webkit-scrollbar-track {
     background: white;
 }
 
+/*Defines the color of the scrollbar slider and changes cursor whenever user hovers over it*/
 ::-webkit-scrollbar-thumb {
     background: var(--primary-color);
     cursor: pointer;
 }
 
+/*Defines the color of the scrollbar slider on hover changes cursor whenever user hovers over it*/
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color-hover);
     cursor: pointer;
 }
 
+/*Defines the size, font, color, padding, border and centers the text of the delete button*/
 .delete-button {
     display: inline-block;
     width: 43px;
@@ -105,6 +120,7 @@
     background-color: var(--primary-color);
 }
 
+/*Defines the position of the delete button inside the FoodDetails component*/
 .food-details-wrapper > .delete-button {
     display: block;
     position: absolute;
@@ -112,18 +128,20 @@
     top: -36px;
 }
 
+/*Changes the color of the delete button inside the FoodDetails component and the cursor whenever user hovers over it*/
 .delete-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
-
 @media only screen and (max-height: 900px) {
+    /*Adjusts the maximum height of the wrapper around ingredients on smaller devices*/
     .food-details-ingredients-wrapper {
         max-height: 50px;
     }
 
+    /*Adjusts the maximum height of the div with food description on smaller devices*/
     .food-details-description {
         max-height: 56px;
     }

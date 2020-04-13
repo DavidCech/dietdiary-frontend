@@ -7,6 +7,7 @@ const initialState = {
     deleteMessage: "",
 };
 
+//Depending on the type of the action decides which attributes of the state get changed
 export default function (state = initialState, action) {
     switch (action.type) {
         case 'GET_FOODS':

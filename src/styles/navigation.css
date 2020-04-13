@@ -1,9 +1,11 @@
+/*Defines the size and background of the navigation bar of the Navigation component*/
 .navigation-wrapper {
     width: 100%;
     height: 40px;
     background-color: var(--primary-color);
 }
 
+/*Defines the size, font, color and centers the items in the navigation bar of the Navigation component*/
 .navigation-item {
     text-decoration: none;
     color: var(--secondary-color);
@@ -20,48 +22,26 @@
     vertical-align: middle;
 }
 
-.user-information-p {
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-    float: left;
-    width: 14.2857%;
-    height: 40px;
-    line-height: 36px;
-    font-size: 22px;
-    text-align: center;
-    display: block;
-    vertical-align: middle;
-    margin: 0;
-    cursor: default;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
+/*Defines the change of the color of the items in navigation bar whenever user hovers upon them*/
 .navigation-item:hover {
     background-color: var(--primary-color-hover) !important;
 }
 
 @media only screen and (max-height: 900px) {
+    /*Changes the size of the items on smaller devices*/
     .navigation-item {
         height: 50px;
         line-height: 50px;
         font-size: 20px;
     }
 
+    /*Changes the size of the viewdiaryentry item on smaller devices*/
     .long-nav-item {
         height: 50px;
         line-height: 25px;
     }
 
-    .user-information-p {
-        height: 50px;
-        line-height: 50px;
-        font-size: 20px;
-    }
-
+    /*Defines the size of the navigation bar of the Navigation component on smaller devices*/
     .navigation-wrapper {
         height: 50px;
     }

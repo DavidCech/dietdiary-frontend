@@ -1,5 +1,6 @@
+/*Defines the font, color, size, position and centers the text of the input of the Searchfood component*/
 .search-bar-wrapper > .search-input {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 50px;
@@ -18,8 +19,9 @@
     z-index: 1;
 }
 
+/*Defines the font, color, size, position and centers the text of the wrapper around the searched items in the Searchfood component*/
 .search-bar-wrapper > .searched-names-wrapper {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 40%;
@@ -34,6 +36,7 @@
     padding: 2px 0 0 0;
 }
 
+/*Defines the font, color, size, position and centers the text of all the buttons in the Searchfood component*/
 .search-bar-wrapper > .next-page-button, .search-bar-wrapper > .previous-page-button, .searched-food-wrapper > .previous-page-button {
     color: var(--secondary-color);
     width: 15%;
@@ -50,26 +53,31 @@
     top: 71%;
 }
 
+/*Allocates the position of the next page button in the Searchfood component*/
 .search-bar-wrapper > .next-page-button {
     left: 50%;
 }
 
+/*Allocates the position of the previous page button in the Searchfood component*/
 .search-bar-wrapper > .previous-page-button {
     left: 35%;
 }
 
+/*Allocates the position of the back button in the Searchfood component*/
 .searched-food-wrapper > .previous-page-button {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
+/*Changes the color of the buttons in the SearchedFood component and the cursor whenever user hover over them*/
 .previous-page-button:hover, .next-page-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the font, color, size, position and centers the text of the searched items in the Searchfood component*/
 .searched-names-wrapper > .food-clickable {
     display: block;
     height: 10%;
@@ -82,14 +90,17 @@
     border-left: 1px solid var(--primary-color);
 }
 
+/*Defines the border whenever there are two searched items adjecent to one another in the Searchfood component*/
 .food-clickable + .food-clickable {
     border-bottom: 1px solid var(--primary-color);
 }
 
+/*Adds border to the first searched item*/
 .food-clickable:nth-child(1) {
     border-bottom: 1px solid var(--primary-color);
 }
 
+/*Changes the color of the searched items in the SearchedFood component and the cursor whenever user hover over them*/
 .searched-names-wrapper > .food-clickable:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
@@ -98,29 +109,35 @@
 }
 
 @media only screen and (max-height: 900px) {
+    /*Adjusts the size of the search input on smaller devices*/
     .search-bar-wrapper > .search-input {
         width: 40%;
     }
 
+    /*Adjusts the size of the wrapper around searched items on smaller devices*/
     .search-bar-wrapper > .searched-names-wrapper {
         width: 40%;
         height: 50%;
     }
 
+    /*Adjusts the position of the buttons on smaller devices*/
     .search-bar-wrapper > .next-page-button, .search-bar-wrapper > .previous-page-button {
         top: 83%;
         width: 20%;
     }
 
+    /*Adjusts the position of the previous page button on smaller devices*/
     .search-bar-wrapper > .previous-page-button {
         left: 30%;
     }
 
+    /*Adjusts the position and size of the back button on smaller devices*/
     .searched-food-wrapper > .previous-page-button {
         top: 80%;
         width: 20%;
     }
 
+    /*Adjusts the position of wrapper around searched items on smaller devices*/
     .search-bar-wrapper > .searched-names-wrapper {
         top: 56.5%;
     }

@@ -1,3 +1,4 @@
+/*Defines the size, position, font and border of the ReactCalendar component*/
 .react-calendar {
     width: 750px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
@@ -11,29 +12,37 @@
     top: 50%;
 }
 
+/*Defines the size and padding of tiles in the ReactCalendar component*/
 .react-calendar__tile {
     padding: 22px 8px;
     font-size: 16px;
 }
 
+/*Changes the color of the day tiles in the ReactCalendar component whenever user hovers over them*/
 .react-calendar__month-view__days__day:hover {
     background-color: var(--primary-color-hover);
 }
 
+/*Changes the color of the tiles in the ReactCalendar component whenever user clicks on them*/
 .react-calendar__tile--active {
     background: var(--primary-color-hover);
     color: var(--secondary-color);
 }
 
+/*Changes the font size of the label in the ReactCalendar component*/
 .react-calendar__navigation__label {
     font-size: 18px;
 }
 
+/*Changes the background color of the tiles in the ReactCalendar component both when user hovers over them and whenever
+they click on them*/
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
     background: var(--primary-color-hover);
 }
 
+/*Defines the size, position, font, centers the text, border and color of the submit and back buttons in the ViewDiaryEntries
+component*/
 .view-diaryentries-submit, .view-diaryentries-back {
     color: var(--secondary-color);
     width: 15%;
@@ -52,16 +61,19 @@
     transform: translate(-50%, 0);
 }
 
+/*Defines the position of the back button in the ViewDiaryEntries component*/
 .view-diaryentries-back {
     top: 90.5%;
 }
 
+/*Changes the color of the submit and back button and the cursor whenever user hover over them*/
 .view-diaryentries-submit:hover, .view-diaryentries-back:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the position of the range div (inside which is the option to select a range of dates inside the ReactClendar label)*/
 .range-div {
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
@@ -70,7 +82,7 @@
     top: 20%;
 }
 
-/* Customize the label (the container) */
+/*Defines the position, margin, font, padding of the label in the range div*/
 .container {
     display: inline-block;
     margin-left: 12px;
@@ -85,7 +97,7 @@
     user-select: none;
 }
 
-/* Hide the browser's default checkbox */
+/*Hide the browser's default checkbox*/
 .container input {
     position: absolute;
     opacity: 0;
@@ -94,7 +106,7 @@
     width: 0;
 }
 
-/* Create a custom checkbox */
+/*Creates a custom checkbox*/
 .checkmark {
     position: absolute;
     top: 0;
@@ -106,33 +118,34 @@
     background-color: var(--primary-color);
 }
 
-/* On mouse-over, add a grey background color */
+/*Changes the color of the custom checkbox whenever user hovers over it*/
 .container:hover input ~ .checkmark {
     background-color: var(--primary-color-hover);
 }
 
-/* When the checkbox is checked, add a blue background */
+/*When the checkbox is checked, add a blue background*/
 .container input:checked ~ .checkmark {
     background-color: var(--primary-color);
 }
 
+/*When the checkbox is checked, add a blue background*/
 .container:hover input:checked ~ .checkmark {
     background-color: var(--primary-color-hover);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
+/*Create the checkmark/indicator (hidden when not checked)*/
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-/* Show the checkmark when checked */
+/*Show the checkmark when checked*/
 .container input:checked ~ .checkmark:after {
     display: block;
 }
 
-/* Style the checkmark/indicator */
+/*Defines the size, border and position of the the checkmark/indicator inside the custom checkbox*/
 .container .checkmark:after {
     left: 9px;
     top: 5px;
@@ -145,13 +158,16 @@
     transform: rotate(45deg);
 }
 
+/*Defines the font, color and centers the text of the label in the range div*/
 .range-label {
     font-size: 20px;
     line-height: 24px;
-    color: black;
+    color: var(--contrast-to-secondary);
     vertical-align: middle;
 }
 
+/*Defines the position and border of the wrapper around the Recharts component and the table with nutrition summary for
+the day*/
 .chart-wrapper {
     position: fixed;
     -ms-transform: translate(-50%, -50%);
@@ -161,14 +177,17 @@
     border: 2px solid var(--primary-color);
 }
 
+/*Adds padding to the first item in the legend of the Recharts component*/
 .legend-item-0 {
     padding-left: 100px;
 }
 
+/*Defines the position of the wrapper around Recharts component*/
 .recharts-wrapper {
     z-index: -1;
 }
 
+/*Defines the position, size, and font size of the delete button icons*/
 .buttons-wrapper > .delete-button {
     font-size: 22px;
     float: right;
@@ -176,6 +195,8 @@
     z-index: 1;
 }
 
+/*Defines the position, size, border, padding, centers the text and font size of the button which determines whether
+kilocalories or macronutrients will be shown in the chart*/
 .chart-toggle {
     font-size: 21px;
     padding: 5px 5px;
@@ -193,15 +214,20 @@
     z-index: 1;
 }
 
+/*Changes the cursor whenever user hovers over the chart*/
 .chart-wrapper > select:hover {
     cursor: pointer;
 }
 
+/*Defines the size of the wrapper around the delete button and the button which changes view of the items in the Recharts
+component*/
 .buttons-wrapper {
     width: 100%;
     height: 40px;
 }
 
+/*Changes the color of the button which changes the view of the items inside the Recharts component and the cursor
+ whenever user hovers over the button*/
 .chart-toggle:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
@@ -209,27 +235,32 @@
     border-right: 2px solid var(--primary-color-hover);
 }
 
+/*Removes the outline from the Recharts chart wrapper*/
 .chart-wrapper > select:focus {
     outline: none;
 }
 
+/*Defines the size and border of the table which shows nutrition details*/
 .view-diaryentries-table {
     width: 100%;
     border-top: 1px solid var(--primary-color);
     border-collapse: collapse;
 }
 
+/*Defines the padding and border of the header cells inside the table which shows nutrition details*/
 .view-diaryentries-table-header {
     padding: 2px 0;
     border-top: 1px solid var(--primary-color);
     border-bottom: 1px solid var(--primary-color);
 }
 
+/*Defines the border between two adjecent cells inside the table which shows nutrition details*/
 .view-diaryentries-table-header + .view-diaryentries-table-header,
 .view-diaryentries-table-cell + .view-diaryentries-table-cell {
     border-left: 1px solid var(--primary-color);
 }
 
+/*Defines the padding, text align and border of the regular cells inside the table which shows nutrition details*/
 .view-diaryentries-table-cell {
     text-align: center;
     padding: 4px 0;
@@ -237,36 +268,42 @@
     border-bottom: 1px solid var(--primary-color);
 }
 
+/*Defines the padding, overflow and maximum height of the burned calories description text area*/
 .burned-calories-description {
     padding: 3px 5px;
     max-height: 50px;
     overflow-y: scroll;
 }
 
+/*Defines the padding of the burned calories input*/
 .burned-calories-count {
     padding: 3px 5px;
 }
 
+/*Defines the padding of the error message which is displayed when user views empty diary entry*/
 .view-diaryentries-no-data {
     padding: 0 0 15px 10px;
 }
 
+/*Defines the overflow, maximum width, and height of individual table cells*/
 .table-cell-restriction {
     max-width: 300px;
     max-height: 35px;
     overflow-y: scroll;
 }
 
+/*Adds top margin to the legend items inside the Recharts component*/
 .recharts-legend-item {
     margin-top: 20px;
 }
 
+/*Hides every other legend item inside the Recharts component*/
 .legend-item-5, .legend-item-7, .legend-item-1, .legend-item-3 {
     display: none !important;
 }
 
-
 @media only screen and (max-height: 900px) {
+    /*Adjusts size, and position of the ReactCalendar component on smaller devices*/
     .react-calendar {
         width: 750px;
         font-size: 20px;
@@ -274,23 +311,28 @@
         top: 55%;
     }
 
+    /*Adjusts size of the tiles inside the ReactCalendar component on smaller devices*/
     .react-calendar__tile {
         padding: 17px 6px;
         font-size: 14px;
     }
 
+    /*Adjusts and position of the submit button on smaller devices*/
     .view-diaryentries-submit {
         top: 88%;
     }
 
+    /*Adjusts the padding of table cells on smaller devices*/
     .view-diaryentries-table-cell {
         padding: 2px 0;
     }
 
+    /*Adjusts the maximum height of table cells on smaller devices*/
     .table-cell-restriction {
         max-height: 20px;
     }
 
+    /*Adjusts the position of the range div on smaller devices*/
     .range-div {
         -ms-transform: translate(-50%, 0);
         transform: translate(-50%, 0);
@@ -299,12 +341,14 @@
         top: 18%;
     }
 
+    /*Adjusts the top margin of the legend items inside the Recharts component on smaller devices*/
     .recharts-legend-item {
         margin-top: 20px;
     }
 
+    /*Adjusts and position of the back button on smaller devices*/
     .view-diaryentries-back {
-        height:40px;
+        height: 40px;
         font-size: 20px;
         left: 50%;
     }

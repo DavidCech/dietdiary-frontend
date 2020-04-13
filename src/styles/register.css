@@ -1,23 +1,29 @@
+/*Allocates the position of the email input in the Register component*/
 .register-form > .email {
     top: 38%;
 }
 
+/*Allocates the position of the password input in the Register component*/
 .register-form > .password {
     top: 46%;
 }
 
+/*Allocates the position of the second password input in the Register component*/
 .register-form > .repassword {
     top: 54%;
 }
 
+/*Allocates the position of the username input in the Register component*/
 .register-form > .username {
     top: 30%;
 }
 
+/*Allocates the position of the submit button in the Register component*/
 .register-button {
     top: 62%;
 }
 
+/*Defines the size, font, color, position and centers the text of the error message in the Register component*/
 .register-message {
     display: block;
     margin: auto;
@@ -34,6 +40,7 @@
     opacity: 0.75;
 }
 
+/*Defines the size, font, color, position and centers the text of the submit button in the Register component*/
 .register-button {
     color: var(--secondary-color);
     width: 10%;
@@ -51,14 +58,17 @@
     left: 50%;
 }
 
+/*Changes the color of the submit button and the cursor whenever user hover over it*/
 .register-button:hover {
     cursor: pointer;
     background-color: var(--primary-color-hover);
     border: 2px solid var(--primary-color-hover);
 }
 
+/*Defines the size, font, position, color and centers the input fields for username and second password in the Register
+ component*/
 .username, .repassword {
-    color: black;
+    color: var(--contrast-to-secondary);
     display: block;
     width: 30%;
     height: 50px;
@@ -75,31 +85,39 @@
 }
 
 @media only screen and (max-height: 900px) {
+
+    /*Adjusts the position of the email input on smaller devices*/
     .register-form > .email {
         top: 42%;
     }
 
+    /*Adjusts the position of the password input on smaller devices*/
     .register-form > .password {
         top: 53%;
     }
 
+    /*Adjusts the position of the second password input on smaller devices*/
     .register-form > .repassword {
         top: 64%;
     }
 
+    /*Adjusts the position of the username input on smaller devices*/
     .register-form > .username {
         top: 31%;
     }
 
+    /*Adjusts the size of the submit button on smaller devices*/
     .register-button {
         top: 75%;
         width: 24%;
     }
 
-    .username, .repassword{
+    /*Adjusts the size of the inputs on smaller devices*/
+    .username, .repassword {
         width: 40%;
     }
 
+    /*Adjusts the position of the error message on smaller devices*/
     .register-message {
         top: 17%;
         width: 40%;
