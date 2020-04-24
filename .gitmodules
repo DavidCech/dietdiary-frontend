@@ -1,0 +1,3 @@
+[submodule "dietdiary-backend"]
+	path = dietdiary-backend
+	url = https://github.com/DavidCech/dietdiary-backend.git
